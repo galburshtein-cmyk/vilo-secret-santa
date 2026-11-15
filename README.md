@@ -31,6 +31,4 @@ then open http://localhost:4173.
 
 ## Fonts
 
-Headlines use **Cabinet Grotesk** (Fontshare, ITF Free Font License), expected at `fonts/CabinetGrotesk-Variable.ttf`. The font file is **not included** in this repository: the licence does not allow handing the font files to third parties. Download it yourselves from https://www.fontshare.com, accept the licence, and put the variable TTF in `fonts/`. Without it the page falls back to Hanken Grotesk.
-
-Body text uses Hanken Grotesk, and the three looks also load Bricolage Grotesque, Fredoka, Nunito, Fraunces and Inter from Google Fonts.
+Headlines use **Familjen Grotesk** (SIL Open Font License, included in `fonts/` with its licence). Body text uses Hanken Grotesk, and the three looks also load Bricolage Grotesque, Fredoka, Nunito, Fraunces and Inter from Google Fonts.

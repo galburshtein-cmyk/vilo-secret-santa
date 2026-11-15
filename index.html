@@ -344,9 +344,11 @@ html[data-look="3"] .bar .wrap{border-radius:12px}
 @keyframes peek{50%{transform:translateY(-5px) rotate(4deg)}}
 @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
 html[data-look="1"] .appt{background:#E3E1EC;color:#17171A}
-@font-face{font-family:'Cabinet Grotesk';src:url(fonts/CabinetGrotesk-Variable.ttf) format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
-html[data-font="d"][data-look]{--head:'Cabinet Grotesk','Hanken Grotesk',sans-serif}
-html[data-font="d"] :is(h1,h2,h3,.logo,summary,.tier b,.kpi .v){letter-spacing:-.01em!important;font-weight:800}
+@font-face{font-family:'Familjen Local';src:url(fonts/FamiljenGrotesk-Variable.ttf) format('truetype');font-weight:400 700;font-style:normal;font-display:swap}
+html[data-font="d"][data-look]{--head:'Familjen Local','Familjen Grotesk','Hanken Grotesk',sans-serif}
+html[data-font="d"] :is(h1,h2,h3,.logo,summary,.tier b,.kpi .v){letter-spacing:0!important;font-weight:700}
+html[data-font="d"] h1{line-height:1.1}
+html[data-font="d"] :is(h2,h3){line-height:1.12}
 html[data-font="a"][data-look]{--head:'Schibsted Grotesk','Hanken Grotesk',sans-serif}
 html[data-font="b"][data-look]{--head:'Familjen Grotesk','Hanken Grotesk',sans-serif}
 html[data-font="c"][data-look]{--head:'Figtree','Hanken Grotesk',sans-serif}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Secret Santa, played in Slack · Vilo Play</title>
+<title>Secret Santa · free look</title>
 <meta name="description" content="Secret Santa across every office, inside Slack: secret clues, real gifts delivered to the door and one live reveal. No spreadsheets. Free up to 25 people.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,12 +11,14 @@
 <style>
 :root{
   /* Vilo brand book v1.2 tokens */
-  --paper:#F2F1F7;--white:#fff;--ink:#17171A;--ink2:#4E4D55;--mute:#6E6D75;
+  --paper:#FDFFF3;--white:#fff;--ink:#1A000A;--ink2:#4D3A44;--mute:#75636C;
   --iris:#7C6CF0;--iris-s:#5B47F5;--iris-ink:#3B2BC4;
   --lilac:#CFC6FF;--peach:#FFD3B8;--mint:#BDEBD8;--sky:#C6DDFF;--butter:#FBE7A1;--rose:#F9C9DA;
   --line:#E3E1EC;
+  /* game palette: Tennis Yellow, Scrubs Blue Light, Scrubs Blue + generated shades; each game = fill / strong / soft */
+  --c-yellow:#EBFF00;--c-blue-l:#C5D0FF;--c-blue:#8D98EC;--c-pink:#FFA3D7;--c-green:#A6F5B8;--c-orange:#FFB15C;--c-violet:#B79BFF;--c-coral:#FF8A73;
   /* per-game colour, set from the GAME config */
-  --g:#F9C9DA;--gs:#D9577F;--g-soft:#FDEBF1;
+  --g:#FF8A73;--gs:#E5533A;--g-soft:#FFC4B8;
   --r8:8px;--r14:14px;--r20:20px;--r28:28px;
   --ease:cubic-bezier(.2,.8,.2,1);
   --head:'Gabarito','Hanken Grotesk',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif;
@@ -58,16 +60,18 @@ button{font:inherit;cursor:pointer;color:inherit}
 .bar .btn{padding:10px 20px}
 /* hero */
 .hero{position:relative;padding:56px 0 96px;background:linear-gradient(180deg,var(--g-soft),var(--paper) 78%)}
-.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
 .tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-radius:999px;padding:6px 14px 6px 8px;font-size:13px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.9)}
 .tag i{width:20px;height:20px;border-radius:50%;background:var(--g);display:inline-block;box-shadow:inset 0 0 0 1.5px var(--gs)}
-.hero h1{font-size:clamp(48px,7vw,88px);margin:22px 0 22px;letter-spacing:-.04em}
+.hero h1{font-size:clamp(44px,5.6vw,80px);margin:22px 0 22px;letter-spacing:-.04em}
+.hero h1 .mk{white-space:nowrap}
 .hero p.sub{font-size:19px;color:var(--ink2);max-width:520px}
 .hero .where{margin-top:14px;font-size:15px;font-weight:600;color:var(--ink)}
 .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 .hero .micro{margin-top:14px;font-size:14px;color:var(--mute)}
 .scene{position:relative;min-height:460px}
 .scene>*{display:none}
+.scene>.hero-art{display:none}[data-hero="D"] .scene>.hero-art{display:block;position:absolute;z-index:3;left:-22%;bottom:-86px;width:64%;pointer-events:none}
 [data-hero="A"] .scene .sA,[data-hero="B"] .scene .sB,[data-hero="C"] .scene .sC{display:block}
 /* illustration placeholders */
 .ph{position:relative;border-radius:var(--r28);background:linear-gradient(135deg,var(--g),var(--g-soft));border:1.5px dashed rgba(23,23,26,.28);display:grid;place-items:center;color:var(--ink2);font-size:13px;font-weight:600;text-align:center;padding:12px;overflow:hidden}
@@ -296,21 +300,21 @@ h1,h2,h3{letter-spacing:var(--ls)}
 .composer{display:flex;justify-content:space-between;align-items:center;width:min(440px,100%);margin:26px auto 0;border:0;background:rgba(255,255,255,.14);color:rgba(255,255,255,.75);border-radius:999px;padding:14px 14px 14px 24px;font-size:15px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);text-align:left}
 .composer i{font-style:normal;width:34px;height:34px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-weight:700}
 .composer:hover{background:rgba(255,255,255,.22)}
-.looksw{position:fixed;left:16px;bottom:16px;z-index:70;display:flex;gap:6px;align-items:center;background:#fff;border-radius:999px;padding:6px 8px 6px 14px;box-shadow:0 6px 20px rgba(0,0,0,.18);font-size:12px;font-weight:700;color:#17171A}
-.looksw button{width:28px;height:28px;border-radius:50%;border:0;background:#eee;font-weight:700;color:#17171A}.looksw button.on{background:#17171A;color:#fff}
+.looksw{position:fixed;left:16px;bottom:16px;z-index:70;display:flex;gap:6px;align-items:center;background:#fff;border-radius:999px;padding:6px 8px 6px 14px;box-shadow:0 6px 20px rgba(0,0,0,.18);font-size:12px;font-weight:700;color:#1A000A}
+.looksw button{width:28px;height:28px;border-radius:50%;border:0;background:#eee;font-weight:700;color:#1A000A}.looksw button.on{background:#1A000A;color:#fff}
 /* LOOK 1: sticker (chunky outlines, hard shadows, mono tags) */
-html[data-look="1"]{--paper:#F2F1F7;--ink:#17171A;--head:'Bricolage Grotesque','Hanken Grotesk',sans-serif;--line:#17171A;--br:18px;--me:var(--g);--me-ink:#17171A;--ls:-.03em;--r14:12px;--r20:16px;--r28:22px}
-html[data-look="1"] :is(.btn.pri,.btn.sec2,.card,.tier,.step,.gc,.kpi,.q,.chat,.qr,.panel,dialog,.looksw){border:2px solid #17171A;box-shadow:4px 4px 0 #17171A}
-html[data-look="1"] .bub{border:2px solid #17171A;box-shadow:3px 3px 0 #17171A}
-html[data-look="1"] .btn.pri:hover,html[data-look="1"] .btn.sec2:hover{box-shadow:6px 6px 0 #17171A}
+html[data-look="1"]{--paper:#F2F1F7;--ink:#1A000A;--head:'Bricolage Grotesque','Hanken Grotesk',sans-serif;--line:#1A000A;--br:18px;--me:var(--g);--me-ink:#1A000A;--ls:-.03em;--r14:12px;--r20:16px;--r28:22px}
+html[data-look="1"] :is(.btn.pri,.btn.sec2,.card,.tier,.step,.gc,.kpi,.q,.chat,.qr,.panel,dialog,.looksw){border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A}
+html[data-look="1"] .bub{border:2px solid #1A000A;box-shadow:3px 3px 0 #1A000A}
+html[data-look="1"] .btn.pri:hover,html[data-look="1"] .btn.sec2:hover{box-shadow:6px 6px 0 #1A000A}
 html[data-look="1"] .step.on{box-shadow:4px 4px 0 var(--gs)}
 html[data-look="1"] .endcta .btn{box-shadow:4px 4px 0 rgba(255,255,255,.7);border-color:#fff}
-html[data-look="1"] :is(.eyebrow,.tag){font-family:'DM Mono',monospace;border:1.5px solid #17171A;border-radius:999px;padding:4px 12px;display:inline-block;color:#17171A;background:transparent}
+html[data-look="1"] :is(.eyebrow,.tag){font-family:'DM Mono',monospace;border:1.5px solid #1A000A;border-radius:999px;padding:4px 12px;display:inline-block;color:#1A000A;background:transparent}
 html[data-look="1"] .tag{display:inline-flex}
-html[data-look="1"] .bar .wrap{border:2px solid #17171A;box-shadow:4px 4px 0 #17171A;background:#fff}
+html[data-look="1"] .bar .wrap{border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A;background:#fff}
 html[data-look="1"] h1,html[data-look="1"] h2,html[data-look="1"] h3{font-weight:800}
 /* LOOK 2: soft pop (round font, big radii, colour) */
-html[data-look="2"]{--paper:#F2F1F7;--ink:#17171A;--head:'Fredoka','Nunito',sans-serif;--body:'Nunito',sans-serif;--br:24px;--me:var(--gs);--ls:-.01em;--r14:18px;--r20:26px;--r28:36px;--line:#E3E1EC;--chat-shadow:0 30px 70px rgba(140,90,220,.28)}
+html[data-look="2"]{--paper:#F2F1F7;--ink:#1A000A;--head:'Fredoka','Nunito',sans-serif;--body:'Nunito',sans-serif;--br:24px;--me:var(--gs);--ls:-.01em;--r14:18px;--r20:26px;--r28:36px;--line:#E3E1EC;--chat-shadow:0 30px 70px rgba(140,90,220,.28)}
 html[data-look="2"] h1,html[data-look="2"] h2,html[data-look="2"] h3{font-weight:600}
 html[data-look="2"] .card,html[data-look="2"] .tier,html[data-look="2"] .gc,html[data-look="2"] .kpi{box-shadow:0 14px 0 -6px var(--g),0 18px 40px rgba(140,90,220,.14)}
 html[data-look="2"] .btn{box-shadow:0 5px 0 rgba(0,0,0,.28)}html[data-look="2"] .btn:active{box-shadow:0 1px 0 rgba(0,0,0,.28);transform:translateY(3px)}
@@ -319,7 +323,7 @@ html[data-look="2"] .bub.me{color:#fff}
 html[data-look="2"] .hero{background:linear-gradient(180deg,var(--g),var(--paper) 80%)}
 html[data-look="2"] .step{border-radius:30px}
 /* LOOK 3: editorial (serif, hairlines, calm and elegant) */
-html[data-look="3"]{--paper:#FFFFFF;--ink:#17171A;--head:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;--br:14px;--ls:-.02em;--r14:6px;--r20:10px;--r28:14px;--line:#E3E1EC;--me:#17171A;--chat-shadow:0 20px 50px rgba(28,27,26,.1)}
+html[data-look="3"]{--paper:#FFFFFF;--ink:#1A000A;--head:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;--br:14px;--ls:-.02em;--r14:6px;--r20:10px;--r28:14px;--line:#E3E1EC;--me:#1A000A;--chat-shadow:0 20px 50px rgba(28,27,26,.1)}
 html[data-look="3"] h1,html[data-look="3"] h2,html[data-look="3"] h3{font-weight:600}
 html[data-look="3"] .btn{border-radius:8px}
 html[data-look="3"] :is(.tag,.chip,.pill,.qr,.composer){border-radius:8px}
@@ -337,13 +341,13 @@ html[data-look="3"] .bar .wrap{border-radius:12px}
 /* the moon from the logo, peeking from a corner (two places only) */
 .sD{position:relative}.chat{z-index:1}
 .moon{position:absolute;width:64px;height:64px;border-radius:50%;background:#FFB08A;z-index:0;animation:peek 4.5s ease-in-out infinite}
-.moon i{position:absolute;top:26px;width:7px;height:9px;border-radius:50%;background:#17171A;animation:blink 5s infinite}
+.moon i{position:absolute;top:26px;width:7px;height:9px;border-radius:50%;background:#1A000A;animation:blink 5s infinite}
 .moon i:nth-child(1){left:19px}.moon i:nth-child(2){right:19px}
-.moon b{position:absolute;left:25px;top:40px;width:14px;height:7px;border-bottom:2.5px solid #17171A;border-radius:0 0 14px 14px}
+.moon b{position:absolute;left:25px;top:40px;width:14px;height:7px;border-bottom:2.5px solid #1A000A;border-radius:0 0 14px 14px}
 .moon.m1{right:34px;top:-30px}.moon.m2{right:60px;bottom:-30px;z-index:2}
 @keyframes peek{50%{transform:translateY(-5px) rotate(4deg)}}
 @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-html[data-look="1"] .appt{background:#E3E1EC;color:#17171A}
+html[data-look="1"] .appt{background:#E3E1EC;color:#1A000A}
 @font-face{font-family:'Familjen Local';src:url(fonts/FamiljenGrotesk-Variable.ttf) format('truetype');font-weight:400 700;font-style:normal;font-display:swap}
 html[data-font="d"][data-look]{--head:'Familjen Local','Familjen Grotesk','Hanken Grotesk',sans-serif}
 html[data-font="d"] :is(h1,h2,h3,.logo,summary,.tier b,.kpi .v){letter-spacing:0!important;font-weight:700}
@@ -358,19 +362,21 @@ html[data-font="b"] :is(h1,h2,h3,.logo,summary,.tier b,.kpi .v){letter-spacing:0
 html[data-font="b"] h1{line-height:1.1}
 html[data-font="b"] :is(h2,h3){line-height:1.12}
 .hero h1 .mk{padding-left:0}
+/* hero: gradient = game colour -> Scrubs Blue Light -> Claw White (base shades + one game colour) */
+html[data-look] .hero{background:linear-gradient(100deg,#FDFFF3 0%,#C5D0FF 48%,var(--g) 100%)}
 /* block cards for the other games: solid game colour, extruded black edge, drawer opens downward on hover/click */
 .games{align-items:start;gap:40px}
-.games .gc{position:relative;padding:0;text-align:center;border:0!important;border-radius:0!important;box-shadow:12px -12px 0 #17171A!important;overflow:visible;transform:none!important;background:var(--c);transition:opacity .6s var(--ease),filter .6s var(--ease)}
+.games .gc{position:relative;padding:0;text-align:center;border:0!important;border-radius:0!important;box-shadow:12px -12px 0 #1A000A!important;overflow:visible;transform:none!important;background:var(--c);transition:opacity .6s var(--ease),filter .6s var(--ease)}
 .games .gc .in{padding:34px 28px 40px}
 .games .gc .ph{background:rgba(255,255,255,.4);border:1.5px dashed rgba(23,23,26,.4);border-radius:50%;width:140px;height:140px;margin:0 auto 22px;padding:0}
 .games .gc .ph:before{display:none}
 .games .gc h3{font-size:30px;margin:0 0 8px}
-.games .gc p{margin:0;color:#17171A;opacity:.85}
+.games .gc p{margin:0;color:#1A000A;opacity:.85}
 .games .gc:after{content:"↓";position:absolute;right:20px;bottom:14px;font-size:24px;transition:opacity .2s}
 .games .gc:hover:after,.games .gc.open:after{opacity:0}
-.games .drawer{background:#17171A;max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.8,.2,1);display:flex;justify-content:center}
+.games .drawer{background:#1A000A;max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.8,.2,1);display:flex;justify-content:center}
 .games .gc:hover .drawer,.games .gc.open .drawer,.games .gc:focus-within .drawer{max-height:112px}
-.dbtn{margin:28px 0;display:inline-flex;align-items:stretch;border:0;background:var(--c);color:#17171A;text-decoration:none;font-family:'DM Mono',monospace;font-weight:500;font-size:14px;letter-spacing:.04em;text-transform:uppercase;padding:0;transition:transform .2s var(--ease)}
+.dbtn{margin:28px 0;display:inline-flex;align-items:stretch;border:0;background:var(--c);color:#1A000A;text-decoration:none;font-family:'DM Mono',monospace;font-weight:500;font-size:14px;letter-spacing:.04em;text-transform:uppercase;padding:0;transition:transform .2s var(--ease)}
 .dbtn span{padding:14px 18px}.dbtn i{font-style:normal;padding:14px 14px;border-left:1.5px solid rgba(23,23,26,.35);transition:transform .2s var(--ease)}
 .dbtn:hover i{transform:translateX(3px)}
 /* the demo windows look like a chat: bubbles with a tail, quick-reply pills, messages popping in one by one */
@@ -389,7 +395,7 @@ html[data-font="b"] :is(h2,h3){line-height:1.12}
 .slack .sb.pick.sel{background:var(--g)}
 .slack .sb.done{background:var(--mint);color:var(--ink);box-shadow:none}
 .dayd{align-self:center;background:#fff;border-radius:999px;padding:3px 12px;box-shadow:inset 0 0 0 1px var(--line);animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
-html[data-look="1"] .slack .m>div{border:2px solid #17171A;box-shadow:3px 3px 0 #17171A}
+html[data-look="1"] .slack .m>div{border:2px solid #1A000A;box-shadow:3px 3px 0 #1A000A}
 /* prompt rows: one rounded box, the tinted header sits inside the outline */
 .prb{border:1.5px solid var(--line);border-radius:14px;box-shadow:none;background:#fff}
 .psel{border-radius:12.5px 12.5px 0 0;color:var(--ink);background:var(--g-soft);border-bottom:1.5px solid var(--line)}
@@ -398,12 +404,12 @@ html[data-look="1"] .slack .m>div{border:2px solid #17171A;box-shadow:3px 3px 0 
 .pmenu{top:calc(100% + 4px)}
 /* square sticker buttons that press in: hard shadow, and on press/open they sink into it */
 summary{align-items:center}
-summary:after{content:"↓";flex:none;width:44px;height:44px;display:grid;place-items:center;background:var(--g);color:#17171A;border:2px solid #17171A;box-shadow:4px 4px 0 #17171A;font-family:var(--body);font-size:22px;font-weight:600;line-height:1;transform:none;transition:transform .12s,box-shadow .12s,background .12s,color .12s}
+summary:after{content:"↓";flex:none;width:44px;height:44px;display:grid;place-items:center;background:var(--g);color:#1A000A;border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A;font-family:var(--body);font-size:22px;font-weight:600;line-height:1;transform:none;transition:transform .12s,box-shadow .12s,background .12s,color .12s}
 summary:hover:after{background:var(--mint)}
-summary:active:after{transform:translate(4px,4px);box-shadow:0 0 0 #17171A}
-details[open] summary:after{content:"↑";background:#17171A;color:var(--g);transform:translate(4px,4px);box-shadow:0 0 0 #17171A}
+summary:active:after{transform:translate(4px,4px);box-shadow:0 0 0 #1A000A}
+details[open] summary:after{content:"↑";background:#1A000A;color:var(--g);transform:translate(4px,4px);box-shadow:0 0 0 #1A000A}
 .btn:active,.dbtn:active,.qr:active{transform:translate(3px,3px)!important}
-html[data-look="1"] .btn:active{box-shadow:0 0 0 #17171A!important}
+html[data-look="1"] .btn:active{box-shadow:0 0 0 #1A000A!important}
 /* keep every corner round: no sharp squares */
 summary:after{border-radius:14px}
 .games .gc{border-radius:var(--r20)!important}
@@ -414,79 +420,483 @@ summary:after{border-radius:14px}
 html[data-look="3"]{--r14:10px;--r20:16px;--r28:22px}
 html[data-look="3"] .btn,html[data-look="3"] :is(.tag,.chip,.pill,.qr,.composer){border-radius:999px}
 /* all main buttons: round sticker, game colour, hard shadow, press-in */
-html[data-look] .btn.pri{background:var(--g);color:#17171A;border:2px solid #17171A;box-shadow:4px 4px 0 #17171A}
-html[data-look] .btn.sec2{background:#fff;color:#17171A;border:2px solid #17171A;box-shadow:4px 4px 0 #17171A}
-html[data-look] .btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 #17171A}
-html[data-look] .btn:active{transform:translate(3px,3px)!important;box-shadow:0 0 0 #17171A!important}
+html[data-look] .btn.pri{background:var(--g);color:#1A000A;border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A}
+html[data-look] .btn.sec2{background:#fff;color:#1A000A;border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A}
+html[data-look] .btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 #1A000A}
+html[data-look] .btn:active{transform:translate(3px,3px)!important;box-shadow:0 0 0 #1A000A!important}
 html[data-look] .endcta .btn.pri{background:#fff;border-color:#fff;box-shadow:4px 4px 0 rgba(255,255,255,.55)}
 html[data-look] .endcta .btn.sec2{background:transparent;color:#fff;border-color:#fff;box-shadow:4px 4px 0 rgba(255,255,255,.55)}
 html[data-look] .endcta .btn:hover{box-shadow:6px 6px 0 rgba(255,255,255,.55)}
 html[data-look] .endcta .btn:active{box-shadow:0 0 0 rgba(255,255,255,.55)!important}
 /* palette: black, white and ONE colour per landing page (the game colour) */
-html[data-look]{--paper:#FFFFFF;--lilac:var(--g);--peach:var(--g);--mint:var(--g);--sky:var(--g);--butter:var(--g);--rose:var(--g);--iris:var(--gs);--iris-s:var(--gs);--iris-ink:#17171A}
+html[data-look]{--paper:#FFFFFF;--lilac:var(--g);--peach:var(--g);--mint:var(--g);--sky:var(--g);--butter:var(--g);--rose:var(--g);--iris:var(--gs);--iris-s:var(--gs);--iris-ink:#1A000A}
 html[data-look="2"],html[data-look="3"]{--line:#E4E4E4}
 .hr{background:linear-gradient(180deg,#fff,#F3F3F3)}
 .person{background:#F3F3F3}
-.pts{background:var(--g);color:#17171A}
+.pts{background:var(--g);color:#1A000A}
 .kpi:nth-child(odd){background:var(--g)}
-.kpi:nth-child(even){background:#fff;box-shadow:inset 0 0 0 1.5px #17171A}
-.kpi .v{background:none;color:#17171A;-webkit-text-fill-color:#17171A}
+.kpi:nth-child(even){background:#fff;box-shadow:inset 0 0 0 1.5px #1A000A}
+.kpi .v{background:none;color:#1A000A;-webkit-text-fill-color:#1A000A}
 .q:nth-child(1){background:var(--g)}
-.q:nth-child(2){background:#fff;box-shadow:inset 0 0 0 1.5px #17171A}
-.q:nth-child(3){background:#17171A;color:#fff}
-.q:nth-child(n) i{color:#17171A}.q:nth-child(3) i{color:var(--g)}.q:nth-child(3) small{color:#d9d9d9}
+.q:nth-child(2){background:#fff;box-shadow:inset 0 0 0 1.5px #1A000A}
+.q:nth-child(3){background:#1A000A;color:#fff}
+.q:nth-child(n) i{color:#1A000A}.q:nth-child(3) i{color:var(--g)}.q:nth-child(3) small{color:#d9d9d9}
 .tier:nth-child(n){background:#fff}.tier:nth-child(1){background:var(--g)}
 .chip:nth-child(even){background:#fff}
 .games .gc:nth-child(1){--c:var(--g)}
 .games .gc:nth-child(2){--c:#fff}
-.games .gc:nth-child(3){--c:#17171A;color:#fff;box-shadow:12px -12px 0 var(--g)!important}
+.games .gc:nth-child(3){--c:#1A000A;color:#fff;box-shadow:12px -12px 0 var(--g)!important}
 .games .gc:nth-child(3) :is(h3,p){color:#fff}
 .games .gc:nth-child(3) .ph{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5);color:#fff}
 .games .gc:nth-child(3) .drawer{background:var(--g)}
-.games .gc:nth-child(3) .dbtn{background:#17171A;color:#fff}
+.games .gc:nth-child(3) .dbtn{background:#1A000A;color:#fff}
 .games .gc:nth-child(3):after{color:#fff}
 .moon{background:var(--gs)}
 /* several shades of the one page colour, for the cards */
 html[data-look]{--t1:var(--g-soft);--t2:var(--g);--t3:color-mix(in srgb,var(--gs) 42%,#fff);--t4:var(--gs)}
 .games .gc:nth-child(1){--c:var(--t2)}.games .gc:nth-child(2){--c:var(--t3)}
-.games .gc:nth-child(3){--c:var(--t4);color:#17171A;box-shadow:12px -12px 0 #17171A!important}
-.games .gc:nth-child(3) :is(h3,p){color:#17171A}
+.games .gc:nth-child(3){--c:var(--t4);color:#1A000A;box-shadow:12px -12px 0 #1A000A!important}
+.games .gc:nth-child(3) :is(h3,p){color:#1A000A}
 .games .gc:nth-child(3) .ph{background:rgba(255,255,255,.4);border-color:rgba(23,23,26,.4);color:inherit}
-.games .gc:nth-child(3) .drawer{background:#17171A}
-.games .gc:nth-child(3) .dbtn{background:var(--c);color:#17171A}
-.games .gc:nth-child(3):after{color:#17171A}
+.games .gc:nth-child(3) .drawer{background:#1A000A}
+.games .gc:nth-child(3) .dbtn{background:var(--c);color:#1A000A}
+.games .gc:nth-child(3):after{color:#1A000A}
 .kpi:nth-child(1){background:var(--t2)}.kpi:nth-child(2){background:var(--t1);box-shadow:none}.kpi:nth-child(3){background:var(--t3)}.kpi:nth-child(4){background:var(--t2);box-shadow:none}
 .q:nth-child(1){background:var(--t2)}
 .q:nth-child(2){background:var(--t1);box-shadow:none}
-.q:nth-child(3){background:var(--t3);color:#17171A}
-.q:nth-child(3) i{color:#17171A}.q:nth-child(3) small{color:var(--ink2)}
+.q:nth-child(3){background:var(--t3);color:#1A000A}
+.q:nth-child(3) i{color:#1A000A}.q:nth-child(3) small{color:var(--ink2)}
 .tier:nth-child(1){background:var(--t2)}.tier:nth-child(2),.tier:nth-child(3){background:var(--t1)}.tier:nth-child(4){background:var(--t2)}.tier:nth-child(5){background:var(--t3)}.tier:nth-child(6){background:var(--t4)}
 .cards3 .card:nth-child(1) .ph{background:var(--t2)}.cards3 .card:nth-child(2) .ph{background:var(--t3)}.cards3 .card:nth-child(3) .ph{background:var(--t1)}
 .chips .chip:nth-child(3n+1){background:var(--t1)}.chips .chip:nth-child(3n+2){background:var(--t2)}.chips .chip:nth-child(3n+3){background:var(--t3)}
 /* real keys: they never lift, they press IN until they are flush with their shadow */
 html[data-look] :is(.btn,.dbtn,.qr,.tier,.slack .sb){transition:transform .08s ease-out,box-shadow .08s ease-out,background .15s}
-html[data-look] .btn:hover{transform:none!important;box-shadow:4px 4px 0 #17171A}
+html[data-look] .btn:hover{transform:none!important;box-shadow:4px 4px 0 #1A000A}
 html[data-look] .btn.pri:hover{background:var(--t3)}
 html[data-look] .btn.sec2:hover{background:var(--t1)}
-html[data-look] .btn:active{transform:translate(4px,4px)!important;box-shadow:0 0 0 #17171A!important}
+html[data-look] .btn:active{transform:translate(4px,4px)!important;box-shadow:0 0 0 #1A000A!important}
 html[data-look] .endcta .btn:hover{box-shadow:4px 4px 0 rgba(255,255,255,.55)}
 html[data-look] .dbtn{box-shadow:3px 3px 0 rgba(255,255,255,.5)}
 html[data-look] .dbtn:hover{transform:none}
 html[data-look] .dbtn:active{transform:translate(3px,3px)!important;box-shadow:0 0 0 transparent}
-html[data-look] .qr{box-shadow:inset 0 0 0 1.5px #17171A,3px 3px 0 #17171A}
+html[data-look] .qr{box-shadow:inset 0 0 0 1.5px #1A000A,3px 3px 0 #1A000A}
 html[data-look] .qr:hover{transform:none}
-html[data-look] .qr:active{transform:translate(3px,3px)!important;box-shadow:inset 0 0 0 1.5px #17171A,0 0 0 #17171A}
-html[data-look] .tier{box-shadow:inset 0 0 0 1.5px #17171A,4px 4px 0 #17171A}
+html[data-look] .qr:active{transform:translate(3px,3px)!important;box-shadow:inset 0 0 0 1.5px #1A000A,0 0 0 #1A000A}
+html[data-look] .tier{box-shadow:inset 0 0 0 1.5px #1A000A,4px 4px 0 #1A000A}
 html[data-look] .tier:hover{transform:none}
-html[data-look] .tier:active{transform:translate(4px,4px)!important;box-shadow:inset 0 0 0 1.5px #17171A,0 0 0 #17171A}
-html[data-look] .slack .sb{box-shadow:2px 2px 0 #17171A}
-html[data-look] .slack .sb:is(.ghost,.pick){box-shadow:inset 0 0 0 1.5px #17171A,2px 2px 0 #17171A}
+html[data-look] .tier:active{transform:translate(4px,4px)!important;box-shadow:inset 0 0 0 1.5px #1A000A,0 0 0 #1A000A}
+html[data-look] .slack .sb{box-shadow:2px 2px 0 #1A000A}
+html[data-look] .slack .sb:is(.ghost,.pick){box-shadow:inset 0 0 0 1.5px #1A000A,2px 2px 0 #1A000A}
 html[data-look] .slack .sb:hover{transform:none}
-html[data-look] .slack .sb:active{transform:translate(2px,2px)!important;box-shadow:inset 0 0 0 0 #17171A,0 0 0 #17171A}
+html[data-look] .slack .sb:active{transform:translate(2px,2px)!important;box-shadow:inset 0 0 0 0 #1A000A,0 0 0 #1A000A}
 @media (max-width:980px){.chat{height:500px}}
+/* palette accents: coral stays the lead, soft tints of the other palette colours mixed in */
+html[data-look]{--s-blue:#C5D0FF;--s-yellow:#F7FFA8;--s-blue2:#8D98EC;--s-white:#FDFFF3}
+.kpi:nth-child(1){background:var(--g)}.kpi:nth-child(2){background:var(--s-blue);box-shadow:none}.kpi:nth-child(3){background:var(--s-yellow)}.kpi:nth-child(4){background:var(--s-blue2);box-shadow:none}
+.tier:nth-child(1){background:var(--g)}.tier:nth-child(2){background:var(--s-blue)}.tier:nth-child(3){background:var(--s-blue2)}.tier:nth-child(4){background:var(--s-yellow)}.tier:nth-child(5){background:var(--s-white)}.tier:nth-child(6){background:var(--gs)}
+.q:nth-child(1){background:var(--g)}.q:nth-child(2){background:var(--s-blue);box-shadow:none}.q:nth-child(3){background:var(--s-yellow);color:var(--ink)}
+.cards3 .card:nth-child(1) .ph{background:var(--g)}.cards3 .card:nth-child(2) .ph{background:var(--s-blue)}.cards3 .card:nth-child(3) .ph{background:var(--s-yellow)}
+.chips .chip:nth-child(5n+1){background:var(--g-soft)}.chips .chip:nth-child(5n+2){background:var(--s-blue)}.chips .chip:nth-child(5n+3){background:var(--s-blue2)}.chips .chip:nth-child(5n+4){background:var(--s-yellow)}.chips .chip:nth-child(5n+5){background:var(--s-white)}
+/* other games keep their own colour */
+.games .gc:nth-child(1){--c:#F6CF6B}.games .gc:nth-child(2){--c:#FFA3D7}.games .gc:nth-child(3){--c:#A6F5B8}
+/* demo stage: the right side is a coloured stage so it never looks empty */
+.stage-in{grid-template-columns:minmax(380px,440px) 1fr;gap:40px;align-items:stretch}
+.pane{align-items:center;padding:48px 36px;border-radius:var(--r28);background:linear-gradient(135deg,var(--g) 0%,#C5D0FF 62%,#FDFFF3 100%);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);min-height:520px}
+.pane .slack{width:100%;max-width:540px}
+/* fixed stage height so step 4 (longest chat) no longer makes the section jump */
+.stage-in .pane{height:720px;min-height:0;padding:36px}
+.stage-in .steps{justify-content:space-between}
+/* quotes: bento, one lead quote + two supporting */
+.quotes{grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto;gap:22px}
+.q:nth-child(n){margin-top:0}
+.q:nth-child(1){grid-row:span 2;background:var(--g);padding:40px;display:flex;flex-direction:column;justify-content:space-between}
+.q:nth-child(1) p{font-family:var(--head);font-weight:700;font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.03em;margin:18px 0 28px}
+.q:nth-child(1) i{font-size:64px}
+.q:nth-child(2){background:var(--s-blue);box-shadow:none}.q:nth-child(3){background:var(--s-yellow)}
+@media (max-width:900px){.quotes{grid-template-columns:1fr}.q:nth-child(1){grid-row:auto;padding:28px}}
+/* pricing ladder: flat cards = information, sticker card = the only clickable one */
+.tiers{align-items:end;gap:14px}
+.tier{display:flex;flex-direction:column;justify-content:space-between}
+.tier:nth-child(1){height:150px}.tier:nth-child(2){height:190px}.tier:nth-child(3){height:230px}.tier:nth-child(4){height:270px}.tier:nth-child(5){height:310px}.tier:nth-child(6){height:350px}
+.tier b{display:block}.tier span{display:block;margin-top:2px}
+html[data-look] .tier.flat{border:0;box-shadow:none;transform:none!important;cursor:default}
+html[data-look] .tier.flat:nth-child(5){box-shadow:inset 0 0 0 1.5px rgba(26,0,10,.22)}
+html[data-look] .tier.flat:active,html[data-look] .tier.flat:hover{transform:none!important;box-shadow:none}
+html[data-look] .tier.flat:nth-child(5):hover,html[data-look] .tier.flat:nth-child(5):active{box-shadow:inset 0 0 0 1.5px rgba(26,0,10,.22)}
+html[data-look] .tier.cta{background:var(--ink);color:#fff;cursor:pointer}
+html[data-look] .tier.cta small{color:#d9c9d0}html[data-look] .tier.cta b{color:#fff}
+@media (max-width:900px){.tiers{align-items:stretch}.tier:nth-child(n){height:auto;min-height:130px}}
+/* chips stay tags, but uncoloured: transparent, hairline outline, no shadow */
+.chips,#bg{gap:8px}
+html[data-look] .chip{background:transparent!important;box-shadow:none!important;border:1px solid rgba(26,0,10,.28)!important;border-radius:999px!important;padding:5px 13px!important;font-size:13px;font-weight:600;color:var(--ink2)}
+/* "Gifts at this budget" is a small heading, not a tag */
+html[data-look] #bg .eyebrow{border:0;border-radius:0;padding:0;display:block;background:none;font-family:var(--body);font-size:13px;letter-spacing:.04em;text-transform:none;font-weight:700;color:var(--ink);margin-bottom:2px}
+/* timeline: an illustration above each step, only the deadline carries a date */
+.tl div{padding-top:150px}
+.tl:before{top:120px}
+.tl div:before{top:110px}
+.tlph{position:absolute;top:0;left:50%;width:96px;height:96px;margin-left:-48px;border-radius:50%;padding:0;font-size:11px}
+.tl .dl small{color:var(--ink);font-weight:700}
+@media (max-width:900px){.tl div{padding:0}.tl div:before{top:0}.tl:before{top:6px}.tlph{position:static;display:grid;margin:0 0 10px;width:72px;height:72px}}
+/* RULE: only clickable things get the black outline + hard shadow (buttons, quick replies, steps, game cards, the "Let's talk" card). Everything else is flat and vector: fills or a hairline, no shadow. */
+html[data-look] :is(.card,.kpi,.q,.chat,.panel,dialog,.bar .wrap,.slack,.pane,.dm-card,.bub,.slack .m>div){box-shadow:none!important}
+html[data-look] :is(.kpi,.q,.pane){border:0!important}
+html[data-look] :is(.card,.chat,.panel,dialog,.bar .wrap,.slack,.dm-card,.bub,.slack .m>div){border:1px solid #E3E1EC!important}
+html[data-look] .slack .m.me>div{border:0!important}
+html[data-look] :is(.eyebrow,.tag){border:1px solid rgba(26,0,10,.28)!important}
+html[data-look] .tag i{box-shadow:none}
+html[data-look] .tier.flat:nth-child(5){box-shadow:none;border:1px solid #E3E1EC}
+/* message bubbles: flat, outlined in the game colour instead of black */
+html[data-look] :is(.bub,.slack .m>div){border:2px solid var(--g)!important;box-shadow:none!important;background:#fff}
+html[data-look] :is(.bub.me,.slack .m.me>div){border:2px solid var(--g)!important}
+/* no hover on things that are not buttons */
+html[data-look] :is(.kpi,.card,.q,.panel,.chat,.slack):hover{transform:none!important;box-shadow:none!important}
+html[data-look] .card:hover,html[data-look] .q:hover,html[data-look] .kpi:hover{transform:none!important}
+.tl div:hover:before{transform:none}
+/* logos title centred */
+html[data-look] .logos .eyebrow{display:table;margin:0 auto}
+html[data-look] #bg .eyebrow{border:0!important;border-radius:0!important;padding:0!important}
+/* closing banner: solid brand colours, no transparency */
+.endcta .tagline{background:#FDFFF3;color:var(--ink)}
+.endcta h2 .mk{--g:var(--gs)}
+.endcta .micro{color:#D9C9D0}
+html[data-look] .composer{background:#FDFFF3;color:var(--ink2);box-shadow:4px 4px 0 var(--g)}
+html[data-look] .composer:hover{background:#FDFFF3}
+html[data-look] .composer i{background:var(--ink);color:#FDFFF3}
+html[data-look] .endcta .btn.pri{background:#FDFFF3;border-color:#FDFFF3;box-shadow:4px 4px 0 var(--g)}
+html[data-look] .endcta .btn.sec2{background:transparent;border-color:#FDFFF3;color:#FDFFF3;box-shadow:4px 4px 0 var(--g)}
+html[data-look] .endcta .btn:hover{box-shadow:4px 4px 0 var(--g)}
+/* ONE button behaviour everywhere (same as mailerbot.com): rests with outline + hard shadow; on hover and on click it presses IN: moves onto the shadow and the shadow disappears */
+html[data-look] :is(.btn,.qr,.step,.composer,.tier.cta,.dbtn,.slack .sb){transition:transform .12s ease-out,box-shadow .12s ease-out,background .15s}
+@media (hover:hover) and (pointer:fine){
+html[data-look] :is(.btn,.qr,.step,.composer,.tier.cta):hover{transform:translate(4px,4px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .dbtn:hover{transform:translate(3px,3px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .slack .sb:hover{transform:translate(2px,2px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .slack .sb:is(.ghost,.pick):hover{box-shadow:inset 0 0 0 1.5px var(--ink)!important}
+}
+html[data-look] :is(.btn,.qr,.step,.composer,.tier.cta):active{transform:translate(4px,4px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .dbtn:active{transform:translate(3px,3px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .slack .sb:active{transform:translate(2px,2px)!important;box-shadow:0 0 0 transparent!important}
+html[data-look] .slack .sb:is(.ghost,.pick):active{box-shadow:inset 0 0 0 1.5px var(--ink)!important}
+/* on click the colours invert: light buttons go dark, dark buttons go light */
+html[data-look] :is(.btn,.qr,.composer,.dbtn):active,html[data-look] .slack .sb:is(.ghost,.pick):active{background:var(--ink)!important;color:#FDFFF3!important}
+html[data-look] .composer:active i{background:#FDFFF3;color:var(--ink)}
+html[data-look] .dbtn:active i{color:#FDFFF3}
+html[data-look] :is(.tier.cta,.slack .sb:not(.ghost):not(.pick)):active{background:#FDFFF3!important;color:var(--ink)!important}
+html[data-look] .tier.cta:active :is(small,b){color:var(--ink)!important}
+/* demo steps: no big gaps, the closed steps share the column height evenly */
+.stage-in .steps{justify-content:flex-start;gap:12px}
+.stage-in .step{flex:1 1 0;display:flex;flex-direction:column;justify-content:center}
+.stage-in .step.on{flex:0 0 auto}
+/* message sender: the Vilo logo mark instead of the word */
+.slack .nm .vav.sm{display:inline-grid;width:22px;height:22px;border-radius:7px;vertical-align:middle;margin-right:6px}
+.slack .nm .vav.sm i{width:12px;height:12px}
+/* Slack buttons look like every other button: outline + 4px hard shadow, coral fill (primary) or white (secondary), presses in on hover/click, colours invert on click */
+html[data-look] .slack .sb{background:var(--g);color:var(--ink);border:2px solid var(--ink);border-radius:999px;box-shadow:4px 4px 0 var(--ink);padding:7px 18px}
+html[data-look] .slack .sb:is(.ghost,.pick){background:#fff;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+html[data-look] .slack .sb.pick.sel{background:var(--g)}
+html[data-look] .slack .sb.done{background:#FDFFF3;color:var(--ink);transform:translate(4px,4px)!important;box-shadow:0 0 0 transparent!important;pointer-events:none}
+@media (hover:hover) and (pointer:fine){html[data-look] .slack .sb:not(.done):hover{transform:translate(4px,4px)!important;box-shadow:0 0 0 transparent!important}}
+html[data-look] .slack .sb:not(.done):active{transform:translate(4px,4px)!important;box-shadow:0 0 0 transparent!important;background:var(--ink)!important;color:#FDFFF3!important}
+/* "Let's talk" is a real button: same look as every other button (coral fill, outline, hard shadow, arrow) */
+html[data-look] .tier.cta{background:var(--g);color:var(--ink);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+html[data-look] .tier.cta small,html[data-look] .tier.cta b{color:var(--ink)}
+html[data-look] .tier.cta b:after{content:" \2192";font-weight:600}
+html[data-look] .tier.cta:active{background:var(--ink)!important;color:#FDFFF3!important}
+html[data-look] .tier.cta:active :is(small,b){color:#FDFFF3!important}
+/* flat price cards: no hover state at all */
+html[data-look] .tier.flat,html[data-look] .tier.flat:hover,html[data-look] .tier.flat:active{transform:none!important;box-shadow:none!important;cursor:default}
+html[data-look] .tier.flat:nth-child(5),html[data-look] .tier.flat:nth-child(5):hover{border:1px solid #E3E1EC!important}
+/* timeline: four steps */
+.tl{grid-template-columns:repeat(4,1fr);gap:16px}
+.tl:before{left:12.5%;right:12.5%;top:144px}
+.tl div{padding-top:174px;font-size:16px}
+.tl div:before{top:134px}
+.tlph{width:120px;height:120px;margin-left:-60px;font-size:12px}
+@media (max-width:900px){.tl{grid-template-columns:1fr}.tl:before{left:11px;right:auto;top:6px}.tl div{padding:0}.tl div:before{top:0}.tlph{position:static;display:grid;width:80px;height:80px;margin:0 0 10px}}
+/* MOTION SYSTEM: one set of durations and one entrance, used everywhere
+   press (buttons) .12s | ui colour changes .2s | open/close .35s | entrances .45s | scroll reveal .6s
+   no blur, no overshoot, no looping decoration (only the typing dots, which show activity) */
+:root{--d-press:.12s;--d-ui:.2s;--d-open:.35s;--d-enter:.45s;--d-reveal:.6s}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* scroll reveal */
+.rv{filter:none;transform:translateY(12px);transition:opacity var(--d-reveal) var(--ease),transform var(--d-reveal) var(--ease)}
+.rv.in,.no-js .rv{transform:none}
+/* entrances: messages, bubbles, quick replies, day label, menus */
+.m,.bub,.qr,.dayd,.pmenu,.slack .m{animation:enter var(--d-enter) var(--ease) both;transform-origin:50% 50%}
+/* no decorative loops */
+.float{animation:none}
+/* open and close */
+.step .d,.games .drawer{transition:max-height var(--d-open) var(--ease),opacity var(--d-open) var(--ease)}
+.step{transition:transform var(--d-press) ease-out,box-shadow var(--d-press) ease-out,background var(--d-ui)}
+/* links and menu items: colour only, same speed */
+.nav a,.bar .login,footer a,.pmenu button,.psel,summary:after{transition:background var(--d-ui),color var(--d-ui)}
+/* the marker line draws in the same time as everything else */
+.mk{transition:background-size var(--d-reveal) var(--ease) .2s}
+/* option pills in the sign-up: colour change only, no movement */
+.opt:hover{transform:none}
+/* Slack buttons are black and white until clicked; the colour appears on selection / after the click */
+html[data-look] .slack .sb,html[data-look] .slack .sb:is(.ghost,.pick){background:#fff;color:var(--ink)}
+html[data-look] .slack .sb.pick.sel{background:var(--g)}
+html[data-look] .slack .sb.done{background:var(--g);color:var(--ink)}
+/* demo steps: the open step looks pressed in (moved onto its shadow), same white fill, no colour change */
+html[data-look] .step{outline:0}
+html[data-look] .step:not(.on):active{background:#fff!important;color:var(--ink)!important}
+html[data-look] .step.on,html[data-look] .step.on:hover,html[data-look] .step.on:active{background:#fff!important;color:var(--ink)!important;transform:translate(4px,4px)!important;box-shadow:none!important}
+/* ICON LANGUAGE (option C): 24px grid, 2px black line, round ends, game-colour shape offset behind the line. Flat, not clickable. */
+.ics{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icf{fill:var(--g);stroke:none;transform:translate(2.2px,2.2px)}
+svg.ico{width:64px;height:64px;overflow:visible}
+.tlic{display:grid;place-items:center;border:0;background:none}
+.tlic svg.ico{width:84px;height:84px}
+.cardic{height:150px;border-radius:var(--r14);display:grid;place-items:center}
+.cardic svg.ico{width:84px;height:84px}
+.cards3 .card:nth-child(1) .cardic{background:var(--s-blue,#C5D0FF)}.cards3 .card:nth-child(2) .cardic{background:var(--s-yellow,#F7FFA8)}.cards3 .card:nth-child(3) .cardic{background:var(--s-blue,#C5D0FF)}
+/* hero: the illustration takes the place of the chat window on the right */
+[data-hero="D"] .scene .sD{display:none}
+[data-hero="D"] .scene>.hero-art{position:static;left:auto;bottom:auto;display:block;width:112%;max-width:none;margin-left:-6%;height:auto}
+.scene{min-height:0}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-art{width:100%;margin-left:0}}
+/* icons: smaller */
+.tlic svg.ico,.cardic svg.ico{width:64px;height:64px}
+.tlph{width:84px;height:84px;margin-left:-42px}
+.tl:before{top:108px}
+.tl div:before{top:98px}
+.tl div{padding-top:138px}
+.cardic{height:120px}
+@media (max-width:900px){.tl div{padding:0}.tl div:before{top:0}.tl:before{top:6px}.tlph{position:static;display:grid;width:60px;height:60px;margin:0 0 10px}}
+/* hero message: one Slack message that arrives over the illustration */
+.scene>.hero-msg{display:none}
+[data-hero="D"] .scene>.hero-msg{display:flex;gap:12px;align-items:center;position:absolute;z-index:4;left:2%;bottom:14%;background:#fff;border:2px solid var(--g);border-radius:var(--br) var(--br) var(--br) 6px;padding:12px 18px 12px 14px;animation:enter var(--d-enter) var(--ease) 1.2s both;transform-origin:0 100%}
+.hero-msg .vav.sm{display:grid;width:36px;height:36px;border-radius:10px;flex:none}
+.hero-msg .vav.sm i{width:20px;height:20px}
+.hero-msg small{display:block;font-size:12px;color:var(--mute);font-weight:600}
+.hero-msg p{font-weight:700;font-size:16px;line-height:1.25;white-space:nowrap}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-msg{left:0;bottom:6%}.hero-msg p{font-size:14px}}
+/* hero message: bigger, tilted, overlapping the gifts */
+@keyframes enter-tilt{from{opacity:0;transform:translateY(14px) rotate(-6deg)}to{opacity:1;transform:rotate(-6deg)}}
+[data-hero="D"] .scene>.hero-msg{left:-7%;bottom:12%;gap:16px;padding:18px 30px 18px 18px;border-width:2.5px;border-radius:22px 22px 22px 8px;transform:rotate(-6deg);animation:enter-tilt var(--d-enter) var(--ease) 1.2s both}
+.hero-msg .vav.sm{width:56px;height:56px;border-radius:16px}
+.hero-msg .vav.sm i{width:30px;height:30px}
+.hero-msg small{font-size:15px}
+.hero-msg p{font-size:24px;line-height:1.2;letter-spacing:-.01em}
+.hm-lines{position:absolute;left:-30px;top:-34px;width:64px;height:64px;fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-msg{left:0;bottom:8%;padding:12px 20px 12px 12px}.hero-msg p{font-size:18px}.hero-msg .vav.sm{width:44px;height:44px}.hero-msg .vav.sm i{width:24px;height:24px}}
+/* setup cards: icon sits on the left above the title, no coloured box */
+.cards3 .card .cardic,.cards3 .card:nth-child(n) .cardic{background:none;height:auto;display:block;margin:0 0 14px;place-items:start;justify-items:start}
+.cardic svg.ico{width:56px;height:56px;display:block}
+/* hero message: a bit smaller and a bit higher, no motion lines */
+.hm-lines{display:none}
+[data-hero="D"] .scene>.hero-msg{bottom:76%;padding:14px 24px 14px 14px;gap:14px;border-radius:20px 20px 20px 7px}
+.hero-msg .vav.sm{width:46px;height:46px;border-radius:13px}
+.hero-msg .vav.sm i{width:25px;height:25px}
+.hero-msg small{font-size:13px}
+.hero-msg p{font-size:20px}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-msg{bottom:58%}.hero-msg p{font-size:16px}.hero-msg .vav.sm{width:38px;height:38px}.hero-msg .vav.sm i{width:20px;height:20px}}
+/* headlines: no marker stripe, the emphasised words are a lighter weight instead */
+html[data-look] .mk,html[data-look] .mk.in,html[data-look] .hero h1 .mk{background:none!important;background-size:0 0!important;padding:0!important;font-style:normal!important;font-weight:400!important;transition:none}
+/* hero message: a little to the right, floating from right to left and back, all the time */
+@keyframes msg-drift{0%{transform:translateX(16px) rotate(-6deg)}100%{transform:translateX(-16px) rotate(-7.5deg)}}
+[data-hero="D"] .scene>.hero-msg{left:0%;opacity:1;animation:msg-drift 3.6s ease-in-out infinite alternate}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-msg{left:2%}}
+/* hero tag: same as every other section tag (hairline outline, uppercase mono), no dot */
+html[data-look] .tag{background:transparent!important;border:1px solid rgba(26,0,10,.28)!important;box-shadow:none!important;padding:4px 12px!important;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.tag i{display:none}
+/* art has 260 units of empty room above it so falling gifts are never cut; pull it back up so the layout does not change */
+[data-hero="D"] .scene>.hero-art{margin-top:-19.3%}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-art{margin-top:-17.2%}}
+/* gift choices: text centred and balanced; a softer corner so two-line labels sit well inside the button */
+html[data-look] .slack .sb.pick{border-radius:18px;text-align:center;line-height:1.25;padding:10px 16px;text-wrap:balance}
+.shop{align-items:stretch}
+/* section separation: every second section sits on a very light Scrubs Blue Light */
+section.sec:nth-of-type(even){background:#EEF1FF}
+/* HR numbers: no coloured squares, just the numbers with thin dividers between them */
+.kpis{gap:0}
+html[data-look] .kpis .kpi:nth-child(n){background:none!important;box-shadow:none!important;border:0!important;border-radius:0;padding:10px 24px;text-align:center}
+html[data-look] .kpis .kpi+.kpi{border-left:1px solid #E3E1EC!important}
+@media (max-width:900px){.kpis{row-gap:28px}html[data-look] .kpis .kpi:nth-child(odd){border-left:0!important}}
+@media (max-width:620px){html[data-look] .kpis .kpi+.kpi{border-left:0!important;border-top:1px solid #E3E1EC!important;padding-top:24px}}
+/* demo section enters gradually: heading first, then the six steps one by one, then the stage */
+.stage.rv{opacity:1;transform:none;filter:none;transition:none}
+.stage.rv:not(.in) .stage-in .step,.stage.rv:not(.in) .stage-in .pane,.stage.rv:not(.in) .stage-m{opacity:0}
+.stage.rv.in .stage-in .step,.stage.rv.in .stage-m .step{animation:enter var(--d-enter) var(--ease) backwards;animation-delay:.05s}
+.stage.rv.in .stage-in .pane{animation:enter var(--d-enter) var(--ease) backwards;animation-delay:.3s}
+/* real illustration inside a game card (Who's Who): same 150px slot as the placeholders, centred, no frame */
+.gc-art{height:150px;display:grid;place-items:center}
+.gc-art svg.ww-art{height:150px;width:auto;max-width:100%;display:block;overflow:visible}
+.gc-art .mag{transform-box:fill-box;transform-origin:40% 40%}
+/* on hover only the magnifier searches (the stripes stay where they are) */
+@keyframes search{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-70px,26px) rotate(-9deg)}50%{transform:translate(60px,-34px) rotate(7deg)}75%{transform:translate(-30px,-50px) rotate(-5deg)}}
+.games .gc:hover .gc-art .mag,.games .gc:focus-within .gc-art .mag{animation:search 1.6s ease-in-out infinite}
+/* sections: equal space above and below the content, so it sits in the middle of its background */
+section.sec{padding-top:clamp(64px,8vw,104px)!important;padding-bottom:clamp(64px,8vw,104px)!important}
+/* pricing ladder: the cards grow up from the baseline, left to right */
+@keyframes grow{from{height:64px}to{height:var(--h)}}
+html[data-look] .tiers .tier{overflow:hidden;height:var(--h,150px)}
+html[data-look] .tiers .tier:nth-child(1){--h:150px;--n:0}
+html[data-look] .tiers .tier:nth-child(2){--h:190px;--n:1}
+html[data-look] .tiers .tier:nth-child(3){--h:230px;--n:2}
+html[data-look] .tiers .tier:nth-child(4){--h:270px;--n:3}
+html[data-look] .tiers .tier:nth-child(5){--h:310px;--n:4}
+html[data-look] .tiers .tier:nth-child(6){--h:350px;--n:5}
+html[data-look] .tiers .tier.in{animation:grow .9s var(--ease) both;animation-delay:calc(var(--n)*.14s)}
+/* the row keeps its full height while the cards grow, so nothing below moves */
+html[data-look] .tiers{grid-template-rows:350px;align-items:end}
+@media (max-width:900px){html[data-look] .tiers{grid-template-rows:none;align-items:stretch}html[data-look] .tiers .tier,html[data-look] .tiers .tier.in{height:auto;min-height:130px;animation:none}}
+/* quotes: frames instead of colour fills */
+html[data-look] .quotes .q:nth-child(n){background:transparent!important;border:1px solid rgba(26,0,10,.28)!important;box-shadow:none!important}
+/* the lead quote is the one filled card, in the Secret Santa colour */
+html[data-look] .quotes .q:nth-child(1){background:var(--g)!important;border-color:var(--g)!important}
+/* HR panel: green removed, the coral glows are softer */
+.panel:before,.panel:after{opacity:.32}
+/* logos strip: more air above and below, text sizes unchanged */
+.logos{padding:76px 0 76px}
+/* the numbers rise one after the other */
+.kpi .v{animation:enter var(--d-enter) var(--ease) both;animation-delay:calc(var(--i,0)*.18s)}
+/* only the dark closing banner is a rounded block, inset from the page edge with space around it; every other section runs edge to edge */
+.endcta{margin:28px clamp(16px,2.5vw,36px);border-radius:36px}
+/* MESSAGE SPACING: more room inside every message and between them, one rhythm for all seven steps */
+html[data-look] .slack .bd{padding:20px 22px 26px;gap:18px}
+html[data-look] .slack .m>div{padding:16px 20px 18px}
+html[data-look] .slack .m .nm{margin-bottom:10px;display:flex;align-items:center;gap:8px}
+html[data-look] .slack .m>div>.nm+*{margin-top:0}
+html[data-look] .slack .m>div>*+*:not(.nm){margin-top:12px}
+html[data-look] .slack .m .kick{display:block;margin-bottom:-4px}
+html[data-look] .slack .m .mini{margin-top:12px}
+html[data-look] .slack .m .btns{margin-top:16px;gap:10px}
+html[data-look] .slack .m .shop{gap:12px;margin-top:14px}
+html[data-look] .slack .m .person{margin-top:14px;padding:12px 14px;gap:14px}
+html[data-look] .slack .prs{gap:14px;margin-top:16px}
+html[data-look] .slack .pr{gap:12px}
+/* step 2: the question is a fixed label, the answer is the choice */
+.prb .pq{padding:9px 12px;font-weight:700;font-size:12.5px;line-height:1.3;color:var(--ink);background:var(--g-soft);border-radius:12.5px 12.5px 0 0;border-bottom:1.5px solid var(--ink)}
+.prb .psel.pa{background:#fff;border-radius:0 0 12.5px 12.5px;border-bottom:0;font-weight:600;font-size:14px;color:var(--ink);padding:10px 12px}
+.prb .psel.pa:hover{background:#EEF1FF}
+/* the stage is a little taller so the longest messages fit with the roomier spacing */
+.stage-in .pane{height:770px}
+/* FAQ arrow buttons behave like every other button: press in on hover, colours invert on click */
+summary:after{transition:transform var(--d-press) ease-out,box-shadow var(--d-press) ease-out,background var(--d-ui),color var(--d-ui)}
+@media (hover:hover) and (pointer:fine){
+  summary:hover:after{background:var(--g);transform:translate(4px,4px);box-shadow:0 0 0 transparent}
+}
+summary:active:after{background:var(--ink)!important;color:#FDFFF3!important;transform:translate(4px,4px);box-shadow:0 0 0 transparent}
+details[open] summary:hover:after{background:var(--ink);color:var(--g)}
+/* the three quotes appear one after the other too */
+.quotes .q.rv{transition:opacity var(--d-reveal) var(--ease),transform var(--d-reveal) var(--ease)}
+.quotes .q.rv:nth-child(1){transition-delay:0s}
+.quotes .q.rv:nth-child(2){transition-delay:.18s}
+.quotes .q.rv:nth-child(3){transition-delay:.36s}
+.quotes .q.rv:not(.in){transform:translateY(28px) scale(.97)}
+/* the three setup cards open one after the other */
+.cards3 .card.rv{transition:opacity var(--d-reveal) var(--ease),transform var(--d-reveal) var(--ease)}
+.cards3 .card.rv:nth-child(1){transition-delay:0s}
+.cards3 .card.rv:nth-child(2){transition-delay:.18s}
+.cards3 .card.rv:nth-child(3){transition-delay:.36s}
+.cards3 .card.rv:not(.in){transform:translateY(28px) scale(.97)}
+.psel:disabled{opacity:1;cursor:default}
+.psel:disabled:hover{background:#fff}
+/* footer inverted: Snout Black background, Claw White text */
+footer{background:#1A000A;color:#FDFFF3;margin-top:0}
+footer h4{color:#D9C9D0}
+footer a{color:#FDFFF3}
+footer a:hover{color:var(--g)}
+footer p{color:#D9C9D0!important}
+footer p a{color:#FDFFF3}
+footer .fine,footer .pauseb{color:#D9C9D0}
+/* the games section sits on the plain page background */
+section.sec:has(.games){background:none!important}
+/* HR section: flat background, no gradient */
+section.hr{background:none}
+/* no tags in the setup cards: the gift examples under the slider read as a plain line */
+#bg{gap:0;align-items:baseline}
+html[data-look] #bg .chip{border:0!important;padding:0!important;font-size:14px;font-weight:600}
+#bg .chip+.chip:before{content:"\00b7";margin:0 8px;color:var(--mute)}
+/* all three game cards share one illustration slot (140px + 22px gap), so the cards are the same size and nothing touches the title */
+.games .gc .gc-art{height:140px;margin-bottom:22px;display:grid;place-items:center}
+.games .gc .gc-art svg{height:128px;width:auto;max-width:100%}
+/* Step Challenge: the shoes walk on hover, one after the other */
+.gc-art svg.sc-art{height:150px;width:auto;max-width:100%;display:block;overflow:visible}
+.gc-art .shoe{transform-box:fill-box;transform-origin:50% 100%}
+@keyframes stepA{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(40px,-70px) rotate(-5deg)}50%{transform:translate(70px,0) rotate(0)}75%{transform:translate(30px,6px) rotate(1deg)}}
+@keyframes stepB{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(30px,6px) rotate(1deg)}50%{transform:translate(0,0) rotate(0)}75%{transform:translate(40px,-70px) rotate(5deg)}}
+.games .gc:hover .sc-art .shoe-a,.games .gc:focus-within .sc-art .shoe-a{animation:stepA 1.4s ease-in-out infinite}
+.games .gc:hover .sc-art .shoe-b,.games .gc:focus-within .sc-art .shoe-b{animation:stepB 1.4s ease-in-out infinite}
+.games .gc .gc-art img.ms-art{height:128px;width:auto;max-width:100%;display:block;object-fit:contain}
+/* Secret Office Missions: the front envelope is closed, and opens on hover (flap lifts, the letter rises out) */
+.gc-art svg.mo-art{height:128px;width:auto;max-width:100%;display:block;overflow:visible}
+.mo-flap-front{transform-box:fill-box;transform-origin:50% 0%;transition:transform .25s ease-in}
+.mo-flap-back{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .3s ease-out .2s}
+.mo-letter{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(0);transition:transform .6s var(--ease) .38s}
+.games .gc:hover .mo-flap-front,.games .gc:focus-within .mo-flap-front{transform:scaleY(0)}
+.games .gc:hover .mo-flap-back,.games .gc:focus-within .mo-flap-back{transform:scaleY(1)}
+.games .gc:hover .mo-letter,.games .gc:focus-within .mo-letter{transform:translateY(-300px) rotate(-4deg)}
+/* the viewBox has more room above the envelope, so keep the envelope the same size as before */
+.games .gc .gc-art svg.mo-art{height:138px}
+/* envelope: opening runs flap, flap, card; closing runs in reverse: the card slides back in first, then the flap closes */
+.mo-letter{transition:transform .45s cubic-bezier(.5,0,.75,0) 0s}
+.mo-flap-back{transition:transform .25s ease-in .4s}
+.mo-flap-front{transition:transform .3s ease-out .62s}
+.games .gc:hover .mo-flap-front,.games .gc:focus-within .mo-flap-front{transition:transform .25s ease-in 0s}
+.games .gc:hover .mo-flap-back,.games .gc:focus-within .mo-flap-back{transition:transform .3s ease-out .2s}
+.games .gc:hover .mo-letter,.games .gc:focus-within .mo-letter{transition:transform .6s var(--ease) .38s}
+/* the tree illustration has no spare room above it, so no pull-up margin is needed */
+[data-hero="D"] .scene>.hero-art{margin-top:0}
+@media (max-width:900px){[data-hero="D"] .scene>.hero-art{margin-top:0}}
+/* the message sits above the left gifts, clear of the tree */
+[data-hero="D"] .scene>.hero-msg{left:-1%;bottom:58.5%}
+/* the person in a message is shown as initials in a game-colour circle, no photo */
+.person .av{width:48px;height:48px;display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:17px;color:var(--ink);box-shadow:none;letter-spacing:0}
+/* game pages (hero + demo switch) */
+.games .gc{cursor:pointer}
+/* snow lives in the page */
+body{position:relative}
+#snowp{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:60}
+#snowp .sn-sway{position:absolute;inset:0;animation:sn-sway ease-in-out infinite alternate}
+#snowp .sn-fall{position:absolute;left:-40px;right:-40px;top:0;animation:sn-fall linear infinite;transform:translateY(calc(-1*var(--T)));will-change:transform}
+@keyframes sn-fall{from{transform:translateY(calc(-1*var(--T)))}to{transform:translateY(0)}}
+@keyframes sn-sway{from{transform:translateX(-18px)}to{transform:translateX(18px)}}
+body.paused #snowp *{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){#snowp *{animation:none!important}}
+/* hero drawings loop on their own (inline SVG cloned from the cards) */
+[data-hero="D"] .scene>.hero-art.svg{display:flex;justify-content:center;width:100%;margin-left:0}
+.hero-art.svg svg{width:auto;max-width:100%;overflow:visible;display:block}
+[data-game="whos"] .hero-art.svg svg{height:440px}[data-game="missions"] .hero-art.svg svg{height:430px}[data-game="steps"] .hero-art.svg svg{height:360px}
+.hero-art.svg .mag{transform-box:fill-box;transform-origin:40% 40%;animation:search 3.4s ease-in-out infinite}
+.hero-art.svg .shoe-a{animation:stepA 2.6s ease-in-out infinite}.hero-art.svg .shoe-b{animation:stepB 2.6s ease-in-out infinite}
+/* the flap turns over in two halves, one after the other (front folds up, then back stands), and closes the same way in reverse */
+@keyframes mo-letter{0%,26%{transform:translateY(0) rotate(0)}42%,60%{transform:translateY(-300px) rotate(-4deg)}76%,100%{transform:translateY(0) rotate(0)}}
+@keyframes mo-front{0%,14%{transform:scaleY(1)}20%,84%{transform:scaleY(0)}92%,100%{transform:scaleY(1)}}
+@keyframes mo-back{0%,20%{transform:scaleY(0)}26%,76%{transform:scaleY(1)}84%,100%{transform:scaleY(0)}}
+.hero-art.svg .mo-letter{animation:mo-letter 6s ease-in-out infinite}.hero-art.svg .mo-flap-front{animation:mo-front 6s ease-in-out infinite}.hero-art.svg .mo-flap-back{animation:mo-back 6s ease-in-out infinite}
+/* the floating message sits somewhere different on each game's hero */
+[data-game="whos"] .scene>.hero-msg{left:34%;bottom:73%}
+[data-game="missions"] .scene>.hero-msg{left:42%;bottom:11%;animation-name:msg-drift-r}
+@keyframes msg-drift-r{0%{transform:translateX(16px) rotate(6deg)}100%{transform:translateX(-16px) rotate(7.5deg)}}
+[data-game="steps"] .scene>.hero-msg{left:9.4%;bottom:-11.7%}
+body[data-game]:not([data-game="santa"]) .stage-in{align-items:start}
+body[data-game]:not([data-game="santa"]) .stage-in .step,body[data-game]:not([data-game="santa"]) .stage-in .step.on{flex:0 0 auto;padding:24px 26px;font-size:17px}
+body[data-game]:not([data-game="santa"]) .stage-in .pane{height:560px}
+#gback{margin-left:10px;padding:6px 14px;font-size:13px;min-height:0;vertical-align:middle}
+#gback[hidden]{display:none}
+.board{display:grid;gap:6px;margin-top:10px}
+.brow{display:flex;align-items:center;gap:10px;background:#F6F5FA;border-radius:12px;padding:8px 12px;font-size:14px}
+.brow span{font-weight:800;color:var(--gs);width:14px}.brow b{flex:1}.brow em{font-style:normal;font-weight:700}
+.slack .m .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+[data-game="whos"] .scene>.hero-art,[data-game="missions"] .scene>.hero-art,[data-game="steps"] .scene>.hero-art{animation:art-float 4.5s ease-in-out infinite alternate}
+@keyframes art-float{from{transform:translateY(6px)}to{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.scene>.hero-art{animation:none!important}}
 </style>
 </head>
 <body class="no-js">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-phone" viewBox="0 0 24 24"><path class="icf" d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5.500 5.500L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/><path class="ics" d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5.500 5.500L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path class="icf" d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path class="ics" d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle class="icf" cx="12" cy="12" r="9"/><circle class="ics" cx="12" cy="12" r="9"/><path class="ics" d="M12 7v5l3 2"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle class="icf" cx="11" cy="11" r="6.500"/><circle class="ics" cx="11" cy="11" r="6.500"/><path class="ics" d="M16 16l5 5"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect class="icf" x="4" y="9" width="16" height="11" rx="1.500"/><rect class="ics" x="4" y="9" width="16" height="11" rx="1.500"/><rect class="ics" x="3" y="6" width="18" height="3" rx="1"/><path class="ics" d="M12 6v14M12 6c-1-3-5-3.500-5-1.500S10 6 12 6zM12 6c1-3 5-3.500 5-1.500S14 6 12 6z"/></symbol>
+<symbol id="i-house" viewBox="0 0 24 24"><path class="icf" d="M4 11l8-7 8 7v9H4z"/><path class="ics" d="M4 11l8-7 8 7v9H4z"/><path class="ics" d="M10 20v-5h4v5"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path class="icf" d="M12 3l2.200 6.300L21 12l-6.800 2.700L12 21l-2.200-6.300L3 12l6.800-2.700z"/><path class="ics" d="M12 3l2.200 6.300L21 12l-6.800 2.700L12 21l-2.200-6.300L3 12l6.800-2.700z"/></symbol>
+</defs></svg>
 <canvas id="snow" aria-hidden="true"></canvas>
 <header class="bar"><div class="wrap">
   <a class="logo" href="#" aria-label="Vilo"><span class="ring"></span>vilo</a>
@@ -500,8 +910,8 @@ html[data-look] .slack .sb:active{transform:translate(2px,2px)!important;box-sha
 /* ============ GAME CONFIG: a new game = new data + colour + mockups ============ */
 const GAME={
   id:'secret-santa',name:'Secret Santa',
-  color:{g:'#F9C9DA',gs:'#D9577F',soft:'#FDEBF1'},
-  ambient:'none', /* snow is paused: set to 'snow' to bring it back */
+  color:{g:'#FF8A73',gs:'#E5533A',soft:'#FFC4B8'},
+  ambient:'snow', /* snow falls on the Secret Santa page only; other game pages hide it */
   season:{state:'before',
     before:{tag:'Sign up by November 20 to reveal before the holidays.'},
     after:{tag:'[Copy from Vilo: after the deadline]'},
@@ -515,10 +925,10 @@ const GAME={
   hrp:{h:['And HR sees all of it, ','live.'],lead:'Who joined, which offices are lagging, which gifts are still unopened. Without asking anyone.',
     kpis:[['Joined',96],['Clues sent',294],['Guesses locked',71],['Gifts opened',88]]},
   setup:{eyebrow:'For people teams',h:['You set it up once. ','It runs itself.'],cards:[
-    {t:'Zero admin',p:'No spreadsheet, no hat, no chasing people for addresses. Vilo runs sign-ups, matching, reminders and delivery.',chips:['Sign-ups','Matching','Reminders','Delivery','Reveal'],art:'Admin'},
-    {t:'A budget you set',p:'Set the budget per gift once. The gift shop only shows gifts within it, so people never see a price.',slider:true,art:'Gift'},
-    {t:'Office or home',p:'The person receiving the gift chooses where it goes, so remote people are part of it from day one.',chips:['Office delivery','Home delivery','Swap a gift'],art:'Delivery'}]},
-  timeline:{eyebrow:'The season at a glance',h:['One call. ','One season.'],items:[['One 15-minute call','[date]'],['One DM. One tap.','[date]'],['Joining closes','Mon 7 Dec · 12:00'],['Your person arrives.','Mon 7 Dec'],['Clues drop.','[dates]'],['A gift shop inside Slack.','[date]'],['The reveal.','[date]']]},
+    {t:'Zero admin',p:'No spreadsheet, no hat, no chasing people for addresses. Vilo runs sign-ups, matching, reminders and delivery.',art:'Admin'},
+    {t:'A budget you set',p:'Set the budget per gift once. The gift shop only shows gifts within it, so people never see a price.',art:'Gift'},
+    {t:'Office or home',p:'The person receiving the gift chooses where it goes, so remote people are part of it from day one.',art:'Delivery'}]},
+  timeline:{eyebrow:'The season at a glance',h:['One call. ','One season.'],items:[['One 15-minute call',''],['Joining closes','Mon 7 Dec · 12:00'],['Clues drop. Guessing starts.',''],['The reveal.','']]},
   pricing:{h:['What does it ','cost?'],lead:'Priced by team size. No payment on the site.',tiers:[['Up to 25 people','Free'],['26–100 people','$99'],['101–150 people','$159'],['151–200 people','$229'],['201–300 people','$299'],['More than 300','Let’s talk']],note:'Plus the gift budget per person you choose. Bigger than that, let’s talk.'},
   quotes:[['We used to plan one office at a time. Now Tel Aviv and New York play the same game on the same morning, and people actually talk about it.','Head of People · global tech company'],['I approve a brief and the rest just happens. Suppliers, sign-ups, the Slack posts. It gave me my weeks back.','Employee Experience Manager · fast-growing startup'],['Our remote people finally feel part of it. The buddy program alone changed how onboarding feels.','VP People · remote-first company']],
   faq:[['Where does it run?','Wherever your people already are: in Slack, in the Vilo mobile app, or in the Vilo web app. Nobody installs anything new to join.'],
@@ -531,31 +941,36 @@ const GAME={
     ['We don\'t have an HR team. Can we still run it?','Yes. Any team lead or founder can start it. It\'s free up to 25 people, the setup is one 15-minute call, and Vilo runs everything from the invite to the reveal.'],
     ['What if someone doesn\'t join?','Nobody is forced. Vilo sends a friendly reminder before joining closes, and everyone can still enjoy the reveal in the channel.']],
   end:{h:['Give your people the ','best December yet.']},
-  more:{eyebrow:'Vilo Play',h:['Games that run in ','Slack or the app.'],all:'All games →',items:[['Who’s Who','A daily clue about a colleague','#C6DDFF'],['Secret Office Missions','Small secret missions, one reveal','#FFD3B8'],['Shoutouts','Peer thank-yous tied to your values','#FBE7A1']]},
+  more:{eyebrow:'Vilo Play',h:['Games that run in ','Slack or the app.'],all:'All games →',items:[['Who’s Who','A daily clue about a colleague','#F6CF6B'],['Secret Office Missions','Small secret missions, one reveal','#FFA3D7'],['Step Challenge','Office vs office, one live board','#A6F5B8']]},
   steps:[
     {when:'Day one',t:'One DM. One tap.',d:'Everyone gets a personal invite from Vilo in Slack. Joining takes a second, and nobody downloads anything.',tip:'Vilo sends a friendly nudge to anyone who hasn\'t joined before sign-ups close.',
-     mock:()=>`${vm('10:00',`<b>🎅 Secret Santa is happening!</b><p>One colleague to give to, one gift. The company covers it, you choose it. Nobody knows who has whom until reveal day.</p><p class="mini">Joining closes <b>Mon 7 Dec, 12:00</b></p><div class="btns"><button class="sb" data-act="join">Join</button><button class="sb ghost">Not this time</button></div><div class="mini" data-in>0 colleagues already in</div>`)}`},
+     mock:()=>`${vm('10:00',`<b>Secret Santa is happening! 🎅</b><p>One colleague to give to, one gift. The company covers it, you choose it. Nobody knows who has whom until reveal day.</p><p class="mini">Joining closes <b>Mon 7 Dec, 12:00</b></p><div class="btns"><button class="sb" data-act="join">Join</button></div>`)}`},
     {when:'Right after joining',isNew:1,t:'Three clues about you.',d:'Instead of a gift list, everyone fills in three secret prompts about themselves, like in Who’s Who. Their answers become the clues their person gets about them.',tip:'People learn something new about a colleague, before they even know who it is.',
      mock:()=>`${vm('10:01',`<b>You’re in! 🎉</b><p>Fill in 3 secret prompts about you. We’ll send them, one at a time, as clues to whoever has you.</p>${promptsHTML()}<div class="btns"><button class="sb" data-act="save">Save my clues</button></div>`)}`},
     {when:'Mon 7 Dec · 12:00',t:'Your person arrives.',d:'Joining closes and Vilo draws names across offices and teams. Everyone gets a private DM with one colleague to surprise.',tip:'Only Vilo knows who has whom. Not HR, not managers.',
-     mock:()=>`${vm('12:00',`<b>Your match is here 🎁</b><div class="person"><span class="av"></span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div><p class="mini">Gift <b>before the reveal</b> · <span class="pts">⭐ On time earns 30 Points</span></p>`)}`},
-    {when:'Through the week',t:'Clues drop. Guessing starts.',d:'Every couple of days, a new clue about your Santa lands in your DMs, straight from their own answers. Think you know? Lock in a guess before reveal day.',tip:'This is the part people talk about at lunch.',
-     mock:()=>`${day('Tuesday')+vm('09:30',`<span class="kick">Clue 1 of 3 · about your Santa</span><p>Their hidden talent: juggling three oranges while walking 🍊</p>`)}${day('Thursday')+vm('09:30',`<span class="kick">Clue 2 of 3</span><p>On a free Sunday they’re on a long bike ride, then a full breakfast</p>`)}${vm('Fri 09:30',`<span class="kick">Clue 3 of 3</span><p>As a kid, they wanted to be a pilot</p><p class="mini">Think you know? Lock in a guess before reveal day. A right guess earns 20 Points.</p><div class="shop"><button class="sb pick" data-act="guess">Omer<br><small>Sales · London</small></button><button class="sb pick" data-act="guess">Sam<br><small>R&amp;D · Berlin</small></button><button class="sb pick" data-act="guess">Chris<br><small>Finance · NYC</small></button></div>`)}`},
+     mock:()=>`${vm('12:00',`<b>Your match is here 🎁</b><div class="person"><span class="av">MC</span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div><p class="mini">Gift <b>before the reveal</b> · <span class="pts">⭐ On time earns 30 Points</span></p>`)}`},
+    {when:'Through the week',t:'Clues drop. Guessing starts.',d:'Every couple of days, a new clue about your Santa lands in your DMs, straight from their own answers.',tip:'This is the part people talk about at lunch.',
+     mock:()=>`${vm('Tue 09:30',`<span class="kick">Clue 1 of 3 · about your Santa</span><p>Their hidden talent: juggling three oranges while walking 🍊</p>`)}${vm('Thu 09:30',`<span class="kick">Clue 2 of 3</span><p>On a free Sunday they’re on a long bike ride, then a full breakfast</p>`)}${vm('Fri 09:30',`<span class="kick">Clue 3 of 3</span><p>As a kid, they wanted to be a pilot</p><p class="mini">Think you know? Lock in a guess before reveal day. A right guess earns 20 Points.</p><div class="shop"><button class="sb pick" data-act="guess">Omer<br><small>Sales · London</small></button><button class="sb pick" data-act="guess">Sam<br><small>R&amp;D · Berlin</small></button><button class="sb pick" data-act="guess">Chris<br><small>Finance · NYC</small></button></div>`)}`},
     {when:'Before the reveal',t:'A gift shop inside Slack.',d:'A curated shop, already within the budget your company set. No prices, no receipts, no addresses to chase. The receiver gets a link, unwraps the gift on any device, can swap it, and picks office or home delivery. Their Santa never sees the address.',tip:'Remote people are included from day one. The gift comes to them.',
-     mock:()=>`<div data-shop>${vm('09:00',`<b>Gift picking is open 🎁</b><p>Choose a gift for Maya Cohen before the reveal.</p><div class="shop"><button class="sb pick sel" data-act="item">Pour-over coffee kit</button><button class="sb pick" data-act="item">Desk plant in a ceramic pot</button><button class="sb pick" data-act="item">Calm Evenings candle</button><button class="sb pick" data-act="item">Artisan chocolate box</button></div><p class="mini">Your note, signed “Your Secret Santa”: For slow coffee mornings ☕ Merry Christmas!</p><div class="btns"><button class="sb" data-act="send">Send gift</button></div>`)}</div><div class="hidden" data-sent>${vm('09:06',`<b>Sent ✓</b><p>Pour-over coffee kit is on its way to Maya. She gets it within a few hours and chooses where it’s delivered.</p><p class="mini"><span class="pts">⭐ +30 Points for giving on time</span></p>`)}${vm('11:42',`<p>Your Secret Santa sent you a gift! 🎁 Open it to see what it is and tell us where to send it.</p><div class="btns"><button class="sb" data-act="open">Open your gift</button></div>`)}</div>`},
+     mock:()=>`<div data-shop>${vm('09:00',`<b>Gift picking is open 🎁</b><p>Choose a gift for Maya Cohen before the reveal.</p><div class="shop"><button class="sb pick" data-act="item">Pour-over coffee kit</button><button class="sb pick" data-act="item">Desk plant in a ceramic pot</button><button class="sb pick" data-act="item">Calm Evenings candle</button><button class="sb pick" data-act="item">Artisan chocolate box</button></div><div class="btns"><button class="sb" data-act="send">Send gift</button></div>`)}</div><div class="hidden" data-sent>${vm('09:06',`<b>Sent ✓</b><p>Pour-over coffee kit is on its way to Maya. She gets it within a few hours and chooses where it’s delivered.</p>`)}${vm('11:42',`<p>Your Secret Santa sent you a gift! 🎁 Open it to see what it is and tell us where to send it.</p><div class="btns"><button class="sb" data-act="open">Open your gift</button></div>`)}</div>`},
     {when:'Reveal day',t:'The reveal.',d:'Every Santa is revealed at the same moment. Guesses are scored, thank-yous fly, and the channel gets a season wrap.',tip:'Points from giving on time and guessing right go to the Vilo leaderboard.',
-     mock:()=>`${vm('17:00',`<b>🎄 Reveal time! Your Secret Santa was…</b><div class="person"><span class="av"></span><div><b>Omer Katz</b><small>Sales · London · the orange juggler 🍊</small></div></div><p class="mini">You didn’t lock in a guess this time. 71 people did.</p><div class="btns"><button class="sb" data-act="thanks">Say thank you 💌</button></div>`)}${vm('17:02',`<p>And Maya just found out it was you. She says:</p><p><b>The coffee kit is perfect ☕ Thank you, Daniel!</b></p>`)}${vm('17:10',`<b>That’s a wrap, Santas 🎅</b>`)}`}
+     mock:()=>`${vm('17:00',`<b>Reveal time! Your Secret Santa was… 🎄</b><div class="person"><span class="av">OK</span><div><b>Omer Katz</b><small>Sales · London · the orange juggler 🍊</small></div></div><p class="mini">You didn’t lock in a guess this time. 71 people did.</p><div class="btns"><button class="sb" data-act="thanks">Say thank you 💌</button></div>`)}${vm('17:10',`<b>That’s a wrap, Santas 🎅</b>`)}`}
   ]};
 /* ============ helpers ============ */
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const day=t=>`<div class="dayd">${t}</div>`;
-function vm(time,html){return `<div class="m"><span class="vav"><i></i></span><div><div class="nm">Vilo<span class="appt">APP</span><em>${time}</em></div>${html}</div></div>`}
+function ico(n){return `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-${n}"/></svg>`}
+function vm(time,html){return `<div class="m"><span class="vav"><i></i></span><div><div class="nm"><span class="vav sm" role="img" aria-label="Vilo"><i></i></span><em>${time}</em></div>${html}</div></div>`}
 const mk=(a,b)=>`${a}<span class="mk">${b}</span>`;
-const PROMPTS=['My hidden talent is…','On a free Sunday you’ll find me…','The last thing I googled…','My karaoke song is…','I could eat ___ every day','As a kid I wanted to be…'];
-const ANS=['Solving a Rubik’s cube in under two minutes','At the Carmel market with an iced coffee','How long a lemon tree takes to give fruit'];
-function promptsHTML(){return `<div class="prs">${[0,1,2].map(i=>`<div class="pr"><span class="pn">${i+1}</span><div class="prb"><button class="psel" data-act="popen"><span>${PROMPTS[i]}</span><i>⌄</i></button><div class="pans">${ANS[i]}</div><ul class="pmenu hidden">${PROMPTS.map(p=>`<li><button data-act="ppick">${p}</button></li>`).join('')}</ul></div></div>`).join('')}</div>`}
-function mockWin(i){return `<div class="slack"><div class="hd"><span>Direct message · Vilo</span><span>${GAME.steps[i].when}</span></div><div class="bd">${GAME.steps[i].mock()}</div></div>`}
-function stepHTML(s,i,on){return `<div class="step${on?' on':''}" data-i="${i}" tabindex="0" role="button" aria-label="Step ${i+1}: ${s.t}"><div class="t"><span class="n">0${i+1}</span>${s.t}${s.isNew?'<span class="newtag">New</span>':''}</div><div class="d"><div class="when">${s.when}</div>${s.d}<div class="tip">${s.tip}</div></div></div>`}
+/* three fixed questions; the person only chooses an answer for each (every answer here already appears in the demo copy) */
+const PROMPTS=[
+  {q:'My hidden talent is…',a:['Solving a Rubik’s cube in under two minutes','Juggling three oranges while walking']},
+  {q:'On a free Sunday you’ll find me…',a:['At the Carmel market with an iced coffee','On a long bike ride, then a full breakfast']},
+  {q:'As a kid I wanted to be…',a:['A lighthouse keeper','A pilot']}
+];
+function promptsHTML(){return `<div class="prs">${PROMPTS.map((p,i)=>`<div class="pr"><span class="pn">${i+1}</span><div class="prb"><div class="pq">${p.q}</div><button class="psel pa" data-act="popen"><span>${p.a[0]}</span><i>⌄</i></button><ul class="pmenu hidden">${p.a.map(x=>`<li><button data-act="ppick">${x}</button></li>`).join('')}</ul></div></div>`).join('')}</div>`}
+function mockWin(i){return `<div class="slack"><div class="hd"><span>${GAME.steps[i].ch||'Direct message · Vilo'}</span><span>${GAME.steps[i].when}</span></div><div class="bd">${GAME.steps[i].mock()}</div></div>`}
+function stepHTML(s,i,on){return `<div class="step${on?' on':''}" data-i="${i}" tabindex="0" role="button" aria-label="Step ${i+1}: ${s.t}"><div class="t"><span class="n">0${i+1}</span>${s.t}${s.isNew?'<span class="newtag">New</span>':''}</div>${(s.when||s.d||s.tip)?`<div class="d"><div class="when">${s.when}</div>${s.d}<div class="tip">${s.tip}</div></div>`:''}</div>`}
 /* ============ render ============ */
 function render(){
   const G=GAME,c=G.color,r=document.documentElement.style;
@@ -568,40 +983,40 @@ function render(){
       <span class="tag"><i></i>Vilo ${G.name}</span>
       <h1>${G.hero.h1a}<br><span class="mk">${G.hero.h1b}</span></h1>
       <p class="sub">${G.hero.sub}</p>
-      <p class="where">${G.hero.where}</p>
+      
       <div class="cta"><button class="btn pri" data-open>${G.cta.primary}</button><a class="btn sec2" href="${G.cta.call}" target="_blank" rel="noopener">${G.cta.secondary}</a></div>
       <p class="micro">${G.cta.micro}</p>
     </div>
     <div class="scene">
-      <div class="sD"><div class="chat"><div class="ch-hd"><span class="vav"><i></i></span><div><b>Vilo <span class="appt">APP</span></b><small>#secret-santa</small></div></div><div class="ch-log" id="hchat"></div><div class="ch-act" id="hact"></div></div></div><div class="sA"><div class="ph"><span><b>Illustration</b>${G.hero.art}</span></div>${dmCard()}</div>
+      <img class="hero-art" src="art/secret_santa_tree_anim.svg" alt="">
+      <div class="hero-msg" aria-hidden="true"><span class="vav sm"><i></i></span><div><small>#secret-santa</small><p>Secret Santa is happening! 🎅</p></div></div>
+      <div class="sD"><div class="chat"><div class="ch-hd"><span class="vav"><i></i></span><div><b>Vilo </b><small>#secret-santa</small></div></div><div class="ch-log" id="hchat"></div><div class="ch-act" id="hact"></div></div></div><div class="sA"><div class="ph"><span><b>Illustration</b>${G.hero.art}</span></div>${dmCard()}</div>
       <div class="sB"><div class="ph"><span><b>Illustration</b>Gift object</span></div>${dmCard()}</div>
       <div class="sC"><div class="slack" style="margin-top:20px"><div class="hd"><span>Direct message · Vilo</span><span>now</span></div><div class="bd" id="typed"></div></div></div>
     </div>
   </div></section>
   <section class="logos"><div class="wrap"><div class="eyebrow">${G.logos.title}</div><div class="row">${G.logos.items.map(x=>`<span>${x}</span>`).join('')}</div></div></section>
   <section class="sec" id="game"><div class="wrap center rv"><div class="eyebrow">${G.demo.eyebrow}</div><h2>${mk(G.demo.h[0],G.demo.h[1])}</h2><p class="lead">${G.demo.lead}</p></div>
-    <div class="wrap"><div class="stage" id="stage" style="--n:${G.steps.length}"><div class="stage-in">
+    <div class="wrap"><div class="stage rv" id="stage" style="--n:${G.steps.length}"><div class="stage-in">
       <div class="steps" id="steps">${G.steps.map((s,i)=>stepHTML(s,i,i===0)).join('')}</div>
       <div class="pane"><span class="ph2">Slack mockup</span><div id="mockHost">${mockWin(0)}</div></div>
     </div></div>
     <div class="stage-m">${G.steps.map((s,i)=>stepHTML(s,i,true)+`<div class="pane">${mockWin(i)}</div>`).join('')}</div></div>
   </section>
-  <section class="sec hr" id="hr"><div class="wrap center"><div class="rv"><h2>${mk(G.hrp.h[0],G.hrp.h[1])}</h2><p class="lead">${G.hrp.lead}</p></div>
-    <div class="panel rv"><div class="kpis">${G.hrp.kpis.map(k=>`<div class="kpi"><div class="v count" data-to="${k[1]}">0</div><div class="l">${k[0]}</div></div>`).join('')}</div><p class="ex">Example data</p></div>
-    <div class="ctarow"><button class="btn pri" data-open>${G.cta.primary}</button><a class="btn sec2" href="${G.cta.call}" target="_blank" rel="noopener">${G.cta.secondary}</a></div></div></section>
   <section class="sec"><div class="wrap"><div class="rv"><div class="eyebrow">${G.setup.eyebrow}</div><h2>${mk(G.setup.h[0],G.setup.h[1])}</h2></div>
-    <div class="cards3">${G.setup.cards.map(k=>`<div class="card rv"><div class="ph"><span><b>Illustration</b>${k.art}</span></div><h3>${k.t}</h3><p>${k.p}</p>${k.chips?`<div class="chips">${k.chips.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:''}${k.slider?`<div class="slider"><output id="bo">$50 per gift</output><input type="range" id="br" min="20" max="150" step="5" value="50" aria-label="Budget per gift"><div class="rng"><span>$20</span><span>$150</span></div><div class="chips" id="bg"></div></div>`:''}</div>`).join('')}</div></div></section>
-  <section class="sec" style="padding-top:20px"><div class="wrap"><div class="rv"><div class="eyebrow">${G.timeline.eyebrow}</div><h2>${mk(G.timeline.h[0],G.timeline.h[1])}</h2></div>
-    <div class="tl rv">${G.timeline.items.map(x=>`<div>${x[0]}<small>${x[1]}</small></div>`).join('')}</div></div></section>
+    <div class="cards3">${G.setup.cards.map((k,i)=>`<div class="card rv"><div class="cardic">${ico(['chat','gift','house'][i])}</div><h3>${k.t}</h3><p>${k.p}</p>${k.chips?`<div class="chips">${k.chips.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:''}${k.slider?`<div class="slider"><output id="bo">$50 per gift</output><input type="range" id="br" min="20" max="150" step="5" value="50" aria-label="Budget per gift"><div class="rng"><span>$20</span><span>$150</span></div><div class="chips" id="bg"></div></div>`:''}</div>`).join('')}</div></div></section>
+  <section class="sec hr" id="hr"><div class="wrap center"><div class="rv"><h2>${mk(G.hrp.h[0],G.hrp.h[1])}</h2><p class="lead">${G.hrp.lead}</p></div>
+    <div class="panel rv"><div class="kpis">${G.hrp.kpis.map(k=>`<div class="kpi"><div class="v count" data-to="${k[1]}">0</div><div class="l">${k[0]}</div></div>`).join('')}</div></div>
+    <div class="ctarow"><button class="btn pri" data-open>${G.cta.primary}</button><a class="btn sec2" href="${G.cta.call}" target="_blank" rel="noopener">${G.cta.secondary}</a></div></div></section>
   <section class="sec" id="pricing"><div class="wrap center"><div class="rv"><h2>${mk(G.pricing.h[0],G.pricing.h[1])}</h2><p class="lead">${G.pricing.lead}</p></div>
-    <div class="tiers">${G.pricing.tiers.map((t,i)=>`<button class="tier rv${i===0?' free':''}" data-open data-tier="${i}"><small>${t[0]}</small><b>${t[1]}</b><span>${i<5?'+ gifts':'&nbsp;'}</span></button>`).join('')}</div>
-    <p class="pnote">${G.pricing.note}</p></div></section>
+    <div class="tiers">${G.pricing.tiers.map((t,i)=>i<5?`<div class="tier flat rv${i===0?' free':''}"><small>${t[0]}</small><div><b>${t[1]}</b><span>+ gifts</span></div></div>`:`<button class="tier cta rv" data-open data-tier="${i}"><small>${t[0]}</small><div><b>${t[1]}</b></div></button>`).join('')}</div>
+    <p class="pnote">${G.pricing.note}</p><div class="ctarow"><button class="btn pri" data-open>${G.cta.primary}</button></div></div></section>
   <section class="sec" style="padding-top:20px"><div class="wrap"><div class="quotes">${G.quotes.map(q=>`<figure class="q rv"><i>“</i><p>${q[0]}</p><small>${q[1]}</small></figure>`).join('')}</div></div></section>
   <section class="sec"><div class="wrap faq"><div class="rv"><div class="eyebrow">Questions</div><h2>${mk('Before ','you ask.')}</h2></div><div>${G.faq.map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('')}</div></div></section>
-  <section class="endcta"><span class="tagline" id="seasonTag"></span><h2>${G.end.h[0]}<span class="mk" style="--g:rgba(255,255,255,.22)">${G.end.h[1]}</span></h2>
+  <section class="endcta"><span class="tagline" id="seasonTag"></span><h2>${G.end.h[0]}<span class="mk">${G.end.h[1]}</span></h2>
     <div class="ctarow" style="margin-top:28px"><button class="btn pri" data-open>${G.cta.primary}</button><a class="btn sec2" href="${G.cta.call}" target="_blank" rel="noopener">${G.cta.secondary}</a></div><p class="micro">${G.cta.micro}</p></section>
-  <section class="sec"><div class="wrap"><div class="head2 rv"><div><div class="eyebrow">${G.more.eyebrow}</div><h2>${mk(G.more.h[0],G.more.h[1])}</h2></div><a class="btn sec2" href="#">${G.more.all}</a></div>
-    <div class="games">${G.more.items.map(x=>`<div class="gc rv"><div class="in"><div class="ph"><span><b>Illustration</b>${x[0]}</span></div><h3>${x[0]}</h3><p>${x[1]}</p></div><div class="drawer"><a class="dbtn" href="#"><span>Play</span><i>→</i></a></div></div>`).join('')}</div></div></section>
+  <section class="sec"><div class="wrap"><div class="head2 rv"><div><div class="eyebrow">${G.more.eyebrow}</div><h2>${mk(G.more.h[0],G.more.h[1])}</h2></div></div>
+    <div class="games">${G.more.items.map(x=>`<div class="gc rv"><div class="in">${x[0]==='Secret Office Missions'?'<div class="gc-art"><svg class="mo-art" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="700" height="720" viewBox="300 95 700 775"><defs><linearGradient id="mo-pinkg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD9EE"/><stop offset="1" stop-color="#FFA3D7"/></linearGradient><linearGradient id="mo-cardg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C5D0FF"/><stop offset="1" stop-color="#8D98EC"/></linearGradient><pattern id="mo-air" width="64" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">  <rect width="64" height="64" fill="#FDFFF3"/>  <rect x="0" width="20" height="64" fill="#8D98EC"/><rect x="32" width="20" height="64" fill="#E0509B"/></pattern><pattern id="mo-air2" width="64" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">  <rect width="64" height="64" fill="url(#mo-pinkg)"/>  <rect x="0" width="20" height="64" fill="#8D98EC"/><rect x="32" width="20" height="64" fill="#E0509B"/></pattern></defs><g transform="translate(330 400) rotate(-8)"><g class="mo-flap-back"><path d="M0,0 L580,0 L510,-176 C500,-194 480,-200 460,-200 L130,-200 C110,-200 92,-194 82,-176 Z" transform="translate(12 12)" fill="#E0509B" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,0 L580,0 L510,-176 C500,-194 480,-200 460,-200 L130,-200 C110,-200 92,-194 82,-176 Z" fill="#FFD9EE" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g><g class="mo-letter"><g transform="translate(55 45)"><rect x="12" y="12" width="470" height="330" rx="22" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect width="470" height="330" rx="22" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="22" y="22" width="426" height="286" rx="12" fill="none" stroke="#E0509B" stroke-width="4" stroke-dasharray="14 12" stroke-linecap="round"/><path d="M203.0,133.0 C203.0,89.0 267.0,89.0 267.0,133.0 C267.0,161.0 235.0,167.0 235.0,191.0" fill="none" stroke="#1A000A" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><path d="M203.0,133.0 C203.0,89.0 267.0,89.0 267.0,133.0 C267.0,161.0 235.0,167.0 235.0,191.0" fill="none" stroke="#E0509B" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/><circle cx="235.0" cy="229.0" r="14" fill="#EBFF00" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g></g><rect x="12" y="12" width="580" height="420" rx="8" fill="#E0509B" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect width="580" height="420" rx="8" fill="url(#mo-pinkg)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><clipPath id="mo-fe"><rect width="580" height="420" rx="8"/></clipPath><g clip-path="url(#mo-fe)"><rect x="0" y="392" width="580" height="28" fill="url(#mo-air2)"/><rect x="0" y="0" width="28" height="420" fill="url(#mo-air2)"/><rect x="552" y="0" width="28" height="420" fill="url(#mo-air2)"/></g><rect width="580" height="420" rx="8" fill="none" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><g class="mo-flap-front"><path d="M0,0 L580,0 L290,215 Z" fill="#FFD9EE" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g></g></svg></div>':x[0]==='Step Challenge'?'<div class="gc-art"><svg class="sc-art" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1300" height="800" viewBox="200 130 1300 800"><defs><linearGradient id="sc-heel" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6FBDD" /><stop offset="0.45" stop-color="#A6F5B8" /><stop offset="1" stop-color="#3FBF6A" /></linearGradient><linearGradient id="sc-knit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDFFF3" /><stop offset="1" stop-color="#D6FBDD" /></linearGradient></defs><g class="shoe shoe-a"><g transform="translate(100 70) scale(0.64) rotate(14 810 520)"><g transform="translate(13 13)"><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /></g><path d="M902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 L1308,262 C1286,220 1224,206 1174,242 C1084,314 964,332 876,292 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M778,278 C784,252 826,244 846,262 L902,322 L828,372 L792,334 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M786,282 C790,262 822,256 836,270 L852,292 C832,284 808,288 794,302 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="url(#sc-knit)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M930,420 C795.0,440 690.0,480 630,520 C696.0,496 804.0,460 930,442 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M950,470 C828.5,490 734.0,530 680,570 C739.4,546 836.6,510 950,492 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M960,522 C852.0,542 768.0,582 720,622 C772.8,598 859.2,562 960,544 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M955,572 C860.5,592 787.0,632 745,672 C791.2,648 866.8,612 955,594 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1030,346 C1110,338 1170,306 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C1010,560 990,470 1030,346 Z" fill="url(#sc-heel)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M1236.0,262.0 C1252,360 1240,470 1206,582.0 L1226,578.0 C1262,466 1272,356 1258.0,256.0 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1249.6,268.8 C1286,360 1274,470 1240,575.2 L1260,571.2 C1296,466 1306,356 1271.6,262.8 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1262,252 C1270,214 1298,196 1322,206 C1338,214 1340,240 1334,292 C1316,262 1290,250 1262,252 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M910,348 C1000,386 1120,366 1206,300" fill="none" stroke="#1A000A" stroke-width="3.15" stroke-dasharray="2 14" stroke-linecap="round" /><path d="M430,512 C540,480 650,430 760,354 L800,330 L828,372 C760,418 650,488 470,560 C440,548 428,530 430,512 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><ellipse cx="486" cy="524" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="560" cy="494" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="634" cy="458" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="706" cy="414" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="774" cy="368" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M520,742 C700,730 900,690 1060,650 C1160,626 1230,632 1262,664 C1180,654 1100,668 1010,694 C860,738 700,760 560,762 C530,762 515,752 520,742 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M268,782 C280,814 304,832 345,834 L1255,834 C1320,834 1360,806 1370,770 C1300,790 1240,796 1180,796 L420,796 C340,796 300,792 268,782 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><rect x="1150" y="690" width="96" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1168,708 L1220,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><rect x="1268" y="690" width="70" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1286,708 L1312,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><ellipse cx="778" cy="344" rx="13" ry="11" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" /><rect x="736" y="450" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(14 744 454)" /><rect x="792" y="460" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(-8 800 464)" /></g></g><g class="shoe shoe-b"><g transform="translate(500 340) scale(0.64) rotate(-20 810 520)"><g transform="translate(13 13)"><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /></g><path d="M902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 L1308,262 C1286,220 1224,206 1174,242 C1084,314 964,332 876,292 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M778,278 C784,252 826,244 846,262 L902,322 L828,372 L792,334 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M786,282 C790,262 822,256 836,270 L852,292 C832,284 808,288 794,302 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="url(#sc-knit)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M930,420 C795.0,440 690.0,480 630,520 C696.0,496 804.0,460 930,442 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M950,470 C828.5,490 734.0,530 680,570 C739.4,546 836.6,510 950,492 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M960,522 C852.0,542 768.0,582 720,622 C772.8,598 859.2,562 960,544 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M955,572 C860.5,592 787.0,632 745,672 C791.2,648 866.8,612 955,594 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1030,346 C1110,338 1170,306 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C1010,560 990,470 1030,346 Z" fill="url(#sc-heel)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M1236.0,262.0 C1252,360 1240,470 1206,582.0 L1226,578.0 C1262,466 1272,356 1258.0,256.0 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1249.6,268.8 C1286,360 1274,470 1240,575.2 L1260,571.2 C1296,466 1306,356 1271.6,262.8 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1262,252 C1270,214 1298,196 1322,206 C1338,214 1340,240 1334,292 C1316,262 1290,250 1262,252 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M910,348 C1000,386 1120,366 1206,300" fill="none" stroke="#1A000A" stroke-width="3.15" stroke-dasharray="2 14" stroke-linecap="round" /><path d="M430,512 C540,480 650,430 760,354 L800,330 L828,372 C760,418 650,488 470,560 C440,548 428,530 430,512 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><ellipse cx="486" cy="524" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="560" cy="494" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="634" cy="458" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="706" cy="414" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="774" cy="368" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M520,742 C700,730 900,690 1060,650 C1160,626 1230,632 1262,664 C1180,654 1100,668 1010,694 C860,738 700,760 560,762 C530,762 515,752 520,742 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M268,782 C280,814 304,832 345,834 L1255,834 C1320,834 1360,806 1370,770 C1300,790 1240,796 1180,796 L420,796 C340,796 300,792 268,782 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><rect x="1150" y="690" width="96" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1168,708 L1220,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><rect x="1268" y="690" width="70" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1286,708 L1312,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><ellipse cx="778" cy="344" rx="13" ry="11" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" /><rect x="736" y="450" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(14 744 454)" /><rect x="792" y="460" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(-8 800 464)" /></g></g></svg></div>':x[0]==='Who’s Who'?'<div class="gc-art"><svg class="ww-art" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="260 110 1000 920"><defs><linearGradient id="ww-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEAB8"/><stop offset="0.5" stop-color="#F6CF6B"/><stop offset="1" stop-color="#C9971A"/></linearGradient><linearGradient id="ww-handle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAB8"/><stop offset="0.45" stop-color="#F6CF6B"/><stop offset="1" stop-color="#C9971A"/></linearGradient></defs><g transform="translate(-10 -15)"><g class="rows"><g transform="rotate(-6 800 560)"><rect x="330" y="244" width="620" height="68" rx="34" fill="#B79BFF" stroke="none"/><rect x="280" y="396" width="860" height="68" rx="34" fill="#7B55E8" stroke="none"/><rect x="420" y="548" width="500" height="68" rx="34" fill="#DCCDFF" stroke="none"/></g></g><g class="mag"><g transform="translate(712 462) rotate(45)"><rect x="288" y="-26" width="92" height="52" fill="#8D98EC" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="370" y="-44" width="360" height="88" rx="40" fill="#C9971A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(700 450) rotate(45)"><rect x="288" y="-26" width="92" height="52" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><line x1="310" y1="-26" x2="310" y2="26" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><line x1="328" y1="-26" x2="328" y2="26" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><rect x="370" y="-44" width="360" height="88" rx="40" fill="url(#ww-handle)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M410,-24 L670,-24" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" fill="none"/><path d="M414,-14 L660,-14" stroke="#FDFFF3" stroke-width="6" stroke-linecap="round" fill="none"/></g><path d="M400,450 a300,300 0 1,0 600,0 a300,300 0 1,0 -600,0 Z M445,450 a255,255 0 1,1 510,0 a255,255 0 1,1 -510,0 Z" transform="translate(13 13)" fill="#C9971A" fill-rule="evenodd" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><clipPath id="ww-lens"><circle cx="700" cy="450" r="255"/></clipPath><g clip-path="url(#ww-lens)"><path d="M481.05161935688335,450 " fill="none" stroke="none"/><path d="M445,450 A255,255 0 0,0 700,705 A318.75,318.75 0 0,1 445,450 Z" transform="rotate(10 700 450)" fill="none" stroke="none"/><path d="M707.7,229.1 A221,221 0 0,1 874.2,313.9" fill="none" stroke="#1A000A" stroke-width="5" stroke-linecap="round"/><path d="M895.1,346.2 A221,221 0 0,1 907.7,374.4" fill="none" stroke="#1A000A" stroke-width="5" stroke-linecap="round"/></g><path d="M400,450 a300,300 0 1,0 600,0 a300,300 0 1,0 -600,0 Z M445,450 a255,255 0 1,1 510,0 a255,255 0 1,1 -510,0 Z" fill="url(#ww-rim)" fill-rule="evenodd" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M459.7,311.2 A277.5,277.5 0 0,1 605.1,189.2" fill="none" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round"/></g></g></svg></div>':`<div class="ph"><span><b>Illustration</b>${x[0]}</span></div>`}<h3>${x[0]}</h3><p>${x[1]}</p></div><div class="drawer"><a class="dbtn" href="#"><span>Play</span><i>→</i></a></div></div>`).join('')}</div></div></section>
   <footer><div class="wrap"><div class="fcols"><div><a class="logo" href="#"><span class="ring"></span>vilo</a><p style="margin-top:14px;color:var(--ink2);max-width:240px">Every moment, made with your people.</p><p style="margin-top:12px;font-size:13px"><a href="#">SOC 2 Type II readiness</a></p></div>
     <div><h4>Product</h4><ul><li><a href="#">Experience Designer</a></li><li><a href="#">Vilo Play</a></li><li><a href="#">Journeys</a></li><li><a href="#">Communities</a></li><li><a href="#">Employee App</a></li><li><a href="#">Wellbeing Insights</a></li><li><a href="#">For leaders</a></li><li><a href="#">Vilo Moments</a></li></ul></div>
     <div><h4>Vilo Play</h4><ul><li><a href="#">Secret Santa</a></li><li><a href="#">Step Challenge</a></li><li><a href="#">Who’s Who</a></li><li><a href="#">Shoutouts</a></li><li><a href="#">Recognition</a></li><li><a href="#">Secret Office Missions</a></li><li><a href="#">Truth or Bluff</a></li><li><a href="#">Coffee Roulette</a></li></ul></div>
@@ -611,14 +1026,14 @@ function render(){
   $('#seasonTag').textContent=G.season[season].tag;
   document.body.classList.remove('no-js');
 }
-function dmCard(){const h=GAME.hero.card;return `<div class="glassc dm-card float"><div style="display:flex;gap:10px;align-items:center"><span class="vav"><i></i></span><div><b>Vilo</b><span class="appt">APP</span><small>12:00</small></div></div><p style="margin-top:8px;font-weight:600">${h[0]}</p><div class="row"><span class="av"></span><div><b>${h[1]}</b><small>${h[2]}</small></div></div></div>`}
+function dmCard(){const h=GAME.hero.card;return `<div class="glassc dm-card float"><div style="display:flex;gap:10px;align-items:center"><span class="vav"><i></i></span><div><b>Vilo</b><small>12:00</small></div></div><p style="margin-top:8px;font-weight:600">${h[0]}</p><div class="row"><span class="av"></span><div><b>${h[1]}</b><small>${h[2]}</small></div></div></div>`}
 render();
 /* ============ interactions ============ */
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-function confetti(host,x,y){if(reduce)return;const cols=['#F9C9DA','#CFC6FF','#BDEBD8','#FBE7A1','#FFD3B8','#C6DDFF'];const box=host.getBoundingClientRect();
+function confetti(host,x,y){if(reduce)return;const cols=['#FF8A73','#EBFF00','#C5D0FF','#8D98EC','#FFC4B8','#FDFFF3'];const box=host.getBoundingClientRect();
   for(let i=0;i<16;i++){const s=document.createElement('span');s.className='cf';s.style.background=cols[i%6];s.style.left=(x-box.left)+'px';s.style.top=(y-box.top)+'px';const a=Math.random()*Math.PI*2,d=50+Math.random()*70;s.style.setProperty('--x',Math.cos(a)*d+'px');s.style.setProperty('--y',Math.sin(a)*d-20+'px');s.style.setProperty('--r',(Math.random()*540-270)+'deg');host.style.position=host.style.position||'relative';host.appendChild(s);setTimeout(()=>s.remove(),1200)}}
 /* stage */
-const stage=$('#stage'),steps=$$('#steps .step'),host=$('#mockHost');let cur=0;
+const stage=$('#stage'),host=$('#mockHost');let cur=0,steps=$$('#steps .step');
 function setStep(i,fromClick){if(i===cur&&!fromClick)return;cur=i;steps.forEach((s,k)=>s.classList.toggle('on',k===i));host.innerHTML=mockWin(i);}
 /* no scroll-pinning: the page scrolls normally. Steps advance on their own while visible, and stop for good once the viewer picks one. */
 let auto=!reduce,timer=null,seen=false;
@@ -627,25 +1042,103 @@ const stop=()=>{clearInterval(timer);timer=null};
 new IntersectionObserver(es=>es.forEach(en=>{seen=en.isIntersecting;seen?play():stop()}),{threshold:.35}).observe(stage);
 $('#steps').addEventListener('click',e=>{const s=e.target.closest('.step');if(!s)return;auto=false;stop();setStep(+s.dataset.i,true)});
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('step')){e.preventDefault();e.target.click()}});
+/* ============ game switch: hero + demo section change per game (text from vilohub.com game pages) ============ */
+const um=(n,t,h)=>`<div class="m"><span class="vav"><i></i></span><div><div class="nm"><b>${n}</b><em>${t}</em></div>${h}</div></div>`;
+const brow=(i,n,v)=>`<div class="brow"><span>${i}</span><b>${n}</b><em>${v}</em></div>`;
+const FOOT='Free up to 25 people · One price per game, no per-seat subscription · Live in your Slack in a few days';
+const SANTA={tag:'Vilo Secret Santa',color:GAME.color,name:GAME.name,hero:GAME.hero,demo:GAME.demo,steps:GAME.steps,cta:GAME.cta,art:'art/secret_santa_tree_anim.svg',msg:['#secret-santa','Secret Santa is happening! 🎅']};
+const GAMES={
+ santa:SANTA,
+ whos:{tag:'Who’s Who · Employee trivia',color:{g:'#F6CF6B',gs:'#C9971A',soft:'#FBEAB8'},name:'Who’s Who',art:'art/who_s_who.svg',msg:['#whos-who','Who’s Who starts Monday 🎲'],
+  hero:{h1a:'Get to know everyone,',h1b:'one clue at a time.',sub:'A daily clue about a colleague, right in Slack or your app. People guess, laugh, and the new person stops being new. Pick a theme, Vilo runs the rest.'},
+  cta:{primary:'Play now',secondary:'Try a theme',micro:FOOT,call:'#game'},
+  demo:{eyebrow:'How it works',h:['Five minutes to set up. ','Runs all year.'],lead:'Scroll to watch a round in Slack. Vilo does the work, your people play.'},
+  steps:[
+   {ch:'# whos-who',when:'',d:'',tip:'',t:'People answer three light questions',mock:()=>vm('','<b>Who’s Who starts Monday 🎲</b><p>Three light questions, under a minute.</p>')+um('Noa','','<p>Done. Fair warning, my fun fact is weird 😅</p>')},
+   {ch:'# whos-who',when:'',d:'',tip:'',t:'Vilo posts a daily clue',mock:()=>vm('','<b>Fun fact of the day 😎</b><p>Guess who is this:</p><p><b>Lived in four countries and still can’t whistle.</b></p><div class="chips"><span class="chip">Noa</span><span class="chip">Sam</span><span class="chip">Maya</span><span class="chip">Omer</span></div><p class="mini">32 guesses</p>')},
+   {ch:'# whos-who',when:'',d:'',tip:'',t:'Everyone guesses',mock:()=>um('Jordan','','<p>Sam. 100% Sam. The whistling gives it away.</p>')+um('Maya','','<p>The Berlin office is voting Noa 🤔</p>')},
+   {ch:'# whos-who',when:'',d:'',tip:'',t:'The reveal',mock:()=>vm('','<b>It was @Sam Cohen 🎉</b><p>🥇 Jordan guessed first · Engineering, Berlin</p><p>✓ 19 of 32 got it right · +10 points</p>')+vm('','<p>Tomorrow’s clue drops at 9:00 🕘</p>')}]},
+ missions:{tag:'Game · Secret Office Missions',color:{g:'#FFA3D7',gs:'#E0509B',soft:'#FFD9EE'},name:'Secret Office Missions',art:'art/secret_office_missions_1_anim.svg',msg:['#office-missions','Mission week is set 🕵️'],
+  hero:{h1a:'A secret mission',h1b:'every morning.',sub:'Every morning each person gets a tiny, sealed mission in Slack. Nobody knows who has which one, until the happy hour reveal.'},
+  cta:{primary:'Play now',secondary:'See it in Slack',micro:FOOT,call:'#game'},
+  demo:{eyebrow:'How it works',h:['Four small steps, ','run by Vilo.'],lead:'Scroll to watch a round in Slack. Vilo does the work, your people play.'},
+  steps:[
+   {ch:'# office-missions',when:'',d:'',tip:'',t:'Pick the week',mock:()=>vm('','<b>Mission week is set 🕵️</b><p>Five missions, one reveal at Thursday’s happy hour.</p>')},
+   {ch:'# office-missions',when:'',d:'',tip:'',t:'Vilo writes the missions',mock:()=>vm('','<b>Mission 1 🕵️</b><p>Leave a tiny note on a colleague’s desk without being seen.</p>')},
+   {ch:'# office-missions',when:'',d:'',tip:'',t:'Missions go out daily',mock:()=>um('Omer','','<p>Mission done. Nobody saw a thing 🕵️</p>')+um('Noa','','<p>Who left a note on my keyboard?!</p>')},
+   {ch:'# office-missions',when:'',d:'',tip:'',t:'Reveal and celebrate',mock:()=>vm('','<span class="kick">Mission of the week</span><div class="person"><span class="av">O</span><div><b>Omer</b><small>Ops · Tel Aviv</small></div></div><p class="mini">✓ 23 votes</p>')+vm('','<p>See you at the happy hour 🍹</p>')}]},
+ steps:{tag:'Step Challenge',color:{g:'#A6F5B8',gs:'#3FBF6A',soft:'#D6FBDD'},name:'Step Challenge',art:'art/step_challenge.svg',msg:['#step-challenge','Step Challenge starts Monday 👟'],
+  hero:{h1a:'Every team,',h1b:'one finish line.',sub:'Fully modular: office vs office, team vs team, or everyone together. Steps sync from phones and watches into one live board in Slack, from the start date you set, and Vilo runs it start to finish.'},
+  cta:{primary:'Play now',secondary:'See it in Slack',micro:'Free up to 10 people · One price for the whole month · You set the start date',call:'#game'},
+  demo:{eyebrow:'How it works',h:['Four steps to ','the finale.'],lead:'Scroll to watch a round in Slack. Vilo does the work, your people play.'},
+  steps:[
+   {ch:'# step-challenge',when:'',d:'',tip:'',t:'Connect',mock:()=>vm('','<b>Step Challenge starts Monday 👟</b><p>Tap once to link Apple Health, Google Fit or your watch.</p>')+um('Omer','','<p>Linked. Toronto is coming for you, London 😤</p>')},
+   {ch:'# step-challenge',when:'',d:'',tip:'',t:'Line up',mock:()=>vm('','<p>Teams are set, fair by size: Toronto · New York · London · Berlin</p>')},
+   {ch:'# step-challenge',when:'',d:'',tip:'',t:'Walk',mock:()=>vm('','<span class="kick">Week 2 · the board this morning</span><div class="board">'+brow(1,'New York','98.2k')+brow(2,'Toronto','96.1k')+brow(3,'London','77.3k')+brow(4,'Berlin','65.1k')+'</div>')+um('Noa','','<p>Lunch walk done 🚶 +3,200 for Toronto</p>')},
+   {ch:'# step-challenge',when:'',d:'',tip:'',t:'Celebrate',mock:()=>vm('','<span class="kick">Final board · winners</span><p><b>Toronto 🏆</b></p><p class="mini">412k steps in four weeks</p>')+vm('','<p>Finale at 16:00 in every office. Photos in the thread 📸</p>')}]}
+};
+const SLUG={'Who’s Who':'whos','Secret Office Missions':'missions','Step Challenge':'steps'};
+let curGame='santa';
+function switchGame(id,opts={}){
+  const g=GAMES[id];if(!g)return;curGame=id;
+  Object.assign(GAME,{color:g.color,name:g.name,hero:g.hero,demo:g.demo,steps:g.steps,cta:g.cta});
+  const rs=document.documentElement.style;rs.setProperty('--g',g.color.g);rs.setProperty('--gs',g.color.gs);rs.setProperty('--g-soft',g.color.soft);
+  const hero=$('.hero');hero.dataset.game=id;document.body.dataset.game=id;
+  const snowEl=$('#snowp');if(snowEl)snowEl.style.display=id==='santa'?'':'none';
+  $('.hero .tag').innerHTML='<i></i>'+g.tag;
+  $('.hero h1').innerHTML=`${g.hero.h1a}<br><span class="mk">${g.hero.h1b}</span>`;
+  $('.hero .sub').textContent=g.hero.sub;
+  const sec=$('.hero .cta .sec2');sec.textContent=g.cta.secondary;sec.href=g.cta.call;
+  if(g.cta.call[0]==='#'){sec.removeAttribute('target');sec.removeAttribute('rel')}else{sec.target='_blank';sec.rel='noopener'}
+  $('.hero .micro').textContent=g.cta.micro;
+  { /* hero drawing: games use the card's inline SVG so parts can loop; Santa keeps its animated image */
+    const old=$('.scene>.hero-art'),sel={whos:'svg.ww-art',missions:'svg.mo-art',steps:'svg.sc-art'}[id],src=sel&&$('.games '+sel);let el;
+    if(src){el=document.createElement('div');el.className='hero-art svg';el.appendChild(src.cloneNode(true))}
+    else{el=document.createElement('img');el.className='hero-art';el.alt='';el.src=g.art}
+    old.replaceWith(el)}
+  $('.hero-msg small').textContent=g.msg[0];$('.hero-msg p').textContent=g.msg[1];
+  const d=g.demo,gw=$('#game .wrap.center');
+  gw.querySelector('.eyebrow').textContent=d.eyebrow;gw.querySelector('h2').innerHTML=mk(d.h[0],d.h[1]);gw.querySelector('.lead').textContent=d.lead;
+  $('#stage').style.setProperty('--n',g.steps.length);
+  $('#steps').innerHTML=g.steps.map((s,i)=>stepHTML(s,i,i===0)).join('');
+  $('.stage-m').innerHTML=g.steps.map((s,i)=>stepHTML(s,i,true)+`<div class="pane">${mockWin(i)}</div>`).join('');
+  cur=0;steps=$$('#steps .step');host.innerHTML=mockWin(0);
+  auto=!reduce;stop();if(seen)play();
+  const u=new URL(location.href);id==='santa'?u.searchParams.delete('game'):u.searchParams.set('game',id);history.replaceState(null,'',u);
+  if(opts.scroll){scrollTo({top:0,behavior:reduce?'auto':'smooth'});if(!reduce){const kf=[{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'none'}],o={duration:520,easing:'cubic-bezier(.2,.7,.2,1)'};$('.hero .wrap').animate(kf,o);gw.animate(kf,o)}}
+}
+$('.games')?.addEventListener('click',e=>{const c=e.target.closest('.gc');if(!c)return;e.preventDefault();c.blur();c.classList.remove('open');const id=SLUG[c.querySelector('h3')?.textContent];if(id)switchGame(id,{scroll:1})});
+/* "Vilo Play" in the top nav brings you back to Secret Santa */
+$$('.nav a').filter(a=>a.textContent.trim()==='Vilo Play').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();curGame==='santa'?scrollTo({top:0,behavior:'smooth'}):switchGame('santa',{scroll:1})}));
+{const q=new URLSearchParams(location.search).get('game');if(q&&GAMES[q]&&q!=='santa')switchGame(q)}
 /* mock buttons */
 document.addEventListener('click',e=>{if(!e.target.closest('.prb'))$$('.pmenu').forEach(m=>m.classList.add('hidden'));const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,w=b.closest('.slack');if(w){auto=false;stop()}
   if(a==='popen'){const menu=b.parentElement.querySelector('.pmenu'),open=!menu.classList.contains('hidden');$$('.pmenu',w).forEach(m=>m.classList.add('hidden'));if(!open)menu.classList.remove('hidden');return}
-  if(a==='ppick'){const row=b.closest('.prb');row.querySelector('.psel span').textContent=b.textContent;row.querySelector('.pmenu').classList.add('hidden');return}
-  if(a==='join'||a==='save'||a==='thanks'){b.classList.add('done');b.textContent=a==='join'?'Joined ✓':a==='save'?'Saved ✓':'Sent ✓';confetti(w,e.clientX,e.clientY);const m=w.querySelector('[data-in]');if(m)m.textContent='1 colleague already in. You.'}
+  if(a==='ppick'){b.closest('.pmenu').classList.add('hidden');b.closest('.prb').querySelector('.psel span').textContent=b.textContent;return}
+  if(a==='save'){$$('.psel',w).forEach(x=>{x.disabled=true})}
+  if(a==='join'||a==='save'||a==='thanks'){b.classList.add('done');b.textContent=a==='join'?'Joined ✓':a==='save'?'Saved ✓':'Sent ✓';confetti(w,e.clientX,e.clientY);}
   if(a==='guess'){$$('[data-act=guess]',w).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');}
   if(a==='item'){$$('[data-act=item]',w).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');}
   if(a==='send'){w.querySelector('[data-sent]').classList.remove('hidden');b.classList.add('done');b.textContent='Sent ✓';confetti(w,e.clientX,e.clientY)}
   if(a==='open'){b.classList.add('done');b.textContent='Opened ✓';confetti(w,e.clientX,e.clientY)}});
 /* count up, reveal, marker */
-const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const t=en.target;t.classList.add('in');io.unobserve(t);
-  if(t.matches('.panel')){$$('.count',t).forEach(c=>{const to=+c.dataset.to,t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1300);c.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)})}}),{threshold:.25});
+/* animations replay every time their section comes into view: the 'in' class is added on entering and removed once the element is fully out of view */
+const io=new IntersectionObserver(es=>es.forEach(en=>{const t=en.target;
+  if(!en.isIntersecting){if(en.intersectionRatio===0&&t.classList.contains('in')){t.classList.remove('in');if(t.matches('.panel'))$$('.count',t).forEach(c=>{c.textContent='0'})}return}
+  if(t.classList.contains('in'))return;t.classList.add('in');
+  if(t.matches('.panel')){$$('.count',t).forEach((c,i)=>{const to=+c.dataset.to;c.closest('.kpi').style.setProperty('--i',i);setTimeout(()=>{const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1600);c.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)},i*180)})}}),{threshold:[0,.25]});
 $$('.rv,.mk').forEach(x=>io.observe(x));
 $$('.hero .mk').forEach(x=>setTimeout(()=>x.classList.add('in'),300));
+/* hero: the gifts fall again when the hero comes back into view; demo: the current step replays its messages */
+(function(){let heroOut=false,gameOut=false;
+  new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting){if(en.intersectionRatio===0)heroOut=true;return}if(heroOut){heroOut=false;const im=$('.hero-art');if(im&&im.tagName==='IMG')im.src=im.src.split('?')[0]+'?'+Date.now()}}),{threshold:[0,.3]}).observe($('.hero'));
+  /* the demo message plays when the stage comes into view (first time and every time after), once the stage itself has appeared */
+  gameOut=true;const g=$('#stage');if(g)new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting){if(en.intersectionRatio===0)gameOut=true;return}if(gameOut){gameOut=false;setTimeout(()=>{try{setStep(cur,true)}catch(e){}},450)}}),{threshold:[0,.3]}).observe(g)})();
 /* budget slider */
-const br=$('#br');if(br){const gifts=[[20,['Cozy socks','Chocolate box']],[40,['Coffee kit','A desk plant']],[90,['Coffee kit','A desk plant','Cozy socks']],[150,['Premium coffee kit','Ceramic plant set','Cozy socks']]];
+const br=$('#br');if(br){const gifts=[[20,['A good book','Local treats','A scented candle']],[35,['Coffee kit','A desk plant','Cozy socks']],[65,['Wireless earbuds','A cooking class','Spa voucher']],[105,['Experience day','Premium headphones','A weekend treat']]];
   const up=()=>{const v=+br.value;$('#bo').textContent='$'+v+' per gift';const set=gifts.filter(g=>v>=g[0]).pop()[1];$('#bg').innerHTML='<span class="eyebrow" style="width:100%">Gifts at this budget</span>'+set.map(x=>`<span class="chip">${x}</span>`).join('')};br.oninput=up;up()}
 /* hero variant C: typed DM */
-if($('#typed')){$('#typed').innerHTML=vm('12:00',`<b>Your match is here 🎁</b><div class="person"><span class="av"></span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div>`)}
+if($('#typed')){$('#typed').innerHTML=vm('12:00',`<b>Your match is here 🎁</b><div class="person"><span class="av">MC</span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div>`)}
 /* modal */
 const dlg=$('#dlg');let st={step:0,size:null,budget:null,start:null};
 const SIZES=GAME.pricing.tiers.map(t=>[t[0],t[1]==='Free'?'Free + gifts':t[1]==='Let’s talk'?'Let’s talk':t[1]+' + gifts']);
@@ -667,17 +1160,32 @@ document.addEventListener('submit',e=>{if(e.target.id==='lead'){e.preventDefault
 /* snow: ambient from the game config; pauses on reduced motion or the Pause button */
 let paused=reduce;const cv=$('#snow'),cx=cv.getContext('2d');let W,Hh,flakes=[];
 function size(){W=cv.width=innerWidth*devicePixelRatio;Hh=cv.height=innerHeight*devicePixelRatio}
-function initSnow(){size();const n=innerWidth<700?30:64;flakes=[...Array(n)].map(()=>({x:Math.random()*W,y:Math.random()*Hh,r:(1.6+Math.random()*3)*devicePixelRatio,v:.35+Math.random()*.9,ph:Math.random()*6.28,a:.85+Math.random()*.15}))}
-function tick(t){cx.clearRect(0,0,W,Hh);for(const f of flakes){if(!paused){f.y+=f.v*devicePixelRatio;f.x+=Math.sin(t/1500+f.ph)*.35*devicePixelRatio;if(f.y>Hh+8){f.y=-8;f.x=Math.random()*W}}
-  cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.283);cx.fillStyle=`rgba(255,255,255,${f.a})`;cx.shadowColor='rgba(110,91,242,.4)';cx.shadowBlur=6*devicePixelRatio;cx.fill();cx.shadowBlur=0;cx.lineWidth=1*devicePixelRatio;cx.strokeStyle='rgba(124,108,240,.4)';cx.stroke()}
+/* snow belongs to the page: flakes live in page coordinates over the whole document height and scroll with it */
+let docH=0;
+function initSnow(){size();docH=document.documentElement.scrollHeight*devicePixelRatio;const per=innerWidth<700?30:64,n=Math.min(520,Math.round(per*docH/Hh));flakes=[...Array(n)].map(()=>({x:Math.random()*W,y:Math.random()*docH,r:(1.6+Math.random()*3)*devicePixelRatio,v:.9+Math.random()*2,k:.9+Math.random()*.1,ph:Math.random()*6.28,a:.85+Math.random()*.15}))}
+function tick(t){cx.clearRect(0,0,W,Hh);const DH=document.documentElement.scrollHeight*devicePixelRatio,sy=scrollY*devicePixelRatio;if(Math.abs(DH-docH)>240*devicePixelRatio)initSnow();
+  for(const f of flakes){if(!paused){f.y+=f.v*devicePixelRatio;f.x+=Math.sin(t/1100+f.ph)*.7*devicePixelRatio;if(f.y>docH+8){f.y=-8;f.x=Math.random()*W}}
+  const py=f.y-sy*f.k;if(py<-12||py>Hh+12)continue;
+  cx.beginPath();cx.arc(f.x,py,f.r,0,6.283);cx.fillStyle=`rgba(255,255,255,${f.a})`;cx.shadowColor='rgba(110,91,242,.4)';cx.shadowBlur=6*devicePixelRatio;cx.fill();cx.shadowBlur=0;cx.lineWidth=1*devicePixelRatio;cx.strokeStyle='rgba(124,108,240,.4)';cx.stroke()}
   requestAnimationFrame(tick)}
-if(GAME.ambient==='snow'){initSnow();addEventListener('resize',initSnow);requestAnimationFrame(tick)}else cv.remove();
+/* snow is part of the page: three layers of tiled flakes inside a page-height box, moved by CSS transforms, so it scrolls natively with the page (no per-frame redraw) */
+function makeSnow(){
+  const host=document.createElement('div');host.id='snowp';host.setAttribute('aria-hidden','true');
+  [{T:600,n:3,r:[3.8,4.2],dur:22,sway:5.5},{T:720,n:2,r:[3.8,4.2],dur:16,sway:4.4},{T:840,n:2,r:[3.8,4.2],dur:12,sway:3.6}].forEach((l,i)=>{
+    const c=document.createElement('canvas'),d=2;c.width=c.height=l.T*d;const x=c.getContext('2d');x.scale(d,d);
+    for(let k=0;k<l.n;k++){const px=Math.random()*l.T,py=Math.random()*l.T,r=l.r[0]+Math.random()*(l.r[1]-l.r[0]);
+      for(const ox of [-l.T,0,l.T])for(const oy of [-l.T,0,l.T]){const X=px+ox,Y=py+oy;if(X<-12||X>l.T+12||Y<-12||Y>l.T+12)continue;
+        x.beginPath();x.arc(X,Y,r,0,6.283);x.fillStyle='rgba(255,255,255,.95)';x.shadowColor='rgba(110,91,242,.4)';x.shadowBlur=6;x.fill();x.shadowBlur=0;x.lineWidth=1;x.strokeStyle='rgba(124,108,240,.4)';x.stroke()}}
+    const sw=document.createElement('div');sw.className='sn-sway';sw.style.animationDuration=l.sway+'s';sw.style.animationDelay=(-i*1.7)+'s';
+    const fall=document.createElement('div');fall.className='sn-fall';fall.style.cssText=`background-image:url(${c.toDataURL()});background-size:${l.T}px ${l.T}px;height:calc(100% + ${l.T}px);animation-duration:${l.dur}s;--T:${l.T}px`;
+    sw.appendChild(fall);host.appendChild(sw)});
+  document.body.appendChild(host)}
+cv.remove();if(GAME.ambient==='snow')makeSnow();
 $('#pauseb').onclick=function(){paused=!paused;document.body.classList.toggle('paused',paused);this.textContent=paused?'Play animations':'Pause animations'};
 if(reduce){$('#pauseb').textContent='Play animations'}
 /* ===== free look: chat language ===== */
-(function(){const l=new URLSearchParams(location.search).get('look')||(()=>{try{return localStorage.getItem('look')}catch(e){return null}})()||'1';document.documentElement.dataset.look=l})();
-document.body.insertAdjacentHTML('beforeend','<div class="looksw" role="group" aria-label="Look"><span>Look</span><button data-look="1">1</button><button data-look="2">2</button><button data-look="3">3</button></div>');
-$$('.looksw button').forEach(b=>{b.onclick=()=>{document.documentElement.dataset.look=b.dataset.look;try{localStorage.setItem('look',b.dataset.look)}catch(e){}$$('.looksw button').forEach(x=>x.classList.toggle('on',x===b))};b.classList.toggle('on',b.dataset.look===document.documentElement.dataset.look)});
+/* the design is fixed (look 1) */
+document.documentElement.dataset.look='1';
 const wait=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
 function mkChat(log,act){
   const sc=()=>{log.scrollTop=log.scrollHeight};
@@ -688,18 +1196,15 @@ function mkChat(log,act){
   return {bub,say,chips,clear(){log.innerHTML='';act.innerHTML=''}}}
 /* hero: Secret Santa arrives as a chat */
 const hc=mkChat($('#hchat'),$('#hact'));let hrun=0;
-const personHTML='<div class="person"><span class="av"></span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div>';
+const personHTML='<div class="person"><span class="av">MC</span><div><b>Maya Cohen</b><small>Product Designer · Tel Aviv</small></div></div>';
 async function heroRun(){const id=++hrun,ok=()=>id===hrun;hc.clear();
   await hc.say('<b>Secret Santa is happening! 🎅</b>',600);if(!ok())return;
   await hc.say('One colleague to give to, one gift. The company covers it, you choose it. Nobody knows who has whom until reveal day.',900);if(!ok())return;
   await hc.say('Joining closes <b>Mon 7 Dec, 12:00</b>',700);if(!ok())return;
-  hc.chips([['Join',hJoin],['Not this time',hNope]])}
+  hc.chips([['Join',hJoin]])}
 async function hJoin(l){hc.bub(l,1);await hc.say('<b>You’re in! 🎉</b>',600);const r=$('.chat').getBoundingClientRect();confetti($('.chat'),r.left+r.width/2,r.top+r.height*.55);
   await hc.say('<b>Your match is here 🎁</b>'+personHTML,900);hc.chips([['Play again',heroRun]])}
-async function hNope(l){hc.bub(l,1);await hc.say('<b>Nobody is forced.</b>',600);await hc.say('Vilo sends a friendly reminder before joining closes, and everyone can still enjoy the reveal in the channel.',900);hc.chips([['Join',hJoin]])}
 setTimeout(heroRun,500);
-$('.sD').insertAdjacentHTML('afterbegin','<span class="moon m1" aria-hidden="true"><i></i><i></i><b></b></span>');
-$('.endcta').insertAdjacentHTML('beforeend','<span class="moon m2" aria-hidden="true"><i></i><i></i><b></b></span>');
 /* sign-up as a conversation (static prototype: nothing is sent) */
 function modal(){const d=$('#dlgBody');
   d.innerHTML='<button class="mclose" data-close aria-label="Close">×</button><div class="ch-hd"><span class="vav"><i></i></span><div><b>Vilo</b><small>Runs in Slack · At least two weeks</small></div></div><div class="ch-log" id="mlog"></div><div class="ch-act" id="mact"></div>';
@@ -718,12 +1223,12 @@ function modal(){const d=$('#dlgBody');
 (function(){let f='d';try{f=new URLSearchParams(location.search).get('font')||'d'}catch(e){}document.documentElement.dataset.font=f;
 document.body.insertAdjacentHTML('beforeend','<div class="looksw fsw" role="group" aria-label="Headline font"><span>Font</span><button data-font="a">A</button><button data-font="b">B</button><button data-font="c">C</button></div>');
 $$('.fsw button').forEach(b=>{b.classList.toggle('on',b.dataset.font===f);b.onclick=()=>{document.documentElement.dataset.font=b.dataset.font;try{localStorage.setItem('font',b.dataset.font)}catch(e){}$$('.fsw button').forEach(x=>x.classList.toggle('on',x===b))}})})();
-$$('.games .gc').forEach(c=>{c.tabIndex=0;c.addEventListener('click',e=>{if(e.target.closest('.dbtn'))return;c.classList.toggle('open')})});
+$$('.games .gc').forEach(c=>{c.tabIndex=0;c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}})});
 /* in the demo windows, pressing a button sends your reply as a chat bubble */
 /* answering moves you on: after a reply the demo continues to the next step by itself */
 const LAST=GAME.steps.length-1;let driven=false;
 function setStep(i,fromClick){if(i===cur&&!fromClick)return;cur=i;steps.forEach((s,k)=>s.classList.toggle('on',k===i));host.innerHTML=mockWin(i);
-  if(driven&&innerWidth>980){const hasAct=host.querySelector('[data-act=join],[data-act=save],[data-act=guess],[data-act=open],[data-act=thanks]');if(!hasAct&&i<LAST){const at=i;setTimeout(()=>{if(cur===at)setStep(at+1,true)},3800)}}}
+  if(driven&&innerWidth>980){const hasAct=host.querySelector('[data-act=join],[data-act=save],[data-act=guess],[data-act=send],[data-act=open],[data-act=thanks]');if(!hasAct&&i<LAST){const at=i;setTimeout(()=>{if(cur===at)setStep(at+1,true)},3800)}}}
 function go(ms,b){driven=true;const mob=innerWidth<=980,idx=mob?$$('.stage-m .pane').indexOf(b.closest('.pane')):cur;
   setTimeout(()=>{if(idx<0||idx>=LAST)return;if(mob){const t=$$('.stage-m .step')[idx+1];if(t)scrollTo({top:t.getBoundingClientRect().top+scrollY-100,behavior:'smooth'})}else if(cur===idx)setStep(idx+1,true)},ms)}
 document.addEventListener('click',e=>{const b=e.target.closest('.slack [data-act]');if(!b)return;const a=b.dataset.act;
@@ -731,14 +1236,13 @@ document.addEventListener('click',e=>{const b=e.target.closest('.slack [data-act
   const L={join:'Join',save:'Save my clues',send:'Send gift',open:'Open your gift',thanks:'Say thank you 💌'}[a];if(!L)return;const m=b.closest('.m'),r=b.closest('.btns');if(!m||!r||r.classList.contains('hidden'))return;r.classList.add('hidden');m.insertAdjacentHTML('afterend','<div class="m me"><div>'+L+'</div></div>');
   if(a==='join'||a==='save'||a==='open'||a==='thanks')go(1600,b)});
 /* messages arrive top to bottom, one after the other (dividers and wrappers included) */
-function seq(root){let i=0,j=0;$$('.m,.dayd',root).forEach(el=>{el.style.animationDelay=(el.closest('.hidden')?j++:i++)*.55+'s'})}
+function seq(root){let i=0,j=0;$$('.m,.dayd',root).forEach(el=>{el.style.animationDelay=(el.closest('.hidden')?j++*.55:.35+i++*.55)+'s'})}
 $$('.slack').forEach(seq);
 new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType!==1)return;const r=n.matches('.slack')?n:n.querySelector('.slack');if(r)seq(r)}))).observe($('#app'),{childList:true,subtree:true});
 /* confetti in the page colour only (plus black) */
-function confetti(host,x,y){if(reduce)return;const cs=getComputedStyle(document.documentElement),cols=[cs.getPropertyValue('--g').trim(),cs.getPropertyValue('--gs').trim(),'#17171A'],box=host.getBoundingClientRect();
+function confetti(host,x,y){if(reduce)return;const cs=getComputedStyle(document.documentElement),cols=[cs.getPropertyValue('--g').trim(),cs.getPropertyValue('--gs').trim(),'#1A000A'],box=host.getBoundingClientRect();
   for(let i=0;i<16;i++){const s=document.createElement('span');s.className='cf';s.style.background=cols[i%3];s.style.left=(x-box.left)+'px';s.style.top=(y-box.top)+'px';const a=Math.random()*Math.PI*2,d=50+Math.random()*70;s.style.setProperty('--x',Math.cos(a)*d+'px');s.style.setProperty('--y',Math.sin(a)*d-20+'px');s.style.setProperty('--r',(Math.random()*540-270)+'deg');host.style.position=host.style.position||'relative';host.appendChild(s);setTimeout(()=>s.remove(),1200)}}
 /* closing CTA as a message composer */
-$('.endcta .ctarow').insertAdjacentHTML('beforebegin','<button class="composer" data-open><span>Message #secret-santa</span><i>↑</i></button>');
 
 </script>
 </body>

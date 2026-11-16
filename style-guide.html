@@ -1,0 +1,418 @@
+<title>Vilo Play Style Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky side index + long single column of numbered rules; every rule shows its live specimen next to the value. */
+:root{
+  --paper:#FFFFFF;--card:#FFFFFF;--ink:#1A000A;--ink2:#4D3A44;--mute:#75636C;--line:#E3E1EC;--alt:#EEF1FF;
+  --shadow:#1A000A;--g:#FF8A73;--gs:#E5533A;--gsoft:#FFC4B8;--ok:#1E7A46;--no:#B3261E;
+  --head:'Familjen Grotesk','Hanken Grotesk',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#14090F;--card:#1F1219;--ink:#FDFFF3;--ink2:#CDBFC6;--mute:#A4929B;--line:#3A2A33;--alt:#1A1530;--shadow:#FDFFF3;--ok:#7BE0A4;--no:#FF9A92;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#14090F;--card:#1F1219;--ink:#FDFFF3;--ink2:#CDBFC6;--mute:#A4929B;--line:#3A2A33;--alt:#1A1530;--shadow:#FDFFF3;--ok:#7BE0A4;--no:#FF9A92;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+h1,h2,h3{font-family:var(--head);letter-spacing:0;line-height:1.1;font-weight:700;text-wrap:balance}
+.reg{font-weight:400}
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px}
+nav.idx{position:sticky;top:24px;align-self:start;padding-top:56px;display:flex;flex-direction:column;gap:2px;font-size:14px}
+nav.idx b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:10px;font-weight:500}
+nav.idx a{color:var(--ink2);text-decoration:none;padding:6px 10px;border-radius:8px}
+nav.idx a:hover{background:var(--line);color:var(--ink)}
+main{padding-block:56px 96px;min-width:0}
+header.top .eyebrow,.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+header.top h1{font-size:clamp(40px,6vw,72px);margin-top:14px}
+header.top p{max-width:60ch;margin-top:20px;font-size:19px;color:var(--ink2)}
+section{padding-top:72px}
+section>h2{font-size:clamp(30px,4vw,44px);margin-top:10px}
+section>p.lead{margin-top:14px;max-width:64ch;color:var(--ink2);font-size:17px}
+h3{font-size:22px;margin-top:40px}
+h3+p,p.note{margin-top:8px;max-width:66ch;color:var(--ink2)}
+code{font-family:var(--mono);font-size:.86em;background:var(--line);padding:1px 6px;border-radius:6px}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.panel h4{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-bottom:12px}
+ul.list{padding-left:18px;display:grid;gap:6px;color:var(--ink2)}
+ul.list li::marker{color:var(--mute)}
+.do h4{color:var(--ok)}.dont h4{color:var(--no)}
+/* swatches */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:20px}
+.chip{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.chip i{display:block;height:72px;border-bottom:1px solid var(--line)}
+.chip div{padding:10px 12px;font-size:13px;line-height:1.35}.chip b{display:block;font-size:14px}
+.chip code{background:none;padding:0;color:var(--mute)}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tw{overflow-x:auto;margin-top:20px;border-radius:16px}.tw table{margin-top:0;min-width:560px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500}
+tr:last-child td{border-bottom:0}
+.dot{display:inline-block;width:22px;height:22px;border-radius:7px;border:1px solid rgba(26,0,10,.5);vertical-align:middle;margin-right:8px}
+/* type */
+.ts{display:grid;gap:0;margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:16px}
+.ts div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:baseline;padding:18px 22px;border-bottom:1px solid var(--line)}
+.ts div:last-child{border-bottom:0}.ts small{font-family:var(--mono);font-size:11px;color:var(--mute);line-height:1.4}
+/* component specimens: the real rules of the page */
+.btn{display:inline-flex;align-items:center;gap:8px;border:2px solid #1A000A;border-radius:999px;padding:12px 22px;font:600 15px var(--body);background:var(--g);color:#1A000A;box-shadow:4px 4px 0 #1A000A;cursor:pointer;transition:transform .12s ease-out,box-shadow .12s ease-out,background .2s,color .2s;text-decoration:none}
+.btn:hover,.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 #1A000A}
+.btn:active{background:#1A000A;color:#FDFFF3}
+.btn.sec{background:#fff}.btn.sec:active{background:#1A000A;color:#fff}
+.btn.dark{background:#1A000A;color:#FDFFF3}.btn.dark:active{background:#FDFFF3;color:#1A000A}
+.btn.flat{box-shadow:none;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:default}.btn.flat:hover{transform:none}
+.tag{display:inline-flex;font:700 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(26,0,10,.28);border-radius:999px;padding:4px 12px;color:var(--ink)}
+:root[data-theme="dark"] .tag{border-color:rgba(253,255,243,.35)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag{border-color:rgba(253,255,243,.35)}}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.card-c{background:#fff;color:#1A000A;border:2px solid #1A000A;box-shadow:4px 4px 0 #1A000A;border-radius:22px;padding:20px;max-width:260px;transition:transform .12s ease-out,box-shadow .12s ease-out}
+.card-c:hover{transform:translate(4px,4px);box-shadow:0 0 0 #1A000A}
+.card-f{background:#fff;color:#1A000A;border:1px solid #E3E1EC;border-radius:22px;padding:20px;max-width:260px}
+.card-c b,.card-f b{font-family:var(--head);font-size:20px;letter-spacing:-.03em;display:block}
+.card-c small,.card-f small{color:#6b5a63;font-size:13px}
+.ics{fill:none;stroke:#1A000A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.icf{fill:var(--g);stroke:none;transform:translate(2.2px,2.2px)}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-top:20px}
+.icons div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:10px;justify-items:start;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.icons svg{width:48px;height:48px;overflow:visible}
+.gcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px 28px;margin-top:26px;padding-right:12px}
+.gcard{background:var(--c);color:#1A000A;border-radius:16px;box-shadow:12px -12px 0 #1A000A;text-align:center;padding:30px 24px 32px;display:grid;justify-items:center;gap:6px}
+.gcard .art{height:140px;margin-bottom:14px;display:grid;place-items:center}.gcard .art img{max-height:100%;max-width:100%}
+/* drawings are inline SVG so their parts can move: loops in the hero boards, on hover in the cards, as on the page */
+.sl{display:grid;place-items:center}.sl svg{width:auto;max-width:100%;overflow:visible;display:block}
+.hc .stage .sl svg{height:210px}.gcard .art .sl svg{height:138px}
+.mag{transform-box:fill-box;transform-origin:40% 40%}.shoe{transform-box:fill-box;transform-origin:50% 100%}
+@keyframes search{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-70px,26px) rotate(-9deg)}50%{transform:translate(60px,-34px) rotate(7deg)}75%{transform:translate(-30px,-50px) rotate(-5deg)}}
+@keyframes stepA{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(40px,-70px) rotate(-5deg)}50%{transform:translate(70px,0) rotate(0)}75%{transform:translate(30px,6px) rotate(1deg)}}
+@keyframes stepB{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(30px,6px) rotate(1deg)}50%{transform:translate(0,0) rotate(0)}75%{transform:translate(40px,-70px) rotate(5deg)}}
+@keyframes mo-letter{0%,26%{transform:translateY(0) rotate(0)}42%,60%{transform:translateY(-300px) rotate(-4deg)}76%,100%{transform:translateY(0) rotate(0)}}
+@keyframes mo-front{0%,14%{transform:scaleY(1)}20%,84%{transform:scaleY(0)}92%,100%{transform:scaleY(1)}}
+@keyframes mo-back{0%,20%{transform:scaleY(0)}26%,76%{transform:scaleY(1)}84%,100%{transform:scaleY(0)}}
+.mo-flap-front{transform-box:fill-box;transform-origin:50% 0%}.mo-flap-back{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0)}.mo-letter{transform-box:fill-box;transform-origin:50% 100%}
+.stage .mag{animation:search 3.4s ease-in-out infinite}
+.stage .shoe-a{animation:stepA 2.6s ease-in-out infinite}.stage .shoe-b{animation:stepB 2.6s ease-in-out infinite}
+.stage .mo-letter{animation:mo-letter 6s ease-in-out infinite}.stage .mo-flap-front{animation:mo-front 6s ease-in-out infinite}.stage .mo-flap-back{animation:mo-back 6s ease-in-out infinite}
+.gcard:hover .mag{animation:search 1.6s ease-in-out infinite}
+.gcard:hover .shoe-a{animation:stepA 1.4s ease-in-out infinite}.gcard:hover .shoe-b{animation:stepB 1.4s ease-in-out infinite}
+.gcard .mo-letter{transition:transform .45s cubic-bezier(.5,0,.75,0) 0s}.gcard .mo-flap-back{transition:transform .25s ease-in .4s}.gcard .mo-flap-front{transition:transform .3s ease-out .62s}
+.gcard:hover .mo-flap-front{transform:scaleY(0);transition:transform .25s ease-in 0s}.gcard:hover .mo-flap-back{transform:scaleY(1);transition:transform .3s ease-out .2s}.gcard:hover .mo-letter{transform:translateY(-300px) rotate(-4deg);transition:transform .6s cubic-bezier(.2,.8,.2,1) .38s}
+.gcard b{font-family:var(--head);font-size:30px;line-height:1.1}.gcard span{font-size:15px;opacity:.85}
+.bub{background:#fff;color:#1A000A;border:2px solid var(--g);border-radius:18px 18px 18px 6px;padding:14px 18px;max-width:300px;font-size:15px}
+.bub em{display:block;font-style:normal;font-size:12px;color:#6b5a63;margin-bottom:4px}
+.icsvg{width:44px;height:44px}.icsvg .s{fill:none;stroke:#1A000A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.icsvg .f{fill:var(--g);transform:translate(2.2px,2.2px)}
+.dur{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.dur div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.dur b{font-family:var(--mono);font-size:18px;display:block;font-weight:500}.dur span{font-size:13px;color:var(--ink2)}
+/* illustration board */
+.heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:22px}
+.hc{border-radius:20px;border:1px solid var(--line);overflow:hidden;background:var(--card)}
+.hc .stage{aspect-ratio:4/3;display:grid;place-items:center;padding:18px;background:linear-gradient(100deg,#FDFFF3 0%,#C5D0FF 48%,var(--c) 100%)}
+.hc .stage img{max-width:92%;max-height:100%;object-fit:contain}
+.hc div.cap{padding:14px 16px;font-size:13px;line-height:1.4}.hc b{display:block;font-size:15px;font-family:var(--head);letter-spacing:-.02em}
+.anat{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:20px}
+.anat div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.anat b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;display:block;margin-bottom:6px}
+.anat span{font-size:15px}
+.dpth{width:120px;height:80px;position:relative;margin:8px 0 12px}
+.dpth i{position:absolute;inset:0;border-radius:14px;border:2px solid #1A000A}
+.dpth i:first-child{transform:translate(8px,8px);background:var(--gs)}.dpth i:last-child{background:linear-gradient(135deg,var(--gsoft),var(--g))}
+.bars{display:grid;gap:6px;width:150px;margin:8px 0 12px}.bars i{height:12px;border-radius:99px;display:block}
+.pal-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pal-row span{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:99px;padding:4px 10px 4px 5px;background:var(--card)}
+.pal-row span i{width:16px;height:16px;border-radius:50%;border:1px solid rgba(26,0,10,.5)}
+.themebtn{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:5}
+@media (max-width:860px){.shell{grid-template-columns:minmax(0,1fr)}nav.idx{display:none}.rule{grid-template-columns:minmax(0,1fr)}.ts div{grid-template-columns:minmax(0,1fr);gap:4px}main{padding-top:36px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:3px solid #5B47F5;outline-offset:3px}
+</style>
+
+<div class="shell">
+<nav class="idx" aria-label="Sections"><b>Vilo Play</b>
+<a href="#principles">Principles</a><a href="#color">Colour</a><a href="#type">Type</a><a href="#components">Components</a><a href="#icons">Icons</a><a href="#illustration">Illustration language</a><a href="#motion">Motion</a><a href="#layout">Layout</a><a href="#responsive">Responsive</a><a href="#access">Accessibility</a><a href="#copy">Copy</a><a href="#tokens">Tokens</a><a href="#games">Adding a game</a></nav>
+
+<main>
+<header class="top">
+<div class="eyebrow">Vilo Play · landing page · v1</div>
+<h1>A calm shell,<br><span class="reg">with colour that belongs to the game.</span></h1>
+<p>One system for every game page: Secret Santa, Who’s Who, Secret Office Missions, Step Challenge and the games after them. The page frame stays quiet. Each game brings its own colour and its own illustration, and nothing else.</p>
+</header>
+
+<section id="principles"><div class="eyebrow">01</div><h2>Principles</h2>
+<div class="rule">
+<div class="panel"><h4>Calm shell, colour from the game</h4><p>Base colours are ink, paper and white. A game colour appears only inside its own card, frame, drawer, hero and highlight. A page never mixes two game colours.</p></div>
+<div class="panel"><h4>Clickable or flat. Never in between.</h4><p>If it can be clicked, it has a 2 px black outline and a 4 px hard shadow, and it presses in. If it cannot be clicked, it is flat, with a hairline border, no shadow and no hover.</p></div>
+<div class="panel"><h4>Real words only</h4><p>Copy comes from Vilo’s own pages. Numbers in demos are examples and are never presented as results. Text inside illustrations is never real words.</p></div>
+<div class="panel"><h4>Motion is quiet and replays</h4><p>Things enter once when they come into view and play again when you scroll back. Hover and click always answer in 120 ms. Reduced motion turns it all off.</p></div>
+</div></section>
+
+<section id="color"><div class="eyebrow">02</div><h2>Colour</h2>
+<p class="lead">Brand base colours are the same on every page. Each game adds three colours: fill, strong and soft. Brand colours are used solid. No transparency on them.</p>
+<h3>Base</h3>
+<div class="sw">
+<div class="chip"><i style="background:#1A000A"></i><div><b>Ink</b><code>#1A000A</code><br>Text, all outlines, hard shadows</div></div>
+<div class="chip"><i style="background:#4D3A44"></i><div><b>Ink 2</b><code>#4D3A44</code><br>Body copy on light</div></div>
+<div class="chip"><i style="background:#75636C"></i><div><b>Mute</b><code>#75636C</code><br>Captions, metadata</div></div>
+<div class="chip"><i style="background:#FFFFFF"></i><div><b>White</b><code>#FFFFFF</code><br>Page background, cards, message bubbles</div></div>
+<div class="chip"><i style="background:#FDFFF3"></i><div><b>Claw White</b><code>#FDFFF3</code><br>Hero gradient start, inverted text, footer text</div></div>
+<div class="chip"><i style="background:#E3E1EC"></i><div><b>Hairline</b><code>#E3E1EC</code><br>Borders on flat items</div></div>
+<div class="chip"><i style="background:#EEF1FF"></i><div><b>Alt section</b><code>#EEF1FF</code><br>Every second section</div></div>
+</div>
+<h3>Illustration base</h3>
+<p class="note">Used inside drawings, with the game colours. They are the same on every page.</p>
+<div class="sw">
+<div class="chip"><i style="background:#EBFF00"></i><div><b>Tennis Yellow</b><code>#EBFF00</code><br>Small accents only</div></div>
+<div class="chip"><i style="background:#C5D0FF"></i><div><b>Scrubs Blue Light</b><code>#C5D0FF</code><br>Secondary objects, depth under white, text bars</div></div>
+<div class="chip"><i style="background:#8D98EC"></i><div><b>Scrubs Blue</b><code>#8D98EC</code><br>Secondary objects, stripes</div></div>
+<div class="chip"><i style="background:#1A000A"></i><div><b>Snout Black</b><code>#1A000A</code><br>All outlines</div></div>
+</div>
+<h3>Game colours</h3>
+<p class="note">Fill is the main surface. Strong is for depth, small marks and numbers. Soft is for the lightest end of a gradient and for tinted backgrounds.</p>
+<div class="tw"><table>
+<tr><th>Game</th><th>Fill</th><th>Strong</th><th>Soft</th></tr>
+<tr><td>Secret Santa</td><td><span class="dot" style="background:#FF8A73"></span>#FF8A73</td><td><span class="dot" style="background:#E5533A"></span>#E5533A</td><td><span class="dot" style="background:#FFC4B8"></span>#FFC4B8</td></tr>
+<tr><td>Secret Office Missions</td><td><span class="dot" style="background:#FFA3D7"></span>#FFA3D7</td><td><span class="dot" style="background:#E0509B"></span>#E0509B</td><td><span class="dot" style="background:#FFD9EE"></span>#FFD9EE</td></tr>
+<tr><td>Who’s Who</td><td><span class="dot" style="background:#F6CF6B"></span>#F6CF6B</td><td><span class="dot" style="background:#C9971A"></span>#C9971A</td><td><span class="dot" style="background:#FBEAB8"></span>#FBEAB8</td></tr>
+<tr><td>Step Challenge</td><td><span class="dot" style="background:#A6F5B8"></span>#A6F5B8</td><td><span class="dot" style="background:#3FBF6A"></span>#3FBF6A</td><td><span class="dot" style="background:#D6FBDD"></span>#D6FBDD</td></tr>
+<tr><td>Shoutouts</td><td><span class="dot" style="background:#EBFF00"></span>#EBFF00</td><td><span class="dot" style="background:#B8C900"></span>#B8C900</td><td><span class="dot" style="background:#F7FFA8"></span>#F7FFA8</td></tr>
+<tr><td>Recognition</td><td><span class="dot" style="background:#8D98EC"></span>#8D98EC</td><td><span class="dot" style="background:#5560D0"></span>#5560D0</td><td><span class="dot" style="background:#C5D0FF"></span>#C5D0FF</td></tr>
+<tr><td>Coffee Roulette</td><td><span class="dot" style="background:#FFB15C"></span>#FFB15C</td><td><span class="dot" style="background:#E67E1E"></span>#E67E1E</td><td><span class="dot" style="background:#FFD9AE"></span>#FFD9AE</td></tr>
+<tr><td>Truth or Bluff</td><td><span class="dot" style="background:#B79BFF"></span>#B79BFF</td><td><span class="dot" style="background:#7B55E8"></span>#7B55E8</td><td><span class="dot" style="background:#DCCDFF"></span>#DCCDFF</td></tr>
+</table></div>
+<p class="note">The game colours are our working set. Vilo has not confirmed an official list, so treat them as proposed until it does.</p>
+<h3>Hero background</h3>
+<div class="panel" style="margin-top:14px;background:linear-gradient(100deg,#FDFFF3 0%,#C5D0FF 48%,#FF8A73 100%);border:0;color:#1A000A"><p style="color:#1A000A"><code style="background:rgba(255,255,255,.7)">linear-gradient(100deg, #FDFFF3 0%, #C5D0FF 48%, GAME-FILL 100%)</code><br>The only gradient on the page. Everything below the hero is flat.</p></div>
+<div class="rule">
+<div class="panel do"><h4>Do</h4><ul class="list"><li>One game colour per page, plus base colours.</li><li>Alternate section backgrounds: page, Alt section, page.</li><li>Use Snout Black for every outline.</li></ul></div>
+<div class="panel dont"><h4>Don’t</h4><ul class="list"><li>Don’t mix two game colours on one page.</li><li>Don’t add transparent or derived shades of brand colours.</li><li>Don’t use the old guide colours (#3546F0, #FFD83A).</li></ul></div>
+</div></section>
+
+<section id="type"><div class="eyebrow">03</div><h2>Type</h2>
+<p class="lead">Three families, each with one job.</p>
+<div class="ts">
+<div><small>Display<br>Familjen Grotesk 700<br>normal tracking, line 1.1</small><span style="font-family:var(--head);font-size:44px;line-height:1.1"><b>Secret Santa,</b><br>played in Slack.</span></div>
+<div><small>Body<br>Hanken Grotesk 400–600<br>16 / 1.5</small><span style="font-size:17px">A daily clue about a colleague, right in Slack or your app. People guess, laugh, and the new person stops being new.</span></div>
+<div><small>Labels<br>DM Mono, bold<br>12 px, uppercase, +0.08em</small><span style="font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase">How it works · Trusted by people teams at</span></div>
+</div>
+<p class="note">The brand book names Gabarito for headings. The page uses Familjen Grotesk instead, loaded from a local file (<code>fonts/FamiljenGrotesk-Variable.ttf</code>, weights 400–700, SIL Open Font License). Hanken Grotesk is the body face in both. Gabarito and Bricolage Grotesque are not used on the page.</p>
+<div class="tw"><table>
+<tr><th>Role</th><th>Size</th><th>Notes</th></tr>
+<tr><td>H1 (hero)</td><td><code>clamp(44px, 5.6vw, 80px)</code></td><td>Familjen 700, line 1.1. Two lines: the first in bold, the second in regular weight 400. No highlight. On desktop the second line never wraps. 46 px under 620 px wide.</td></tr>
+<tr><td>H2 (section)</td><td><code>clamp(36px, 5vw, 62px)</code></td><td>Same two-weight pattern: bold first part, regular last words.</td></tr>
+<tr><td>Game card title</td><td>30 px</td><td>Familjen 700</td></tr>
+<tr><td>Setup card title</td><td>26 px</td><td>Familjen 700</td></tr>
+<tr><td>Quote</td><td>24 px</td><td>Familjen 700, −0.03em</td></tr>
+<tr><td>FAQ question</td><td>21 px</td><td>Familjen 700</td></tr>
+<tr><td>Step title</td><td>20 px</td><td>Familjen 700, −0.03em</td></tr>
+<tr><td>Big numbers</td><td>56 px (HR view), 34 px (prices)</td><td>Familjen 700</td></tr>
+<tr><td>Lead / hero text</td><td>19 px, line 1.5</td><td>Hanken 400, Ink 2. Max 620 px (hero text 520 px).</td></tr>
+<tr><td>Body</td><td>16 px, line 1.5</td><td>Hanken 400, Ink</td></tr>
+<tr><td>Buttons</td><td>15 px</td><td>Hanken 600</td></tr>
+<tr><td>Nav</td><td>14 px</td><td>Hanken 500</td></tr>
+<tr><td>Message text</td><td>14.5 px</td><td>Hanken, sender name 12 px bold in Mute</td></tr>
+<tr><td>Eyebrow, tag</td><td>12 px, +0.08em</td><td>DM Mono bold, uppercase, shown as a pill with a 1 px line</td></tr>
+</table></div>
+<h3>Emphasis in headings</h3>
+<p>Headings are not underlined or highlighted. Emphasis comes from weight alone: the first part is bold and the last words are regular, like “<b style="font-family:var(--head)">The whole season in</b> <span style="font-family:var(--head)">one Slack DM.</span>”</p>
+<h3>Hebrew</h3>
+<p class="note">Vilo has no official Hebrew typeface. Our proposal is Rubik for headings and Heebo for body, to be confirmed against Vilo’s Hebrew site.</p>
+<div class="rule">
+<div class="panel do"><h4>Do</h4><ul class="list"><li>Sentence case in headings.</li><li>Keep body lines near 65 characters.</li><li>Bold first part, regular last words.</li></ul></div>
+<div class="panel dont"><h4>Don’t</h4><ul class="list"><li>No marker, underline or colour behind headline words.</li><li>No italics for emphasis.</li><li>No second typeface in headings.</li></ul></div>
+</div></section>
+
+<section id="components"><div class="eyebrow">04</div><h2>Components</h2>
+<p class="lead">Try them. Hover presses in, click inverts the colours.</p>
+<h3>Buttons</h3>
+<div class="panel" style="margin-top:14px"><div class="row">
+<button class="btn" type="button">Play now</button><button class="btn sec" type="button">Try a theme</button><button class="btn dark" type="button">Book a call</button><span class="btn flat">Not clickable</span></div>
+<ul class="list" style="margin-top:16px"><li>Pill shape, 2 px Snout Black outline, 4 px hard shadow in Snout Black.</li><li>Hover and click: move 4 px down and right, shadow goes to 0.</li><li>On click the colours invert: ink background with Claw White text. Dark buttons invert to light.</li><li>Primary uses the game fill. Secondary is white. Dark is Snout Black.</li></ul></div>
+<h3>Cards and tags</h3>
+<div class="panel" style="margin-top:14px"><div class="row" style="align-items:flex-start">
+<div class="card-c"><b>Clickable card</b><small>Outline, shadow, presses in. Opens a game page.</small></div>
+<div class="card-f"><b>Flat card</b><small>Hairline, no shadow, no hover. Information only.</small></div>
+<span class="tag">Tag · flat</span></div>
+<ul class="list" style="margin-top:16px"><li>Corner radius: 16 px for steps and price tiers, 22 px for panels, quotes and the message window. Controls and tags are pills.</li><li>Tags and eyebrows are transparent with a 1 px line at 28 % ink, uppercase bold mono. They are never clickable.</li></ul></div>
+<h3>Slack message</h3>
+<div class="panel" style="margin-top:14px"><div class="bub"><em>#step-challenge</em><b>Step Challenge starts Monday 👟</b><br>Tap once to link Apple Health, Google Fit or your watch.</div>
+<ul class="list" style="margin-top:16px"><li>White bubble, 2 px border in the game fill, tail corner bottom left, radius 18 px with a 6 px corner at the bottom left.</li><li>Sender name on top in 12 px. Padding: 16 px top, 20 px sides, 18 px bottom.</li><li>Real example copy from the Vilo game pages. Names and numbers are examples.</li></ul></div>
+<h3>Other page elements</h3>
+<div class="tw"><table>
+<tr><th>Element</th><th>Rule</th></tr>
+<tr><td>Menu bar</td><td>White pill with a 1 px hairline, sticky at the top, logo at the left, one game-fill “Play now” button at the right.</td></tr>
+<tr><td>Steps (demo)</td><td>16 px radius, hairline. The chosen step is pressed in and white, with no colour change. Step number in Mute, title in Familjen 20 px.</td></tr>
+<tr><td>Price tiers</td><td>Flat tiles in a row that grows step by step. Free comes first. The last tier, “Let’s talk”, is a pressable sticker button in the game fill.</td></tr>
+<tr><td>Quotes</td><td>Flat white cards, 22 px radius, hairline. Quote in Familjen 24 px, role underneath in Mute. Quotes arrive one after the other.</td></tr>
+<tr><td>FAQ</td><td>Question in Familjen 21 px. Each row has a 44 px arrow button with the pressable style: game fill, 2 px outline, 4 px shadow. Open, it turns Ink with a game-colour arrow, pressed in.</td></tr>
+<tr><td>HR numbers</td><td>Familjen 56 px, counting up from zero each time they come into view. Always labelled as example data.</td></tr>
+<tr><td>Closing banner</td><td>Ink block with 36 px radius and a margin around it, one coral glow only, white text and the same two buttons as the hero.</td></tr>
+<tr><td>Footer</td><td>Full width, <code>#1A000A</code>, Claw White text, five link columns.</td></tr>
+<tr><td>Logo</td><td>Placeholder: a ring and the word “vilo”. Replace with Vilo’s official files before launch.</td></tr>
+</table></div>
+<div class="rule">
+<div class="panel do"><h4>Do</h4><ul class="list"><li>Make every clickable thing press in, the same way.</li><li>Give keyboard focus a visible 3 px ring.</li></ul></div>
+<div class="panel dont"><h4>Don’t</h4><ul class="list"><li>No shadow on anything that cannot be clicked.</li><li>No hover on flat items.</li><li>No soft blurred shadows or glass panels.</li></ul></div>
+</div></section>
+
+<section id="icons"><div class="eyebrow">05</div><h2>Icons</h2>
+<p class="lead">Line first, colour second. Each icon is an ink line drawing with a solid game-colour shape behind it, offset down and right.</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-phone" viewBox="0 0 24 24"><path class="icf" d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5.500 5.500L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/><path class="ics" d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5.500 5.500L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path class="icf" d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path class="ics" d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle class="icf" cx="12" cy="12" r="9"/><circle class="ics" cx="12" cy="12" r="9"/><path class="ics" d="M12 7v5l3 2"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle class="icf" cx="11" cy="11" r="6.500"/><circle class="ics" cx="11" cy="11" r="6.500"/><path class="ics" d="M16 16l5 5"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect class="icf" x="4" y="9" width="16" height="11" rx="1.500"/><rect class="ics" x="4" y="9" width="16" height="11" rx="1.500"/><rect class="ics" x="3" y="6" width="18" height="3" rx="1"/><path class="ics" d="M12 6v14M12 6c-1-3-5-3.500-5-1.500S10 6 12 6zM12 6c1-3 5-3.500 5-1.500S14 6 12 6z"/></symbol>
+<symbol id="i-house" viewBox="0 0 24 24"><path class="icf" d="M4 11l8-7 8 7v9H4z"/><path class="ics" d="M4 11l8-7 8 7v9H4z"/><path class="ics" d="M10 20v-5h4v5"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path class="icf" d="M12 3l2.200 6.300L21 12l-6.800 2.700L12 21l-2.200-6.300L3 12l6.800-2.700z"/><path class="ics" d="M12 3l2.200 6.300L21 12l-6.800 2.700L12 21l-2.200-6.300L3 12l6.800-2.700z"/></symbol>
+</defs></svg>
+<div class="icons">
+<div><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg>chat</div><div><svg viewBox="0 0 24 24"><use href="#i-gift"/></svg>gift</div><div><svg viewBox="0 0 24 24"><use href="#i-house"/></svg>house</div><div><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>clock</div><div><svg viewBox="0 0 24 24"><use href="#i-search"/></svg>search</div><div><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg>phone</div><div><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>spark</div>
+</div>
+<div class="panel" style="margin-top:16px"><ul class="list"><li>Stroke 2 px Snout Black, rounded caps and joins, on a 24 px grid.</li><li>Fill is the game fill, shifted 2.2 px down and right. It is never centred on the line.</li><li>Icons sit at the left of their card, not centred. The setup cards use chat, gift and house.</li><li>The icons here are shown in the Secret Santa coral. On a game page they take that game’s fill.</li></ul></div>
+</section>
+
+<section id="illustration"><div class="eyebrow">06</div><h2>Illustration language</h2>
+<p class="lead">One hero object per game, drawn as clean outlined SVG. Ordinary objects, traced from a reference photo of the real thing, then redrawn by hand in code. It should feel like a sticker you could pick up.</p>
+<div class="heroes">
+<div class="hc"><div class="stage" style="--c:#FF8A73"><img src="art/secret_santa_tree_anim.svg" alt="Christmas tree with gifts"></div><div class="cap"><b>Secret Santa</b>Christmas tree and a pile of gifts. The gifts fall and settle.</div></div>
+<div class="hc"><div class="stage" style="--c:#F6CF6B"><div class="sl" data-svg="ww" role="img" aria-label="Magnifying glass over three text bars"></div></div><div class="cap"><b>Who’s Who</b>Magnifier over three implied text bars. Only the glass moves, drifting over the bars in a loop.</div></div>
+<div class="hc"><div class="stage" style="--c:#FFA3D7"><div class="sl" data-svg="mo" role="img" aria-label="Airmail envelope with a clue card"></div></div><div class="cap"><b>Secret Office Missions</b>Envelope that opens, with a clue card inside. The card rises out, goes back, and the flap closes.</div></div>
+<div class="hc"><div class="stage" style="--c:#A6F5B8"><div class="sl" data-svg="sc" role="img" aria-label="Pair of running sneakers"></div></div><div class="cap"><b>Step Challenge</b>Pair of sneakers. The two shoes step in turn.</div></div>
+</div>
+
+<h3>Anatomy of a drawing</h3>
+<div class="anat">
+<div><b>Outline</b><span>One Snout Black line, about 4.5 px at the 1600 × 1100 canvas, round caps and joins. Small details such as folds and stitches are single strokes at about 3.6 px.</span></div>
+<div><b>Fill</b><span>Flat colour, or a smooth two-stop gradient on the main object only: soft to fill, or fill to strong. Side faces and secondary parts are flat.</span></div>
+<div><b>Depth</b><div class="dpth"><i></i><i></i></div><span>A copy of the main shape, shifted about 12 px down and right, in the game’s strong colour. Under white objects use Scrubs Blue Light.</span></div>
+<div><b>Text is implied</b><div class="bars"><i style="background:#C5D0FF;border:2px solid #1A000A"></i><i style="background:#8D98EC;border:2px solid #1A000A;width:80%"></i><i style="background:#C5D0FF;border:2px solid #1A000A;width:60%"></i></div><span>Rounded bars in Scrubs Blue Light or Scrubs Blue. Never real words, logos or lettering copied from a reference.</span></div>
+<div><b>Perspective</b><span>Boxes and stacks are real 3D boxes seen through one camera with one vanishing point, so every box closes and rests on the one below.</span></div>
+<div><b>Pattern</b><span>Two or three patterned objects per scene at most, dots or stripes. Everything else is plain.</span></div>
+</div>
+
+<h3>Palette in drawings</h3>
+<p>The page’s own game colours plus the four illustration base colours, and nothing else. No derived shades. Depth and side faces reuse a colour already in the set.</p>
+<div class="pal-row"><span><i style="background:#FF8A73"></i>Game fill</span><span><i style="background:#E5533A"></i>Game strong</span><span><i style="background:#FFC4B8"></i>Game soft</span><span><i style="background:#EBFF00"></i>Tennis Yellow</span><span><i style="background:#C5D0FF"></i>Scrubs Blue Light</span><span><i style="background:#8D98EC"></i>Scrubs Blue</span><span><i style="background:#FDFFF3"></i>Claw White</span><span><i style="background:#1A000A"></i>Snout Black</span></div>
+<p class="note">Tennis Yellow is for small accents only: bow tips, a pendant, a star, a lace tip, a dot on a question mark.</p>
+
+<h3>Canvas and delivery</h3>
+<ul class="list" style="margin-top:10px"><li>Canvas 1600 × 1100 px, centred, even margins. On the page the background is transparent.</li><li>One clean SVG with editable shapes. Gradients stay as linear gradients so they open correctly in Illustrator.</li><li>Also keep a PNG and a transparent PNG of each drawing.</li><li>Grain is off. No texture noise, no speed lines, no scattered dots.</li></ul>
+
+<h3>Choosing a subject</h3>
+<ul class="list" style="margin-top:10px"><li>An everyday object people recognise at a glance, such as a magnifier, an envelope, sneakers or a tree.</li><li>Fewer elements beat a busy scene: three text bars, one card, one small question mark.</li><li>Keep it physically believable, with correct perspective and objects that rest on each other.</li><li>No people. The palette has no skin tone, and a portrait did not fit the object style.</li></ul>
+
+<h3>On the game cards</h3>
+<p class="note">The same drawings sit on the cards at the bottom of every page, in a 140 px slot. They never touch the title, and the three cards are the same height. On hover the drawing moves, and it keeps moving while the pointer stays on the card.</p>
+<div class="gcards">
+<div class="gcard" style="--c:#F6CF6B"><div class="art"><div class="sl" data-svg="ww"></div></div><b>Who’s Who</b><span>A daily clue about a colleague</span></div>
+<div class="gcard" style="--c:#FFA3D7"><div class="art"><div class="sl" data-svg="mo"></div></div><b>Secret Office Missions</b><span>Small secret missions, one reveal</span></div>
+<div class="gcard" style="--c:#A6F5B8"><div class="art"><div class="sl" data-svg="sc"></div></div><b>Step Challenge</b><span>Office vs office, one live board</span></div>
+</div>
+<ul class="list" style="margin-top:22px"><li>Card background is the game fill, radius 16 px, with a hard Snout Black shadow offset 12 px right and 12 px up. A Play button sits in a drawer under the card.</li><li>Title 30 px, one line of description at 15 px, centred.</li><li>Clicking a card opens that game’s page: the hero and the demo section change, and the page takes the game colour.</li></ul>
+
+<h3>In the hero</h3>
+<ul class="list" style="margin-top:10px"><li>Each hero drawing loops by itself. On the Who’s Who, Secret Office Missions and Step Challenge pages the whole drawing also floats 6 px up and down, slowly.</li><li>A white message bubble floats over the drawing and drifts a few pixels side to side. It shows the game’s channel and its first message, such as <code>#step-challenge</code> and “Step Challenge starts Monday 👟”. Its position is chosen for each drawing so it never hides the main shape: beside the lens on Who’s Who, to the right of the envelope on Secret Office Missions, under the shoes on Step Challenge. It leans left by 6° on most pages and right by 6° on Secret Office Missions.</li><li>Under reduced motion everything holds still.</li></ul>
+
+<h3>Moving the drawings</h3>
+<ul class="list" style="margin-top:10px"><li>Animate one part, not the whole drawing: the glass, the shoes, the envelope flap and card, the gifts.</li><li>Who’s Who: the magnifier drifts around over the text bars. Step Challenge: the two shoes step in turn. Secret Office Missions: the front flap opens, the card rises out of the envelope, then it slides back and the flap closes. Secret Santa: the gifts fall in and settle while the tree stays still.</li><li>Opening and closing use different timing: the envelope opens flap first, then card, and closes card first, then flap.</li><li>Cards and heroes use inline SVG so the parts can move. The Secret Santa hero is an image file with its animation inside.</li></ul>
+
+<div class="rule">
+<div class="panel do"><h4>Do</h4><ul class="list"><li>Trace a real photo, then simplify.</li><li>Keep every shape outlined the same weight.</li><li>Leave room around the drawing so it never touches text.</li></ul></div>
+<div class="panel dont"><h4>Don’t</h4><ul class="list"><li>No faked 3/4 views made by sweeping a side view. Draw it again.</li><li>No portraits or faces.</li><li>No logos, brand marks or copied lettering. The airmail envelope’s printed words and plane were dropped.</li></ul></div>
+</div></section>
+
+<section id="motion"><div class="eyebrow">07</div><h2>Motion</h2>
+<p class="lead">Light and quick, in the spirit of monday.com. Everything uses one set of durations.</p>
+<div class="dur"><div><b>120 ms</b><span>Press and release</span></div><div><b>200 ms</b><span>Colour and UI changes</span></div><div><b>350 ms</b><span>Open and close</span></div><div><b>450 ms</b><span>Enter</span></div><div><b>600 ms</b><span>Reveal</span></div></div>
+<ul class="list" style="margin-top:20px"><li>Easing <code>cubic-bezier(.2,.8,.2,1)</code> for enter and reveal, <code>ease-out</code> for press.</li><li>Sections reveal when they enter the screen and play again when you scroll back to them. Counters start from zero again.</li><li>Groups arrive one after the other, 0.18 s apart: setup cards, quotes.</li><li>The demo steps advance by themselves while visible and stop for good once someone picks a step.</li><li>Snow falls on the Secret Santa page only. It belongs to the page, not to the window, so it scrolls with the content. It has three layers of flakes in one size, a few per tile, falling at different speeds with a slight sway. The footer’s “Pause animations” button stops it.</li><li>Honour <code>prefers-reduced-motion</code>: no reveal, no float, no snow, no autoplay.</li></ul></section>
+
+<section id="layout"><div class="eyebrow">08</div><h2>Layout</h2>
+<div class="tw"><table>
+<tr><th>Item</th><th>Rule</th></tr>
+<tr><td>Content width</td><td>Max 1200 px, 24 px side padding</td></tr>
+<tr><td>Section spacing</td><td><code>clamp(64px, 8vw, 104px)</code> top and bottom</td></tr>
+<tr><td>Section background</td><td>Flat. Alternates page, Alt section, page. The hero is the only gradient.</td></tr>
+<tr><td>Radius</td><td>Pills for controls and tags. 16 px for steps, price tiers and game cards. 22 px for panels, quotes and the message window. 36 px for the closing banner.</td></tr>
+<tr><td>Page background</td><td>White. The hero gradient and the Alt section tint are the only other grounds.</td></tr>
+<tr><td>Closing banner and footer</td><td>Banner floats with a margin and rounded corners. The footer is full width in <code>#1A000A</code> with Claw White text.</td></tr>
+<tr><td>Game card grid</td><td>Three equal cards, equal height. Drawing in a 140 px slot, never touching the title.</td></tr>
+<tr><td>Page order</td><td>Hero, logos, demo, setup, HR view, pricing, quotes, FAQ, closing banner, other games</td></tr>
+</table></div></section>
+
+<section id="responsive"><div class="eyebrow">09</div><h2>Responsive</h2>
+<p class="lead">One layout, three steps down. Grids drop columns, the hero stacks, and the demo becomes a plain list.</p>
+<div class="tw"><table>
+<tr><th>Width</th><th>What changes</th></tr>
+<tr><td>Above 980 px</td><td>Setup cards, quotes and game cards in 3 columns. HR numbers in 4. Prices in 6. The demo shows the step list beside one message window.</td></tr>
+<tr><td>980 px and below</td><td>The hero stacks to one column, with the drawing under the text. The menu links and Log in are hidden. HR numbers, setup cards, quotes and game cards go to 2 columns, prices to 3. The demo stops auto-playing and becomes a vertical list: each step with its own message window under it.</td></tr>
+<tr><td>900 px and below</td><td>Quotes go to one column and the price tiers stretch to equal height. The Secret Santa message text gets smaller.</td></tr>
+<tr><td>620 px and below</td><td>Everything in 1 column, prices in 2. The hero headline is 46 px.</td></tr>
+</table></div>
+<ul class="list" style="margin-top:18px"><li>Side padding stays at least 16 px. Content max width is 1200 px.</li><li>The card drawers and the drawing motion on game cards open on hover only. On a touch screen there is no hover, so tapping a card opens that game’s page and the drawer is not seen. This is still to be decided.</li><li>Phone widths have not been checked on every page, and the hero message positions are set for desktop. Treat these rules as the intended behaviour.</li></ul></section>
+
+<section id="access"><div class="eyebrow">10</div><h2>Accessibility and contrast</h2>
+<p class="lead">Text is always Snout Black on the game fill. The strong colour is for lines, numbers and marks, never for small text.</p>
+<div class="tw"><table>
+<tr><th>Game</th><th>Ink on fill</th><th>Ink on soft</th><th>Strong on white</th></tr>
+<tr><td>Secret Santa</td><td>8.7 : 1</td><td>13.2 : 1</td><td>3.7 : 1</td></tr>
+<tr><td>Secret Office Missions</td><td>10.9 : 1</td><td>15.7 : 1</td><td>3.6 : 1</td></tr>
+<tr><td>Who’s Who</td><td>13.4 : 1</td><td>16.8 : 1</td><td>2.6 : 1</td></tr>
+<tr><td>Step Challenge</td><td>15.6 : 1</td><td>17.8 : 1</td><td>2.4 : 1</td></tr>
+<tr><td>Shoutouts</td><td>18.0 : 1</td><td>18.9 : 1</td><td>1.8 : 1</td></tr>
+<tr><td>Recognition</td><td>7.5 : 1</td><td>13.2 : 1</td><td>5.3 : 1</td></tr>
+<tr><td>Coffee Roulette</td><td>11.2 : 1</td><td>15.1 : 1</td><td>2.9 : 1</td></tr>
+<tr><td>Truth or Bluff</td><td>8.7 : 1</td><td>13.6 : 1</td><td>4.9 : 1</td></tr>
+</table></div>
+<p class="note">Calculated with the WCAG formula. Ink on every fill passes AA and AAA for normal text. Strong on white is below 4.5 : 1 for most games, so use it only for large numbers, icons and decorative marks.</p>
+<div class="tw"><table>
+<tr><th>Text</th><th>On</th><th>Ratio</th></tr>
+<tr><td>Ink <code>#1A000A</code></td><td>White</td><td>20.0 : 1</td></tr>
+<tr><td>Ink 2 <code>#4D3A44</code></td><td>White / Alt section</td><td>10.5 : 1 / 9.3 : 1</td></tr>
+<tr><td>Mute <code>#75636C</code></td><td>White / Alt section</td><td>5.6 : 1 / 5.0 : 1</td></tr>
+<tr><td>Claw White <code>#FDFFF3</code></td><td>Ink (footer, closing banner)</td><td>19.8 : 1</td></tr>
+</table></div>
+<ul class="list" style="margin-top:18px"><li>Keyboard focus shows a 3 px ring in iris <code>#5B47F5</code> with a 3 px offset. Game cards and steps can be reached with the keyboard, and Enter or Space opens them.</li><li>Pressable controls are at least 44 px high. The FAQ arrows are 44 × 44 px.</li><li>Drawings and decorative flakes are hidden from screen readers. A drawing’s meaning is always also in the text beside it.</li><li>Under reduced motion all looping animation, snow and autoplay are off, and a “Play animations” button lets a visitor turn them on.</li></ul></section>
+
+<section id="copy"><div class="eyebrow">11</div><h2>Copy</h2>
+<ul class="list" style="margin-top:20px"><li><b>Only Vilo’s own text.</b> Headlines, descriptions, steps and message examples come from the Vilo game pages. Nothing is invented. If something is missing it is marked in square brackets, like <code>[Copy from Vilo: off season]</code>.</li><li><b>Examples are examples.</b> Names, numbers and dates in demos are illustrative, and the page footer says so. Examples stay neutral, with no holiday references unless the game is a holiday game.</li><li><b>Sentence case.</b> Headlines in two parts: a bold first line and a regular second line.</li><li><b>Messages sound like a person at work:</b> short, friendly, one emoji at most. The sender is Vilo, a colleague, or a channel name such as <code>#step-challenge</code>.</li><li><b>No real words inside drawings.</b> Implied text bars only.</li></ul>
+<h3>Hero message copy per game</h3>
+<div class="tw"><table>
+<tr><th>Game</th><th>Channel</th><th>Message</th></tr>
+<tr><td>Secret Santa</td><td><code>#secret-santa</code></td><td>Secret Santa is happening! 🎅</td></tr>
+<tr><td>Who’s Who</td><td><code>#whos-who</code></td><td>Who’s Who starts Monday 🎲</td></tr>
+<tr><td>Secret Office Missions</td><td><code>#office-missions</code></td><td>Mission week is set 🕵️</td></tr>
+<tr><td>Step Challenge</td><td><code>#step-challenge</code></td><td>Step Challenge starts Monday 👟</td></tr>
+</table></div></section>
+
+<section id="tokens"><div class="eyebrow">12</div><h2>Tokens</h2>
+<p class="lead">The names used in the page’s CSS. The three game variables are set per page.</p>
+<div class="tw"><table>
+<tr><th>Token</th><th>Value</th><th>Use</th></tr>
+<tr><td><code>--g</code></td><td>per game</td><td>Game fill: buttons, highlights, card background, message border</td></tr>
+<tr><td><code>--gs</code></td><td>per game</td><td>Game strong: step numbers, marks, depth</td></tr>
+<tr><td><code>--g-soft</code></td><td>per game</td><td>Soft tint, light end of gradients</td></tr>
+<tr><td><code>--ink</code></td><td>#1A000A</td><td>Text, outlines, hard shadows</td></tr>
+<tr><td><code>--ink2</code></td><td>#4D3A44</td><td>Body text</td></tr>
+<tr><td><code>--mute</code></td><td>#75636C</td><td>Captions</td></tr>
+<tr><td><code>--paper</code></td><td>#FFFFFF</td><td>Page background</td></tr>
+<tr><td><code>--line</code></td><td>#1A000A</td><td>Outlines of pressable items. Flat items use a literal #E3E1EC hairline.</td></tr>
+<tr><td><code>--r14 / --r20 / --r28</code></td><td>12 / 16 / 22 px</td><td>Radii for small panels, steps and tiers, large panels</td></tr>
+<tr><td><code>--br</code></td><td>18 px</td><td>Message bubble radius</td></tr>
+<tr><td><code>--ease</code></td><td>cubic-bezier(.2,.8,.2,1)</td><td>Enter, open and reveal</td></tr>
+<tr><td><code>--d-press / ui / open / enter / reveal</code></td><td>.12 / .2 / .35 / .45 / .6 s</td><td>Durations</td></tr>
+<tr><td><code>--head / --body</code></td><td>Familjen Grotesk / Hanken Grotesk</td><td>Typefaces, with DM Mono for labels</td></tr>
+</table></div></section>
+
+<section id="games"><div class="eyebrow">13</div><h2>Adding a game</h2>
+<p class="lead">A new game is one record, one colour set and one drawing. Nothing else changes.</p>
+<div class="panel" style="margin-top:20px"><ol class="list" style="list-style:decimal">
+<li>Pick the three game colours: fill, strong and soft. Check that fill reads against Snout Black outlines.</li>
+<li>Choose one everyday object and draw it with this guide. Name it <code>game_name.svg</code>.</li>
+<li>Add the game’s hero copy, four demo steps and example messages, using only text from Vilo’s own game page.</li>
+<li>Add a card for it in the games grid, with its drawing and one hover animation.</li>
+</ol></div>
+<p class="note">Open items from Vilo: official game colours, the main call to action label, season states, and Slack permissions text.</p>
+</section>
+</main></div>
+<template id="svg-ww"><svg class="ww-art" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="260 110 1000 920"><defs><linearGradient id="ww-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEAB8"/><stop offset="0.5" stop-color="#F6CF6B"/><stop offset="1" stop-color="#C9971A"/></linearGradient><linearGradient id="ww-handle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAB8"/><stop offset="0.45" stop-color="#F6CF6B"/><stop offset="1" stop-color="#C9971A"/></linearGradient></defs><g transform="translate(-10 -15)"><g class="rows"><g transform="rotate(-6 800 560)"><rect x="330" y="244" width="620" height="68" rx="34" fill="#B79BFF" stroke="none"/><rect x="280" y="396" width="860" height="68" rx="34" fill="#7B55E8" stroke="none"/><rect x="420" y="548" width="500" height="68" rx="34" fill="#DCCDFF" stroke="none"/></g></g><g class="mag"><g transform="translate(712 462) rotate(45)"><rect x="288" y="-26" width="92" height="52" fill="#8D98EC" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="370" y="-44" width="360" height="88" rx="40" fill="#C9971A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(700 450) rotate(45)"><rect x="288" y="-26" width="92" height="52" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><line x1="310" y1="-26" x2="310" y2="26" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><line x1="328" y1="-26" x2="328" y2="26" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><rect x="370" y="-44" width="360" height="88" rx="40" fill="url(#ww-handle)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M410,-24 L670,-24" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" fill="none"/><path d="M414,-14 L660,-14" stroke="#FDFFF3" stroke-width="6" stroke-linecap="round" fill="none"/></g><path d="M400,450 a300,300 0 1,0 600,0 a300,300 0 1,0 -600,0 Z M445,450 a255,255 0 1,1 510,0 a255,255 0 1,1 -510,0 Z" transform="translate(13 13)" fill="#C9971A" fill-rule="evenodd" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><clipPath id="ww-lens"><circle cx="700" cy="450" r="255"/></clipPath><g clip-path="url(#ww-lens)"><path d="M481.05161935688335,450 " fill="none" stroke="none"/><path d="M445,450 A255,255 0 0,0 700,705 A318.75,318.75 0 0,1 445,450 Z" transform="rotate(10 700 450)" fill="none" stroke="none"/><path d="M707.7,229.1 A221,221 0 0,1 874.2,313.9" fill="none" stroke="#1A000A" stroke-width="5" stroke-linecap="round"/><path d="M895.1,346.2 A221,221 0 0,1 907.7,374.4" fill="none" stroke="#1A000A" stroke-width="5" stroke-linecap="round"/></g><path d="M400,450 a300,300 0 1,0 600,0 a300,300 0 1,0 -600,0 Z M445,450 a255,255 0 1,1 510,0 a255,255 0 1,1 -510,0 Z" fill="url(#ww-rim)" fill-rule="evenodd" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M459.7,311.2 A277.5,277.5 0 0,1 605.1,189.2" fill="none" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round"/></g></g></svg></template>
+<template id="svg-sc"><svg class="sc-art" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1300" height="800" viewBox="200 130 1300 800"><defs><linearGradient id="sc-heel" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6FBDD" /><stop offset="0.45" stop-color="#A6F5B8" /><stop offset="1" stop-color="#3FBF6A" /></linearGradient><linearGradient id="sc-knit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDFFF3" /><stop offset="1" stop-color="#D6FBDD" /></linearGradient></defs><g class="shoe shoe-a"><g transform="translate(100 70) scale(0.64) rotate(14 810 520)"><g transform="translate(13 13)"><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /></g><path d="M902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 L1308,262 C1286,220 1224,206 1174,242 C1084,314 964,332 876,292 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M778,278 C784,252 826,244 846,262 L902,322 L828,372 L792,334 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M786,282 C790,262 822,256 836,270 L852,292 C832,284 808,288 794,302 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="url(#sc-knit)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M930,420 C795.0,440 690.0,480 630,520 C696.0,496 804.0,460 930,442 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M950,470 C828.5,490 734.0,530 680,570 C739.4,546 836.6,510 950,492 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M960,522 C852.0,542 768.0,582 720,622 C772.8,598 859.2,562 960,544 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M955,572 C860.5,592 787.0,632 745,672 C791.2,648 866.8,612 955,594 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1030,346 C1110,338 1170,306 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C1010,560 990,470 1030,346 Z" fill="url(#sc-heel)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M1236.0,262.0 C1252,360 1240,470 1206,582.0 L1226,578.0 C1262,466 1272,356 1258.0,256.0 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1249.6,268.8 C1286,360 1274,470 1240,575.2 L1260,571.2 C1296,466 1306,356 1271.6,262.8 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1262,252 C1270,214 1298,196 1322,206 C1338,214 1340,240 1334,292 C1316,262 1290,250 1262,252 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M910,348 C1000,386 1120,366 1206,300" fill="none" stroke="#1A000A" stroke-width="3.15" stroke-dasharray="2 14" stroke-linecap="round" /><path d="M430,512 C540,480 650,430 760,354 L800,330 L828,372 C760,418 650,488 470,560 C440,548 428,530 430,512 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><ellipse cx="486" cy="524" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="560" cy="494" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="634" cy="458" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="706" cy="414" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="774" cy="368" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M520,742 C700,730 900,690 1060,650 C1160,626 1230,632 1262,664 C1180,654 1100,668 1010,694 C860,738 700,760 560,762 C530,762 515,752 520,742 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M268,782 C280,814 304,832 345,834 L1255,834 C1320,834 1360,806 1370,770 C1300,790 1240,796 1180,796 L420,796 C340,796 300,792 268,782 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><rect x="1150" y="690" width="96" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1168,708 L1220,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><rect x="1268" y="690" width="70" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1286,708 L1312,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><ellipse cx="778" cy="344" rx="13" ry="11" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" /><rect x="736" y="450" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(14 744 454)" /><rect x="792" y="460" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(-8 800 464)" /></g></g><g class="shoe shoe-b"><g transform="translate(500 340) scale(0.64) rotate(-20 810 520)"><g transform="translate(13 13)"><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /></g><path d="M902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 L1308,262 C1286,220 1224,206 1174,242 C1084,314 964,332 876,292 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M778,278 C784,252 826,244 846,262 L902,322 L828,372 L792,334 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M786,282 C790,262 822,256 836,270 L852,292 C832,284 808,288 794,302 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M300,700 C246,662 262,566 380,528 C480,497 600,452 700,392 L792,334 L902,322 C990,362 1110,344 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 Z" fill="url(#sc-knit)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M930,420 C795.0,440 690.0,480 630,520 C696.0,496 804.0,460 930,442 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M950,470 C828.5,490 734.0,530 680,570 C739.4,546 836.6,510 950,492 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M960,522 C852.0,542 768.0,582 720,622 C772.8,598 859.2,562 960,544 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M955,572 C860.5,592 787.0,632 745,672 C791.2,648 866.8,612 955,594 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1030,346 C1110,338 1170,306 1200,272 C1250,236 1312,250 1334,292 C1364,362 1370,470 1356,566 C1250,570 1130,590 1040,612 C1010,560 990,470 1030,346 Z" fill="url(#sc-heel)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M1236.0,262.0 C1252,360 1240,470 1206,582.0 L1226,578.0 C1262,466 1272,356 1258.0,256.0 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1249.6,268.8 C1286,360 1274,470 1240,575.2 L1260,571.2 C1296,466 1306,356 1271.6,262.8 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M1262,252 C1270,214 1298,196 1322,206 C1338,214 1340,240 1334,292 C1316,262 1290,250 1262,252 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M910,348 C1000,386 1120,366 1206,300" fill="none" stroke="#1A000A" stroke-width="3.15" stroke-dasharray="2 14" stroke-linecap="round" /><path d="M430,512 C540,480 650,430 760,354 L800,330 L828,372 C760,418 650,488 470,560 C440,548 428,530 430,512 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><ellipse cx="486" cy="524" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="560" cy="494" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="634" cy="458" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="706" cy="414" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><ellipse cx="774" cy="368" rx="9" ry="7" fill="#3FBF6A" stroke="#1A000A" stroke-width="3.15" /><path d="M300,700 C262,716 256,806 345,834 L1255,834 C1335,834 1378,792 1372,712 L1356,566 C1250,570 1130,590 1040,612 C900,646 790,690 690,700 L300,700 Z" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M520,742 C700,730 900,690 1060,650 C1160,626 1230,632 1262,664 C1180,654 1100,668 1010,694 C860,738 700,760 560,762 C530,762 515,752 520,742 Z" fill="#A6F5B8" stroke="#1A000A" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M268,782 C280,814 304,832 345,834 L1255,834 C1320,834 1360,806 1370,770 C1300,790 1240,796 1180,796 L420,796 C340,796 300,792 268,782 Z" fill="#3FBF6A" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><rect x="1150" y="690" width="96" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1168,708 L1220,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><rect x="1268" y="690" width="70" height="58" rx="29" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" /><path d="M1286,708 L1312,708" stroke="#FDFFF3" stroke-width="7" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M482,528 Q505.0,483.0 546,468" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M556,498 Q579.0,450.0 620,432" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M630,462 Q652.0,410.0 692,388" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M702,418 Q722.0,365.0 760,342" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q698,350 708,294" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M708,294 Q758,274 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q838,364 848,314" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M848,314 Q808,284 778,344" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q748,394 744,454" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#1A000A" stroke-width="22" stroke-linecap="round" /><path d="M778,344 Q798,404 800,464" fill="none" stroke="#FDFFF3" stroke-width="12" stroke-linecap="round" /><ellipse cx="778" cy="344" rx="13" ry="11" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" /><rect x="736" y="450" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(14 744 454)" /><rect x="792" y="460" width="16" height="26" rx="6" fill="#EBFF00" stroke="#1A000A" stroke-width="3.15" transform="rotate(-8 800 464)" /></g></g></svg></template>
+<template id="svg-mo"><svg class="mo-art" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="700" height="720" viewBox="300 95 700 775"><defs><linearGradient id="mo-pinkg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD9EE"/><stop offset="1" stop-color="#FFA3D7"/></linearGradient><linearGradient id="mo-cardg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C5D0FF"/><stop offset="1" stop-color="#8D98EC"/></linearGradient><pattern id="mo-air" width="64" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">  <rect width="64" height="64" fill="#FDFFF3"/>  <rect x="0" width="20" height="64" fill="#8D98EC"/><rect x="32" width="20" height="64" fill="#E0509B"/></pattern><pattern id="mo-air2" width="64" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">  <rect width="64" height="64" fill="url(#mo-pinkg)"/>  <rect x="0" width="20" height="64" fill="#8D98EC"/><rect x="32" width="20" height="64" fill="#E0509B"/></pattern></defs><g transform="translate(330 400) rotate(-8)"><g class="mo-flap-back"><path d="M0,0 L580,0 L510,-176 C500,-194 480,-200 460,-200 L130,-200 C110,-200 92,-194 82,-176 Z" transform="translate(12 12)" fill="#E0509B" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,0 L580,0 L510,-176 C500,-194 480,-200 460,-200 L130,-200 C110,-200 92,-194 82,-176 Z" fill="#FFD9EE" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g><g class="mo-letter"><g transform="translate(55 45)"><rect x="12" y="12" width="470" height="330" rx="22" fill="#C5D0FF" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect width="470" height="330" rx="22" fill="#FDFFF3" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="22" y="22" width="426" height="286" rx="12" fill="none" stroke="#E0509B" stroke-width="4" stroke-dasharray="14 12" stroke-linecap="round"/><path d="M203.0,133.0 C203.0,89.0 267.0,89.0 267.0,133.0 C267.0,161.0 235.0,167.0 235.0,191.0" fill="none" stroke="#1A000A" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><path d="M203.0,133.0 C203.0,89.0 267.0,89.0 267.0,133.0 C267.0,161.0 235.0,167.0 235.0,191.0" fill="none" stroke="#E0509B" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/><circle cx="235.0" cy="229.0" r="14" fill="#EBFF00" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g></g><rect x="12" y="12" width="580" height="420" rx="8" fill="#E0509B" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect width="580" height="420" rx="8" fill="url(#mo-pinkg)" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><clipPath id="mo-fe"><rect width="580" height="420" rx="8"/></clipPath><g clip-path="url(#mo-fe)"><rect x="0" y="392" width="580" height="28" fill="url(#mo-air2)"/><rect x="0" y="0" width="28" height="420" fill="url(#mo-air2)"/><rect x="552" y="0" width="28" height="420" fill="url(#mo-air2)"/></g><rect width="580" height="420" rx="8" fill="none" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><g class="mo-flap-front"><path d="M0,0 L580,0 L290,215 Z" fill="#FFD9EE" stroke="#1A000A" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></g></g></svg></template>
+<script>
+document.querySelectorAll('[data-svg]').forEach(function(el){var t=document.getElementById('svg-'+el.dataset.svg);if(t)el.appendChild(t.content.firstElementChild.cloneNode(true))});
+</script>

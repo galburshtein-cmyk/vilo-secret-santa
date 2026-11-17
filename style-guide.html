@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Vilo Play Style Guide</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -177,7 +179,7 @@ tr:last-child td{border-bottom:0}
 </table></div>
 <p class="note">The game colours are our working set. Vilo has not confirmed an official list, so treat them as proposed until it does.</p>
 <h3>Hero background</h3>
-<div class="panel" style="margin-top:14px;background:linear-gradient(100deg,#FDFFF3 0%,#C5D0FF 48%,#FF8A73 100%);border:0;color:#1A000A"><p style="color:#1A000A"><code style="background:rgba(255,255,255,.7)">linear-gradient(100deg, #FDFFF3 0%, #C5D0FF 48%, GAME-FILL 100%)</code><br>The only gradient on the page. Everything below the hero is flat.</p></div>
+<div class="panel" style="margin-top:14px;background:linear-gradient(100deg,#FDFFF3 0%,#C5D0FF 48%,#FF8A73 100%);border:0;color:#1A000A"><p style="color:#1A000A"><code style="background:rgba(255,255,255,.7)">linear-gradient(100deg, #FDFFF3 0%, #C5D0FF 48%, GAME-FILL 100%)</code><br>The main gradient on the page. It runs up behind the menu bar. Below the hero, sections are flat; the only other soft gradients are the coloured frame around the demo window on desktop and the glow in the closing banner.</p></div>
 <div class="rule">
 <div class="panel do"><h4>Do</h4><ul class="list"><li>One game colour per page, plus base colours.</li><li>Alternate section backgrounds: page, Alt section, page.</li><li>Use Snout Black for every outline.</li></ul></div>
 <div class="panel dont"><h4>Don’t</h4><ul class="list"><li>Don’t mix two game colours on one page.</li><li>Don’t add transparent or derived shades of brand colours.</li><li>Don’t use the old guide colours (#3546F0, #FFD83A).</li></ul></div>
@@ -193,7 +195,7 @@ tr:last-child td{border-bottom:0}
 <p class="note">The brand book names Gabarito for headings. The page uses Familjen Grotesk instead, loaded from a local file (<code>fonts/FamiljenGrotesk-Variable.ttf</code>, weights 400–700, SIL Open Font License). Hanken Grotesk is the body face in both. Gabarito and Bricolage Grotesque are not used on the page.</p>
 <div class="tw"><table>
 <tr><th>Role</th><th>Size</th><th>Notes</th></tr>
-<tr><td>H1 (hero)</td><td><code>clamp(44px, 5.6vw, 80px)</code></td><td>Familjen 700, line 1.1. Two lines: the first in bold, the second in regular weight 400. No highlight. On desktop the second line never wraps. 46 px under 620 px wide.</td></tr>
+<tr><td>H1 (hero)</td><td><code>clamp(44px, 5.6vw, 80px)</code></td><td>Familjen 700, line 1.1. Two lines: the first in bold, the second in regular weight 400. No highlight. On desktop the second line never wraps. Under 620 px wide it scales from 36 to 46 px and may wrap.</td></tr>
 <tr><td>H2 (section)</td><td><code>clamp(36px, 5vw, 62px)</code></td><td>Same two-weight pattern: bold first part, regular last words.</td></tr>
 <tr><td>Game card title</td><td>30 px</td><td>Familjen 700</td></tr>
 <tr><td>Setup card title</td><td>26 px</td><td>Familjen 700</td></tr>
@@ -231,7 +233,7 @@ tr:last-child td{border-bottom:0}
 <ul class="list" style="margin-top:16px"><li>Corner radius: 16 px for steps and price tiers, 22 px for panels, quotes and the message window. Controls and tags are pills.</li><li>Tags and eyebrows are transparent with a 1 px line at 28 % ink, uppercase bold mono. They are never clickable.</li></ul></div>
 <h3>Slack message</h3>
 <div class="panel" style="margin-top:14px"><div class="bub"><em>#step-challenge</em><b>Step Challenge starts Monday 👟</b><br>Tap once to link Apple Health, Google Fit or your watch.</div>
-<ul class="list" style="margin-top:16px"><li>White bubble, 2 px border in the game fill, tail corner bottom left, radius 18 px with a 6 px corner at the bottom left.</li><li>Sender name on top in 12 px. Padding: 16 px top, 20 px sides, 18 px bottom.</li><li>Real example copy from the Vilo game pages. Names and numbers are examples.</li></ul></div>
+<ul class="list" style="margin-top:16px"><li>White bubble, 2 px border in the game fill, tail corner bottom left, radius 18 px with a 6 px corner at the bottom left.</li><li>Sender name on top in 12 px. Padding: 16 px top, 20 px sides, 18 px bottom (12 / 12 / 14 px on phones).</li><li>Real example copy from the Vilo game pages. Names and numbers are examples.</li></ul></div>
 <h3>Other page elements</h3>
 <div class="tw"><table>
 <tr><th>Element</th><th>Rule</th></tr>
@@ -330,7 +332,7 @@ tr:last-child td{border-bottom:0}
 <tr><th>Item</th><th>Rule</th></tr>
 <tr><td>Content width</td><td>Max 1200 px, 24 px side padding</td></tr>
 <tr><td>Section spacing</td><td><code>clamp(64px, 8vw, 104px)</code> top and bottom</td></tr>
-<tr><td>Section background</td><td>Flat. Alternates page, Alt section, page. The hero is the only gradient.</td></tr>
+<tr><td>Section background</td><td>Flat. Alternates page, Alt section, page. The hero carries the gradient; the demo window frame and the closing banner have a soft one too.</td></tr>
 <tr><td>Radius</td><td>Pills for controls and tags. 16 px for steps, price tiers and game cards. 22 px for panels, quotes and the message window. 36 px for the closing banner.</td></tr>
 <tr><td>Page background</td><td>White. The hero gradient and the Alt section tint are the only other grounds.</td></tr>
 <tr><td>Closing banner and footer</td><td>Banner floats with a margin and rounded corners. The footer is full width in <code>#1A000A</code> with Claw White text.</td></tr>
@@ -339,15 +341,15 @@ tr:last-child td{border-bottom:0}
 </table></div></section>
 
 <section id="responsive"><div class="eyebrow">09</div><h2>Responsive</h2>
-<p class="lead">One layout, three steps down. Grids drop columns, the hero stacks, and the demo becomes a plain list.</p>
+<p class="lead">One layout, three steps down. Grids drop columns, the hero stacks with the drawing first, the demo steps become tabs, and the game cards become a swipe row.</p>
 <div class="tw"><table>
 <tr><th>Width</th><th>What changes</th></tr>
 <tr><td>Above 980 px</td><td>Setup cards, quotes and game cards in 3 columns. HR numbers in 4. Prices in 6. The demo shows the step list beside one message window.</td></tr>
 <tr><td>980 px and below</td><td>The hero stacks to one column, with the drawing under the text. The menu links and Log in are hidden. HR numbers, setup cards, quotes and game cards go to 2 columns, prices to 3. The demo stops auto-playing and the steps become tabs: six numbered buttons in one row, then one card that holds both the chosen step’s text and its message window (same width, one outline, so they read as one piece), then Back and Next buttons with a “3 / 6” counter. One step is open at a time. Finishing an action in a message, a tap on Next, or a swipe left or right moves to the next step.</td></tr>
 <tr><td>900 px and below</td><td>Quotes go to one column and the price tiers stretch to equal height. The Secret Santa message text gets smaller.</td></tr>
-<tr><td>620 px and below</td><td>Everything in 1 column, prices in 2. The hero headline scales from 36 to 46 px.</td></tr>
+<tr><td>620 px and below</td><td>Everything in 1 column, prices in 2. The hero headline scales from 36 to 46 px. The game cards become a swipe row with one card at a time and three dots, and the FAQ shows three questions with a “Load more” button.</td></tr>
 </table></div>
-<ul class="list" style="margin-top:18px"><li>Side padding stays at least 16 px. Content max width is 1200 px.</li><li>On touch screens there is no hover, so the Play drawer under each game card stays open and the arrow hint is hidden. Tapping a card opens that game’s page.</li><li>On screens 980 px and narrower the floating hero message sits at the top of the drawing, inside the screen with 8 px to spare, and on phones its text may wrap to two lines. Its placement beside the drawing is for desktop only.</li><li>When the hero stacks, the drawing comes first and the text sits under it. On phones the game drawings are 290 px high (Step Challenge 210 px).</li><li>On phones the demo message windows are only as tall as their messages. The coloured frame around a window is 8 px and the window is 12 px wider than the text column, so bubbles use the full width. Quick-answer buttons go one per row, with their labels on one line.</li><li>The hero headline is <code>clamp(36px, 11vw, 46px)</code> and may wrap on a phone.</li><li>Checked at 320, 360, 375 and 768 px wide: no sideways scrolling on any of the four pages.</li></ul></section>
+<ul class="list" style="margin-top:18px"><li>Side padding stays at least 16 px. Content max width is 1200 px.</li><li>On touch screens there is no hover, so the Play drawer under each game card stays open and the arrow hint is hidden. Tapping a card opens that game’s page.</li><li>On screens 980 px and narrower the floating hero message sits at the top of the drawing, inside the screen with 8 px to spare, and on phones its text may wrap to two lines. Its placement beside the drawing is for desktop only.</li><li>When the hero stacks, the drawing comes first and the text sits under it. On phones the game drawings are 290 px high (Step Challenge 210 px).</li><li>On phones the step text and its message window are one card, with one 2 px outline and the same width. The window is only as tall as its messages, bubbles use the full width of the card (padding 12 px), and quick-answer buttons go one per row with their labels on one line. In the Secret Santa demo the three prompt questions each get their own block under their number.</li><li>The hero headline is <code>clamp(36px, 11vw, 46px)</code> and may wrap on a phone.</li><li>Checked at 320, 360, 375 and 768 px wide: no sideways scrolling on any of the four pages.</li></ul></section>
 
 <section id="access"><div class="eyebrow">10</div><h2>Accessibility and contrast</h2>
 <p class="lead">Text is always Snout Black on the game fill. The strong colour is for lines, numbers and marks, never for small text.</p>
@@ -370,7 +372,7 @@ tr:last-child td{border-bottom:0}
 <tr><td>Mute <code>#75636C</code></td><td>White / Alt section</td><td>5.6 : 1 / 5.0 : 1</td></tr>
 <tr><td>Claw White <code>#FDFFF3</code></td><td>Ink (footer, closing banner)</td><td>19.8 : 1</td></tr>
 </table></div>
-<ul class="list" style="margin-top:18px"><li>Keyboard focus shows a 3 px ring in iris <code>#5B47F5</code> with a 3 px offset. Game cards and steps can be reached with the keyboard, and Enter or Space opens them.</li><li>Pressable controls are at least 44 px high. The FAQ arrows are 44 × 44 px.</li><li>Drawings and decorative flakes are hidden from screen readers. A drawing’s meaning is always also in the text beside it.</li><li>Under reduced motion all looping animation, snow and autoplay are off, and a “Play animations” button lets a visitor turn them on.</li></ul></section>
+<ul class="list" style="margin-top:18px"><li>Keyboard focus shows a 3 px ring in iris <code>#5B47F5</code> with a 3 px offset. Game cards and demo steps can be reached with the keyboard, and Enter or Space opens them. The ring shows for keyboard focus only, not after a mouse click.</li><li>Pressable controls are at least 44 px high. The FAQ arrows are 44 × 44 px.</li><li>Drawings and decorative flakes are hidden from screen readers. A drawing’s meaning is always also in the text beside it.</li><li>Under reduced motion all looping animation, snow and autoplay are off, and a “Play animations” button lets a visitor turn them on.</li></ul></section>
 
 <section id="copy"><div class="eyebrow">11</div><h2>Copy</h2>
 <ul class="list" style="margin-top:20px"><li><b>Only Vilo’s own text.</b> Headlines, descriptions, steps and message examples come from the Vilo game pages. Nothing is invented. If something is missing it is marked in square brackets, like <code>[Copy from Vilo: off season]</code>.</li><li><b>Examples are examples.</b> Names, numbers and dates in demos are illustrative, and the page footer says so. Examples stay neutral, with no holiday references unless the game is a holiday game.</li><li><b>Sentence case.</b> Headlines in two parts: a bold first line and a regular second line.</li><li><b>Messages sound like a person at work:</b> short, friendly, one emoji at most. The sender is Vilo, a colleague, or a channel name such as <code>#step-challenge</code>.</li><li><b>No real words inside drawings.</b> Implied text bars only.</li></ul>

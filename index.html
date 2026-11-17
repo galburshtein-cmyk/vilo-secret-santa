@@ -641,6 +641,7 @@ html[data-look] .slack .sb.pick.sel{background:var(--g)}
 html[data-look] .slack .sb.done{background:var(--g);color:var(--ink)}
 /* demo steps: the open step looks pressed in (moved onto its shadow), same white fill, no colour change */
 html[data-look] .step{outline:0}
+html[data-look] .step:focus-visible{outline:3px solid var(--iris-s);outline-offset:3px}
 html[data-look] .step:not(.on):active{background:#fff!important;color:var(--ink)!important}
 html[data-look] .step.on,html[data-look] .step.on:hover,html[data-look] .step.on:active{background:#fff!important;color:var(--ink)!important;transform:translate(4px,4px)!important;box-shadow:none!important}
 /* ICON LANGUAGE (option C): 24px grid, 2px black line, round ends, game-colour shape offset behind the line. Flat, not clickable. */

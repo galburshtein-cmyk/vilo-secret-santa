@@ -12,6 +12,8 @@ python3 -m http.server 4173
 
 then open http://localhost:4173.
 
+**Taking over the project?** Start with [`handover/HANDOVER.md`](handover/HANDOVER.md). It covers running the site, changing it, publishing it, and making new illustrations in the Vilo style with the bundled skill.
+
 ## Pages
 
 - Secret Santa is the default page.

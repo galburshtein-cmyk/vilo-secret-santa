@@ -1215,7 +1215,7 @@ function switchGame(id,opts={}){
 }
 $('.games')?.addEventListener('click',e=>{const c=e.target.closest('.gc');if(!c)return;e.preventDefault();c.blur();c.classList.remove('open');const id=SLUG[c.querySelector('h3')?.textContent];if(id)switchGame(id,{scroll:1})});
 /* "Vilo Play" in the top nav brings you back to Secret Santa */
-$$('.nav a').filter(a=>a.textContent.trim()==='Vilo Play').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();curGame==='santa'?scrollTo({top:0,behavior:'smooth'}):switchGame('santa',{scroll:1})}));
+[...$$('.nav a').filter(a=>a.textContent.trim()==='Vilo Play'),...$$('.bar .logo')].forEach(a=>a.addEventListener('click',e=>{e.preventDefault();curGame==='santa'?scrollTo({top:0,behavior:'smooth'}):switchGame('santa',{scroll:1})}));
 {const q=new URLSearchParams(location.search).get('game');if(q&&GAMES[q]&&q!=='santa')switchGame(q)}
 /* mock buttons */
 document.addEventListener('click',e=>{if(!e.target.closest('.prb'))$$('.pmenu').forEach(m=>m.classList.add('hidden'));const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,w=b.closest('.slack');if(w){auto=false;stop()}

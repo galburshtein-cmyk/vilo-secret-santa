@@ -267,7 +267,7 @@ dialog::backdrop{background:rgba(23,23,26,.45);backdrop-filter:blur(4px)}
   .faq{grid-template-columns:1fr;gap:28px}.fcols{grid-template-columns:1fr 1fr}.q:nth-child(2){margin-top:0}
   .sec{padding:76px 0}
 }
-@media (max-width:620px){.kpis,.cards3,.quotes,.games{grid-template-columns:1fr}.tiers{grid-template-columns:1fr 1fr}.hero h1{font-size:46px}}
+@media (max-width:620px){.kpis,.cards3,.quotes,.games{grid-template-columns:1fr}.tiers{grid-template-columns:1fr 1fr}.hero h1{font-size:clamp(36px,11vw,46px)}.hero h1 .mk{white-space:normal}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=DM+Mono:wght@500&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Fraunces:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600&family=Schibsted+Grotesk:wght@600;700;800&family=Familjen+Grotesk:wght@600;700&family=Figtree:wght@600;700;800&display=swap" rel="stylesheet">
 <style id="free">
@@ -873,6 +873,76 @@ body.paused #snowp *{animation-play-state:paused}
 [data-game="missions"] .scene>.hero-msg{left:42%;bottom:11%;animation-name:msg-drift-r}
 @keyframes msg-drift-r{0%{transform:translateX(16px) rotate(6deg)}100%{transform:translateX(-16px) rotate(7.5deg)}}
 [data-game="steps"] .scene>.hero-msg{left:9.4%;bottom:-11.7%}
+@media (max-width:980px){
+  .m-tabs{display:flex}
+  .stage-m{margin-top:12px}
+  /* stacked hero: the drawing comes first, the text under it */
+  .hero .wrap>.scene{order:-1;min-height:0}
+  .hero{padding-top:28px}
+  .stage-m .pane{height:auto!important;min-height:0!important;align-items:stretch}
+  .stage-m .slack .bd{min-height:0!important;height:auto!important}
+  [data-hero="D"] .scene>.hero-msg{left:8px;max-width:calc(100% - 16px)}
+  [data-game="whos"] .scene>.hero-msg,[data-game="missions"] .scene>.hero-msg,[data-game="steps"] .scene>.hero-msg{left:max(8px,calc(50% - 150px));bottom:auto;top:0;max-width:calc(100% - 16px)}
+}
+/* the hero background runs up behind the floating menu bar */
+.hero{margin-top:calc(-1*var(--bar-h,72px));padding-top:calc(var(--bar-h,72px) + 56px)}
+@media (max-width:980px){.hero{padding-top:calc(var(--bar-h,72px) + 28px)}}
+.faq-more{display:none}
+@media (max-width:620px){.faq-list:not(.all) details:nth-of-type(n+4){display:none}.faq-more{display:inline-flex;margin-top:24px;justify-self:start;width:auto}.faq-more[hidden]{display:none}}
+.g-dots{display:none;justify-content:center;gap:10px;margin-top:4px}
+.g-dots button{width:14px;height:14px;padding:0;border-radius:50%;border:2px solid #1A000A;background:#fff;cursor:pointer;transition:background var(--d-ui),transform var(--d-press)}
+.g-dots button.on{background:#1A000A}
+@media (min-width:981px){.m-tabs,.m-nav{display:none!important}}
+/* steps on phones: six numbered tabs in one row, the chosen step, its message window, then Back / Next */
+.m-tabs{display:flex;gap:8px;margin:28px 0 0;padding:2px 4px 10px 0}
+.m-tabs button{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;font:700 15px 'DM Mono',monospace;height:46px;border-radius:14px;border:2px solid #1A000A;background:#fff;color:#1A000A;box-shadow:4px 4px 0 #1A000A;cursor:pointer;transition:transform var(--d-press) ease-out,box-shadow var(--d-press) ease-out,background var(--d-ui)}
+.m-tabs button.on{background:var(--g);transform:translate(4px,4px);box-shadow:0 0 0 #1A000A}
+.m-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-right:4px}
+.m-nav .btn{padding:12px 20px;font-size:15px}
+.m-nav .btn[disabled]{opacity:.35;pointer-events:none;box-shadow:none}
+.m-count{font:700 13px 'DM Mono',monospace;color:var(--mute);letter-spacing:.06em}
+.m-off{display:none!important}
+/* touch screens: no hover, so the Play drawer on game cards stays open and the arrow hint goes */
+@media (hover:none){
+  .games .drawer{max-height:112px}.games .gc:after{display:none}
+}
+@media (max-width:620px){
+  /* game cards on phones: compact, so all three fit one under the other */
+  /* one card at a time: a swipe row with dots, and the drawings move on their own */
+  .games{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:28px!important;margin-inline:-24px;padding:24px 24px 14px!important;scroll-padding-inline:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .games::-webkit-scrollbar{display:none}
+  .games>.gc{flex:0 0 calc(100% - 12px);scroll-snap-align:start}
+  .g-dots{display:flex!important}
+  .games .gc .in{padding:22px 18px 22px!important}
+  .games .gc .gc-art{height:112px!important;margin-bottom:12px!important}
+  .games .gc .gc-art svg,.games .gc .gc-art svg.mo-art,.games .gc .gc-art svg.sc-art,.games .gc .gc-art svg.ww-art{height:112px!important}
+  .games .gc .mag{animation:search 3.4s ease-in-out infinite!important}
+  .games .gc .shoe-a{animation:stepA 2.6s ease-in-out infinite!important}.games .gc .shoe-b{animation:stepB 2.6s ease-in-out infinite!important}
+  .games .gc .mo-letter{animation:mo-letter 6s ease-in-out infinite!important}.games .gc .mo-flap-front{animation:mo-front 6s ease-in-out infinite!important}.games .gc .mo-flap-back{animation:mo-back 6s ease-in-out infinite!important}
+  .games .gc h3{font-size:21px!important;margin-bottom:2px!important}
+  .games .gc p{font-size:13.5px!important}
+  .games .gc .drawer,.games .gc:hover .drawer{max-height:66px!important}
+  .games .gc .drawer .dbtn{margin:12px 0!important;font-size:13px}
+  .games .gc .drawer .dbtn span{padding:10px 16px}.games .gc .drawer .dbtn i{padding:10px 12px}
+  .games .gc:after{display:none}
+  [data-game="whos"] .hero-art.svg svg{height:290px}[data-game="missions"] .hero-art.svg svg{height:290px}[data-game="steps"] .hero-art.svg svg{height:210px}
+  /* the step text and its message window are ONE card: same width, one outline */
+  .stage-m{gap:0!important}
+  html[data-look] .stage-m .step{border:2px solid #1A000A!important;border-bottom:0!important;border-radius:22px 22px 0 0!important;box-shadow:none!important;margin:0!important;padding:18px 14px 6px!important;background:#fff!important;transform:none!important}
+  html[data-look] .stage-m .pane{margin:-1px 0 0!important;padding:4px 12px 14px!important;background:#fff!important;border:2px solid #1A000A!important;border-top:0!important;border-radius:0 0 22px 22px!important;box-shadow:none!important}
+  .stage-m .slack{border-radius:16px}
+  html[data-look] .stage-m .slack .bd{padding:8px!important;gap:10px}
+  html[data-look] .stage-m .slack .m>div{padding:12px 12px 14px;max-width:100%;width:100%}
+  .stage-m .slack .m{gap:0}
+  /* quick-answer buttons: one per row on phones so labels stay on one line */
+  html[data-look] .stage-m .slack .m .shop{grid-template-columns:1fr;gap:10px}
+  .stage-m .shop .sb{width:100%;hyphens:none;word-break:normal;overflow-wrap:normal}
+  .stage-m .prs{gap:10px}.stage-m .pr{flex-direction:column;align-items:stretch;gap:6px}.stage-m .prb{width:100%;min-width:0}.stage-m .pn{width:28px;height:28px;font-size:13px}
+  .stage-m .slack .hd{font-size:12px;gap:8px}
+  .hero-msg p{white-space:normal;font-size:15px}
+  .hero-msg .vav.sm{width:36px;height:36px;border-radius:11px}.hero-msg .vav.sm i{width:20px;height:20px}
+  [data-hero="D"] .scene>.hero-msg{padding:10px 16px 10px 10px;gap:10px;max-width:calc(100% - 24px)}
+}
 body[data-game]:not([data-game="santa"]) .stage-in{align-items:start}
 body[data-game]:not([data-game="santa"]) .stage-in .step,body[data-game]:not([data-game="santa"]) .stage-in .step.on{flex:0 0 auto;padding:24px 26px;font-size:17px}
 body[data-game]:not([data-game="santa"]) .stage-in .pane{height:560px}
@@ -1077,6 +1147,40 @@ const GAMES={
    {ch:'# step-challenge',when:'',d:'',tip:'',t:'Walk',mock:()=>vm('','<span class="kick">Week 2 · the board this morning</span><div class="board">'+brow(1,'New York','98.2k')+brow(2,'Toronto','96.1k')+brow(3,'London','77.3k')+brow(4,'Berlin','65.1k')+'</div>')+um('Noa','','<p>Lunch walk done 🚶 +3,200 for Toronto</p>')},
    {ch:'# step-challenge',when:'',d:'',tip:'',t:'Celebrate',mock:()=>vm('','<span class="kick">Final board · winners</span><p><b>Toronto 🏆</b></p><p class="mini">412k steps in four weeks</p>')+vm('','<p>Finale at 16:00 in every office. Photos in the thread 📸</p>')}]}
 };
+/* phones and tablets: the steps become tabs, one step and its message window at a time */
+let mtab=0;
+function setMTab(i,scroll){const t=$('.m-tabs');if(!t)return;const N=GAME.steps.length;i=Math.max(0,Math.min(N-1,i));mtab=i;
+  $$('button',t).forEach((b,k)=>{b.classList.toggle('on',k===i);b.setAttribute('aria-selected',k===i)});
+  const nv=$('.m-nav');if(nv){nv.querySelector('[data-d="-1"]').disabled=i===0;nv.querySelector('[data-d="1"]').disabled=i===N-1;nv.querySelector('.m-count').textContent=(i+1)+' / '+N}
+  [...$('.stage-m').children].forEach((el,k)=>el.classList.toggle('m-off',Math.floor(k/2)!==i));
+  const on=$$('button',t)[i];if(on)t.scrollTo({left:on.offsetLeft-16,behavior:reduce?'auto':'smooth'});
+  if(scroll)scrollTo({top:t.getBoundingClientRect().top+scrollY-90,behavior:reduce?'auto':'smooth'})}
+function buildMTabs(){let t=$('.m-tabs');
+  if(!t){t=document.createElement('div');t.className='m-tabs';t.setAttribute('role','tablist');t.setAttribute('aria-label','Steps');$('.stage-m').before(t);
+    t.addEventListener('click',e=>{const b=e.target.closest('button');if(b)setMTab(+b.dataset.i,false)})}
+  t.innerHTML=GAME.steps.map((s,i)=>`<button type="button" role="tab" data-i="${i}" aria-label="Step ${i+1}: ${s.t}">${i+1}</button>`).join('');
+  let nv=$('.m-nav');
+  if(!nv){nv=document.createElement('div');nv.className='m-nav';$('.stage-m').after(nv);
+    nv.innerHTML='<button type="button" class="btn sec2" data-d="-1">← Back</button><span class="m-count"></span><button type="button" class="btn pri" data-d="1">Next →</button>';
+    nv.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&!b.disabled)setMTab(mtab+ +b.dataset.d,true)});
+    let x0=null,y0=0;const sm=$('.stage-m');
+    sm.addEventListener('touchstart',e=>{const t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});
+    sm.addEventListener('touchend',e=>{if(x0===null)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+      if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6){const n=mtab+(dx<0?1:-1);if(n>=0&&n<GAME.steps.length)setMTab(n,true)}},{passive:true})}
+  setMTab(0)}
+buildMTabs();
+{const bar=$('.bar'),setBar=()=>document.documentElement.style.setProperty('--bar-h',(bar?bar.offsetHeight:72)+'px');setBar();addEventListener('resize',setBar)}
+/* phones: the FAQ shows 3 questions and a "Load more" button for the rest */
+(function(){const f=$('.faq');if(!f)return;const list=f.lastElementChild;list.classList.add('faq-list');
+  const b=document.createElement('button');b.type='button';b.className='btn sec2 faq-more';b.textContent='Load more';
+  b.onclick=()=>{list.classList.add('all');b.hidden=true;const d=$$('details',list)[3];if(d)d.querySelector('summary').focus({preventScroll:true})};list.after(b)})();
+/* phones: dots under the swipe row of game cards */
+(function(){const g=$('.games');if(!g||$('.g-dots'))return;const d=document.createElement('div');d.className='g-dots';
+  d.innerHTML=[...g.children].map((_,i)=>`<button type="button" aria-label="Game ${i+1}" data-i="${i}"></button>`).join('');g.after(d);
+  const step=()=>g.children[0].getBoundingClientRect().width+28;
+  const upd=()=>{const i=Math.round(g.scrollLeft/step());$$('button',d).forEach((b,k)=>b.classList.toggle('on',k===i))};
+  g.addEventListener('scroll',upd,{passive:true});
+  d.addEventListener('click',e=>{const b=e.target.closest('button');if(b)g.scrollTo({left:b.dataset.i*step(),behavior:'smooth'})});upd()})();
 const SLUG={'Who’s Who':'whos','Secret Office Missions':'missions','Step Challenge':'steps'};
 let curGame='santa';
 function switchGame(id,opts={}){
@@ -1102,6 +1206,7 @@ function switchGame(id,opts={}){
   $('#stage').style.setProperty('--n',g.steps.length);
   $('#steps').innerHTML=g.steps.map((s,i)=>stepHTML(s,i,i===0)).join('');
   $('.stage-m').innerHTML=g.steps.map((s,i)=>stepHTML(s,i,true)+`<div class="pane">${mockWin(i)}</div>`).join('');
+  buildMTabs();
   cur=0;steps=$$('#steps .step');host.innerHTML=mockWin(0);
   auto=!reduce;stop();if(seen)play();
   const u=new URL(location.href);id==='santa'?u.searchParams.delete('game'):u.searchParams.set('game',id);history.replaceState(null,'',u);
@@ -1230,7 +1335,7 @@ const LAST=GAME.steps.length-1;let driven=false;
 function setStep(i,fromClick){if(i===cur&&!fromClick)return;cur=i;steps.forEach((s,k)=>s.classList.toggle('on',k===i));host.innerHTML=mockWin(i);
   if(driven&&innerWidth>980){const hasAct=host.querySelector('[data-act=join],[data-act=save],[data-act=guess],[data-act=send],[data-act=open],[data-act=thanks]');if(!hasAct&&i<LAST){const at=i;setTimeout(()=>{if(cur===at)setStep(at+1,true)},3800)}}}
 function go(ms,b){driven=true;const mob=innerWidth<=980,idx=mob?$$('.stage-m .pane').indexOf(b.closest('.pane')):cur;
-  setTimeout(()=>{if(idx<0||idx>=LAST)return;if(mob){const t=$$('.stage-m .step')[idx+1];if(t)scrollTo({top:t.getBoundingClientRect().top+scrollY-100,behavior:'smooth'})}else if(cur===idx)setStep(idx+1,true)},ms)}
+  setTimeout(()=>{if(idx<0||idx>=LAST)return;if(mob){setMTab(idx+1,true)}else if(cur===idx)setStep(idx+1,true)},ms)}
 document.addEventListener('click',e=>{const b=e.target.closest('.slack [data-act]');if(!b)return;const a=b.dataset.act;
   if(a==='guess'){const m=b.closest('.m'),g=b.closest('.shop');if(!g||g.classList.contains('hidden'))return;g.classList.add('hidden');m.insertAdjacentHTML('afterend','<div class="m me"><div>'+b.childNodes[0].textContent+'</div></div>');go(1500,b);return}
   const L={join:'Join',save:'Save my clues',send:'Send gift',open:'Open your gift',thanks:'Say thank you 💌'}[a];if(!L)return;const m=b.closest('.m'),r=b.closest('.btns');if(!m||!r||r.classList.contains('hidden'))return;r.classList.add('hidden');m.insertAdjacentHTML('afterend','<div class="m me"><div>'+L+'</div></div>');

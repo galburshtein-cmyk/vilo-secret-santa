@@ -235,7 +235,10 @@ tr:last-child td{border-bottom:0}
 <h3>Other page elements</h3>
 <div class="tw"><table>
 <tr><th>Element</th><th>Rule</th></tr>
-<tr><td>Menu bar</td><td>White pill with a 1 px hairline, sticky at the top, logo at the left, one game-fill “Play now” button at the right.</td></tr>
+<tr><td>Menu bar</td><td>White pill with a 1 px hairline, sticky at the top, logo at the left, one game-fill “Play now” button at the right. It floats over the page: the hero background runs up behind it, so there is no white strip above the hero.</td></tr>
+<tr><td>Step tabs (phones)</td><td>Six equal square-ish buttons, 46 px high, in the pressable style: white, 2 px outline, 4 px shadow, the step number in mono. The chosen tab is pressed in and takes the game fill. Back and Next sit under the message window; Back is dimmed on the first step and Next on the last.</td></tr>
+<tr><td>Game cards (phones)</td><td>One card at a time in a swipe row, with three dots under it. Each card is about 315 px high: drawing 112 px, title 21 px, one line of text, and the Play button always shown. The drawings move on their own in a loop, with no hover needed.</td></tr>
+<tr><td>FAQ (phones)</td><td>Three questions are shown, then a “Load more” button that opens the rest of the list.</td></tr>
 <tr><td>Steps (demo)</td><td>16 px radius, hairline. The chosen step is pressed in and white, with no colour change. Step number in Mute, title in Familjen 20 px.</td></tr>
 <tr><td>Price tiers</td><td>Flat tiles in a row that grows step by step. Free comes first. The last tier, “Let’s talk”, is a pressable sticker button in the game fill.</td></tr>
 <tr><td>Quotes</td><td>Flat white cards, 22 px radius, hairline. Quote in Familjen 24 px, role underneath in Mute. Quotes arrive one after the other.</td></tr>
@@ -340,11 +343,11 @@ tr:last-child td{border-bottom:0}
 <div class="tw"><table>
 <tr><th>Width</th><th>What changes</th></tr>
 <tr><td>Above 980 px</td><td>Setup cards, quotes and game cards in 3 columns. HR numbers in 4. Prices in 6. The demo shows the step list beside one message window.</td></tr>
-<tr><td>980 px and below</td><td>The hero stacks to one column, with the drawing under the text. The menu links and Log in are hidden. HR numbers, setup cards, quotes and game cards go to 2 columns, prices to 3. The demo stops auto-playing and becomes a vertical list: each step with its own message window under it.</td></tr>
+<tr><td>980 px and below</td><td>The hero stacks to one column, with the drawing under the text. The menu links and Log in are hidden. HR numbers, setup cards, quotes and game cards go to 2 columns, prices to 3. The demo stops auto-playing and the steps become tabs: six numbered buttons in one row, then one card that holds both the chosen step’s text and its message window (same width, one outline, so they read as one piece), then Back and Next buttons with a “3 / 6” counter. One step is open at a time. Finishing an action in a message, a tap on Next, or a swipe left or right moves to the next step.</td></tr>
 <tr><td>900 px and below</td><td>Quotes go to one column and the price tiers stretch to equal height. The Secret Santa message text gets smaller.</td></tr>
-<tr><td>620 px and below</td><td>Everything in 1 column, prices in 2. The hero headline is 46 px.</td></tr>
+<tr><td>620 px and below</td><td>Everything in 1 column, prices in 2. The hero headline scales from 36 to 46 px.</td></tr>
 </table></div>
-<ul class="list" style="margin-top:18px"><li>Side padding stays at least 16 px. Content max width is 1200 px.</li><li>The card drawers and the drawing motion on game cards open on hover only. On a touch screen there is no hover, so tapping a card opens that game’s page and the drawer is not seen. This is still to be decided.</li><li>Phone widths have not been checked on every page, and the hero message positions are set for desktop. Treat these rules as the intended behaviour.</li></ul></section>
+<ul class="list" style="margin-top:18px"><li>Side padding stays at least 16 px. Content max width is 1200 px.</li><li>On touch screens there is no hover, so the Play drawer under each game card stays open and the arrow hint is hidden. Tapping a card opens that game’s page.</li><li>On screens 980 px and narrower the floating hero message sits at the top of the drawing, inside the screen with 8 px to spare, and on phones its text may wrap to two lines. Its placement beside the drawing is for desktop only.</li><li>When the hero stacks, the drawing comes first and the text sits under it. On phones the game drawings are 290 px high (Step Challenge 210 px).</li><li>On phones the demo message windows are only as tall as their messages. The coloured frame around a window is 8 px and the window is 12 px wider than the text column, so bubbles use the full width. Quick-answer buttons go one per row, with their labels on one line.</li><li>The hero headline is <code>clamp(36px, 11vw, 46px)</code> and may wrap on a phone.</li><li>Checked at 320, 360, 375 and 768 px wide: no sideways scrolling on any of the four pages.</li></ul></section>
 
 <section id="access"><div class="eyebrow">10</div><h2>Accessibility and contrast</h2>
 <p class="lead">Text is always Snout Black on the game fill. The strong colour is for lines, numbers and marks, never for small text.</p>
